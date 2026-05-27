@@ -2,11 +2,23 @@
   "name": "error-to-fix",
   "version": "1.0.0",
   "type": "module",
+  "description": "Instant fixes for 3000+ error patterns across 50+ languages",
   "bin": {
     "error-to-fix": "./dist/index.js"
   },
+  "files": [
+    "dist",
+    "data"
+  ],
+  "keywords": ["error", "fix", "debug", "cli", "developer-tools", "diagnostics"],
+  "author": "Satyam Thakur",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Satyamtechy/error-to-fix.git"
+  },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && node -e \"const fs=require('fs');fs.mkdirSync('data',{recursive:true});fs.copyFileSync('../shared/error-database-full.json','data/errors.json')\"",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

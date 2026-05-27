@@ -17,7 +17,7 @@ export interface SearchResult extends ErrorEntry {
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const dbPath = resolve(__dirname, "../../shared/error-database.json");
+const dbPath = resolve(__dirname, "../data/errors.json");
 const database: ErrorEntry[] = JSON.parse(readFileSync(dbPath, "utf-8")) as ErrorEntry[];
 
 export function search(query: string, lang?: string): SearchResult[] {

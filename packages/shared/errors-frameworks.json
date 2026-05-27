@@ -1,0 +1,602 @@
+[
+  {
+    "id": "react-001",
+    "regex": "Invalid hook call\\. Hooks can only be called inside of the body of a function component",
+    "language": "react",
+    "title": "Invalid hook call",
+    "fixes": [
+      "Ensure hooks are only called at the top level of a function component, not inside loops, conditions, or nested functions",
+      "Check for multiple copies of React in your bundle: run `npm ls react` and deduplicate",
+      "Verify the component is a function component, not a class component"
+    ],
+    "tags": ["hooks", "runtime-error"]
+  },
+  {
+    "id": "react-002",
+    "regex": "Too many re-renders\\. React limits the number of renders to prevent an infinite loop",
+    "language": "react",
+    "title": "Too many re-renders (infinite loop)",
+    "fixes": [
+      "Avoid calling setState directly in the render body — wrap in useEffect or event handler",
+      "Ensure onClick passes a function reference, not a function call: `onClick={() => fn()}` not `onClick={fn()}`",
+      "Check for useEffect with setState that triggers its own dependency"
+    ],
+    "tags": ["infinite-loop", "state", "performance"]
+  },
+  {
+    "id": "react-003",
+    "regex": "Each child in a list should have a unique \"key\" prop",
+    "language": "react",
+    "title": "Missing key prop in list",
+    "fixes": [
+      "Add a unique `key` prop to each element returned in a .map() call",
+      "Use a stable unique identifier (id) instead of array index as key",
+      "If no id exists, combine multiple fields to create a unique key"
+    ],
+    "tags": ["lists", "warning", "reconciliation"]
+  },
+  {
+    "id": "react-004",
+    "regex": "Can't perform a React state update on an unmounted component",
+    "language": "react",
+    "title": "Cannot update state on unmounted component",
+    "fixes": [
+      "Return a cleanup function from useEffect to cancel async operations (e.g., AbortController)",
+      "Use a mounted ref flag: `const mounted = useRef(true)` and check before setState",
+      "Cancel subscriptions, timers, and pending requests in the useEffect cleanup"
+    ],
+    "tags": ["memory-leak", "async", "useEffect"]
+  },
+  {
+    "id": "react-005",
+    "regex": "React Hook useEffect has a missing dependency",
+    "language": "react",
+    "title": "useEffect missing dependency (exhaustive-deps)",
+    "fixes": [
+      "Add the missing variable to the dependency array",
+      "Wrap the dependency in useCallback or useMemo to stabilize its reference",
+      "If intentionally omitting, add `// eslint-disable-next-line react-hooks/exhaustive-deps` with a comment explaining why"
+    ],
+    "tags": ["hooks", "eslint", "useEffect"]
+  },
+  {
+    "id": "react-006",
+    "regex": "React Hook .+ cannot be called at the top level",
+    "language": "react",
+    "title": "Hook called outside component or custom hook",
+    "fixes": [
+      "Move the hook call inside a function component or a custom hook (function starting with 'use')",
+      "Ensure the file exports a component or custom hook, not a plain function",
+      "Check that the function name starts with an uppercase letter (component) or 'use' (custom hook)"
+    ],
+    "tags": ["hooks", "rules-of-hooks"]
+  },
+  {
+    "id": "react-007",
+    "regex": "Adjacent JSX elements must be wrapped in an enclosing tag",
+    "language": "react",
+    "title": "Adjacent JSX elements not wrapped",
+    "fixes": [
+      "Wrap sibling elements in a parent `<div>` or `<section>`",
+      "Use a React Fragment: `<>...</>` or `<React.Fragment>...</React.Fragment>`",
+      "If returning from a map, ensure each iteration returns a single root element"
+    ],
+    "tags": ["jsx", "syntax"]
+  },
+  {
+    "id": "react-008",
+    "regex": "A component is changing an? uncontrolled input to be controlled",
+    "language": "react",
+    "title": "Uncontrolled to controlled input switch",
+    "fixes": [
+      "Initialize state with an empty string instead of undefined: `useState('')` not `useState()`",
+      "Ensure the value prop is never undefined — use `value={val || ''}` as fallback",
+      "Decide on controlled or uncontrolled and stay consistent (use `defaultValue` for uncontrolled)"
+    ],
+    "tags": ["forms", "input", "state"]
+  },
+  {
+    "id": "react-009",
+    "regex": "A component is changing a controlled input to be uncontrolled",
+    "language": "react",
+    "title": "Controlled to uncontrolled input switch",
+    "fixes": [
+      "Ensure the value prop never becomes undefined — provide a fallback empty string",
+      "Check that state isn't being set to undefined anywhere in your handlers",
+      "Use `value={state ?? ''}` to guard against null/undefined"
+    ],
+    "tags": ["forms", "input", "state"]
+  },
+  {
+    "id": "react-010",
+    "regex": "Hydration failed because the initial UI does not match what was rendered on the server",
+    "language": "react",
+    "title": "React hydration mismatch",
+    "fixes": [
+      "Ensure server and client render identical HTML — avoid Date.now(), Math.random() in initial render",
+      "Use useEffect for browser-only content (window, localStorage) so it only runs on client",
+      "Wrap browser-only components in a client check: `const [mounted, setMounted] = useState(false)`"
+    ],
+    "tags": ["ssr", "hydration", "nextjs"]
+  },
+  {
+    "id": "react-011",
+    "regex": "React Hook .+ has a complex expression in the dependency array",
+    "language": "react",
+    "title": "Complex expression in useEffect deps",
+    "fixes": [
+      "Extract the complex expression into a variable before the hook",
+      "Use useMemo to compute the derived value and pass that to the dependency array",
+      "Simplify the dependency to a primitive value that changes when the expression changes"
+    ],
+    "tags": ["hooks", "useEffect", "eslint"]
+  },
+  {
+    "id": "react-012",
+    "regex": "Objects are not valid as a React child",
+    "language": "react",
+    "title": "Object rendered as React child",
+    "fixes": [
+      "Convert the object to a string: use JSON.stringify(obj) or access a specific property",
+      "If rendering a list, map the array to JSX elements instead of rendering the array directly",
+      "Check that you're not accidentally passing an object where a string/number is expected"
+    ],
+    "tags": ["rendering", "jsx", "runtime-error"]
+  },
+  {
+    "id": "react-013",
+    "regex": "Maximum update depth exceeded",
+    "language": "react",
+    "title": "Maximum update depth exceeded",
+    "fixes": [
+      "Check for setState calls inside useEffect that trigger the same effect (circular update)",
+      "Ensure event handlers don't unconditionally call setState that re-triggers rendering",
+      "Add proper conditions or dependency arrays to break the update cycle"
+    ],
+    "tags": ["infinite-loop", "state", "useEffect"]
+  },
+  {
+    "id": "react-014",
+    "regex": "Cannot read propert(y|ies) of (undefined|null)",
+    "language": "react",
+    "title": "Cannot read properties of undefined/null",
+    "fixes": [
+      "Add optional chaining: `obj?.property` instead of `obj.property`",
+      "Add a null check or default value before accessing the property",
+      "Ensure async data is loaded before rendering — use conditional rendering or loading state"
+    ],
+    "tags": ["runtime-error", "null-safety"]
+  },
+  {
+    "id": "react-015",
+    "regex": "Rendered fewer hooks than expected|Rendered more hooks than expected",
+    "language": "react",
+    "title": "Hooks rendered conditionally (different count)",
+    "fixes": [
+      "Never place hooks inside if/else blocks, loops, or after early returns",
+      "Move conditional logic inside the hook, not around it",
+      "Ensure all hooks are called in the same order on every render"
+    ],
+    "tags": ["hooks", "rules-of-hooks", "runtime-error"]
+  },
+  {
+    "id": "ng-001",
+    "regex": "NG0100.*Expression has changed after it was checked",
+    "language": "angular",
+    "title": "ExpressionChangedAfterItHasBeenCheckedError (NG0100)",
+    "fixes": [
+      "Move the value change to ngAfterViewInit with a ChangeDetectorRef.detectChanges() call",
+      "Use setTimeout(() => { ... }) to defer the change to the next cycle",
+      "Restructure to avoid changing parent-bound values in child lifecycle hooks — use OnPush + markForCheck()"
+    ],
+    "tags": ["change-detection", "lifecycle", "runtime-error"]
+  },
+  {
+    "id": "ng-002",
+    "regex": "NG0200.*Circular dependency in DI detected",
+    "language": "angular",
+    "title": "Circular dependency in DI (NG0200)",
+    "fixes": [
+      "Break the cycle by injecting one service lazily with `@Inject(forwardRef(() => ServiceName))`",
+      "Extract shared logic into a third service that both services depend on",
+      "Use an event-based pattern (Subject) instead of direct service-to-service calls"
+    ],
+    "tags": ["dependency-injection", "architecture"]
+  },
+  {
+    "id": "ng-003",
+    "regex": "NullInjectorError: No provider for (\\w+)",
+    "language": "angular",
+    "title": "NullInjectorError — missing provider",
+    "fixes": [
+      "Add the service to the `providers` array of the module or component that needs it",
+      "Use `@Injectable({ providedIn: 'root' })` on the service class for app-wide singleton",
+      "If using a lazy-loaded module, ensure the service is provided in that module or root"
+    ],
+    "tags": ["dependency-injection", "providers"]
+  },
+  {
+    "id": "ng-004",
+    "regex": "NG0303.*Can't bind to '.+' since it isn't a known property",
+    "language": "angular",
+    "title": "Can't bind to property — not a known property (NG0303)",
+    "fixes": [
+      "Import the module that declares the directive/component (e.g., FormsModule for ngModel, ReactiveFormsModule for formControl)",
+      "Check for typos in the property name or directive selector",
+      "If it's a custom component input, ensure the component is declared/exported in the correct module"
+    ],
+    "tags": ["template", "binding", "modules"]
+  },
+  {
+    "id": "ng-005",
+    "regex": "NG0500.*hydration",
+    "language": "angular",
+    "title": "Angular hydration mismatch (NG0500)",
+    "fixes": [
+      "Add `ngSkipHydration` attribute to components that use browser-only APIs",
+      "Move DOM manipulation to afterNextRender() or afterRender() instead of ngOnInit",
+      "Ensure server-rendered HTML matches client initial render — avoid window/document in SSR paths"
+    ],
+    "tags": ["ssr", "hydration", "universal"]
+  },
+  {
+    "id": "ng-006",
+    "regex": "NG8001.*'([^']+)' is not a known element",
+    "language": "angular",
+    "title": "Unknown element — component not declared (NG8001)",
+    "fixes": [
+      "Import the module that exports the component into your feature module's imports array",
+      "If standalone component, add it to the `imports` array of the consuming component",
+      "Check the component's selector matches exactly what's in the template (including 'app-' prefix)"
+    ],
+    "tags": ["template", "modules", "declarations"]
+  },
+  {
+    "id": "ng-007",
+    "regex": "NG8002.*Can't bind to '(.+)' since it isn't a known property of '(.+)'",
+    "language": "angular",
+    "title": "Unknown property binding (NG8002)",
+    "fixes": [
+      "Import the required module (e.g., MatInputModule for matInput, RouterModule for routerLink)",
+      "Ensure the @Input() decorator is defined on the target component's property",
+      "Check for typos in the binding name — Angular bindings are case-sensitive"
+    ],
+    "tags": ["template", "binding", "inputs"]
+  },
+  {
+    "id": "ng-008",
+    "regex": "NG0301.*Export of name '(.+)' not found",
+    "language": "angular",
+    "title": "Template export not found (NG0301)",
+    "fixes": [
+      "Ensure the directive is imported — e.g., FormsModule for `#f='ngForm'`",
+      "Check the exportAs property of the directive matches what you're referencing",
+      "Verify the directive/component module is in the imports of your module"
+    ],
+    "tags": ["template", "template-reference", "directives"]
+  },
+  {
+    "id": "ng-009",
+    "regex": "Error: NG0901.*ngIf|ngFor|ngSwitch",
+    "language": "angular",
+    "title": "Structural directive not available",
+    "fixes": [
+      "Import CommonModule in your feature module's imports array",
+      "For standalone components, add CommonModule to the component's imports",
+      "Check that BrowserModule is only imported in AppModule — use CommonModule elsewhere"
+    ],
+    "tags": ["template", "directives", "commonmodule"]
+  },
+  {
+    "id": "ng-010",
+    "regex": "Error: NG05(04|05).*skip hydration",
+    "language": "angular",
+    "title": "Angular SSR hydration node mismatch",
+    "fixes": [
+      "Add `ngSkipHydration` to dynamic content containers that change between server and client",
+      "Wrap browser-only rendering in `@if (isBrowser)` using isPlatformBrowser check",
+      "Defer third-party scripts and DOM manipulations to afterNextRender()"
+    ],
+    "tags": ["ssr", "hydration", "universal"]
+  },
+  {
+    "id": "next-001",
+    "regex": "Hydration failed because the initial UI does not match|Text content does not match server-rendered HTML",
+    "language": "nextjs",
+    "title": "Next.js hydration mismatch",
+    "fixes": [
+      "Avoid using Date.now(), Math.random(), or browser APIs (window, localStorage) during initial render",
+      "Use `useEffect` + state to render browser-dependent content only on client",
+      "Suppress hydration warnings with `suppressHydrationWarning` on specific elements (use sparingly)"
+    ],
+    "tags": ["ssr", "hydration", "rendering"]
+  },
+  {
+    "id": "next-002",
+    "regex": "ReferenceError: window is not defined|ReferenceError: document is not defined",
+    "language": "nextjs",
+    "title": "window/document not defined in SSR",
+    "fixes": [
+      "Wrap browser-only code in `if (typeof window !== 'undefined')` check",
+      "Use dynamic import with `{ ssr: false }`: `dynamic(() => import('./Component'), { ssr: false })`",
+      "Move browser-only logic into useEffect which only runs on client"
+    ],
+    "tags": ["ssr", "browser-api", "dynamic-import"]
+  },
+  {
+    "id": "next-003",
+    "regex": "You're importing a component that needs .+\\. It only works in a Client Component",
+    "language": "nextjs",
+    "title": "Client component feature used in server component",
+    "fixes": [
+      "Add `'use client'` directive at the top of the file that uses hooks, event handlers, or browser APIs",
+      "Extract the interactive parts into a separate client component and import it",
+      "Keep data fetching in the server component, pass data as props to client component"
+    ],
+    "tags": ["app-router", "server-components", "use-client"]
+  },
+  {
+    "id": "next-004",
+    "regex": "Error: Cannot use (useState|useEffect|useRef|useContext) in a Server Component",
+    "language": "nextjs",
+    "title": "React hook used in server component",
+    "fixes": [
+      "Add `'use client'` at the top of the file",
+      "Split into a server component (data fetching) and client component (interactivity)",
+      "If only needed for initial data, use server-side patterns (fetch in server component, pass as props)"
+    ],
+    "tags": ["app-router", "server-components", "hooks"]
+  },
+  {
+    "id": "next-005",
+    "regex": "Dynamic server usage.*couldn't be rendered statically",
+    "language": "nextjs",
+    "title": "Dynamic server usage prevents static rendering",
+    "fixes": [
+      "Add `export const dynamic = 'force-dynamic'` to opt into dynamic rendering",
+      "Use `unstable_noStore()` or `noStore()` in the data-fetching function",
+      "Wrap dynamic content in Suspense boundaries to allow partial static rendering"
+    ],
+    "tags": ["app-router", "static-generation", "dynamic"]
+  },
+  {
+    "id": "next-006",
+    "regex": "Error occurred prerendering page|getStaticProps.*failed",
+    "language": "nextjs",
+    "title": "Static generation / prerendering failure",
+    "fixes": [
+      "Ensure all data fetches in getStaticProps/generateStaticParams handle errors gracefully",
+      "Add `fallback: 'blocking'` or `dynamicParams: true` for pages with unknown params at build time",
+      "Check that environment variables are available at build time (not just runtime)"
+    ],
+    "tags": ["static-generation", "build", "getStaticProps"]
+  },
+  {
+    "id": "next-007",
+    "regex": "Invalid src prop.*hostname .+ is not configured under images in.*next\\.config",
+    "language": "nextjs",
+    "title": "Next/Image hostname not configured",
+    "fixes": [
+      "Add the image hostname to `images.remotePatterns` in next.config.js",
+      "Use `images: { remotePatterns: [{ protocol: 'https', hostname: 'example.com' }] }`",
+      "For local images, import them directly: `import img from './image.png'`"
+    ],
+    "tags": ["image-optimization", "config", "next-image"]
+  },
+  {
+    "id": "next-008",
+    "regex": "API resolved without sending a response.*API Route",
+    "language": "nextjs",
+    "title": "API route resolved without sending response",
+    "fixes": [
+      "Ensure every code path in the API handler calls `res.status().json()` or `res.end()`",
+      "Await all async operations before the handler function completes",
+      "Add `export const config = { api: { externalResolver: true } }` if handled by external middleware"
+    ],
+    "tags": ["api-routes", "async", "response"]
+  },
+  {
+    "id": "docker-001",
+    "regex": "Bind for 0\\.0\\.0\\.0:\\d+ failed: port is already allocated",
+    "language": "docker",
+    "title": "Port already allocated",
+    "fixes": [
+      "Stop the container or process using the port: `docker ps` then `docker stop <id>`",
+      "Find what's using the port: `netstat -tlnp | grep <port>` or `lsof -i :<port>`",
+      "Map to a different host port: `-p 8081:80` instead of `-p 8080:80`"
+    ],
+    "tags": ["networking", "port-conflict", "run"]
+  },
+  {
+    "id": "docker-002",
+    "regex": "pull access denied.*repository does not exist or may require.*docker login",
+    "language": "docker",
+    "title": "Image not found / pull access denied",
+    "fixes": [
+      "Check the image name and tag for typos — verify it exists on the registry",
+      "Run `docker login` to authenticate with the private registry",
+      "Ensure the image is public or your credentials have read access to the repository"
+    ],
+    "tags": ["registry", "authentication", "pull"]
+  },
+  {
+    "id": "docker-003",
+    "regex": "permission denied while trying to connect to the Docker daemon socket",
+    "language": "docker",
+    "title": "Docker daemon permission denied",
+    "fixes": [
+      "Add your user to the docker group: `sudo usermod -aG docker $USER` then re-login",
+      "Run with sudo: `sudo docker ...` (not recommended for production)",
+      "Check Docker Desktop is running (macOS/Windows)"
+    ],
+    "tags": ["permissions", "daemon", "setup"]
+  },
+  {
+    "id": "docker-004",
+    "regex": "COPY failed:.*not found|file not found in build context",
+    "language": "docker",
+    "title": "COPY failed — file not found in build context",
+    "fixes": [
+      "Ensure the file path is relative to the build context (the directory passed to `docker build`)",
+      "Check .dockerignore isn't excluding the file you're trying to COPY",
+      "Verify the file exists and the path is case-sensitive (Linux containers are case-sensitive)"
+    ],
+    "tags": ["dockerfile", "build", "copy"]
+  },
+  {
+    "id": "docker-005",
+    "regex": "COPY --from=.+.*not found|invalid from flag value",
+    "language": "docker",
+    "title": "Multi-stage COPY --from failed",
+    "fixes": [
+      "Ensure the stage name matches: `FROM node:18 AS builder` then `COPY --from=builder`",
+      "Check the source path exists in the builder stage after its RUN commands complete",
+      "Verify stage ordering — you can only COPY from stages defined earlier in the Dockerfile"
+    ],
+    "tags": ["dockerfile", "multi-stage", "build"]
+  },
+  {
+    "id": "docker-006",
+    "regex": "dial tcp.*connect: connection refused|Could not resolve host|network .+ not found",
+    "language": "docker",
+    "title": "Docker network / connection issues",
+    "fixes": [
+      "Use service names (not localhost) for inter-container communication in docker-compose",
+      "Ensure containers are on the same Docker network: `docker network connect <network> <container>`",
+      "Check the target service is running and listening on the expected port inside the container"
+    ],
+    "tags": ["networking", "compose", "connectivity"]
+  },
+  {
+    "id": "docker-007",
+    "regex": "Error response from daemon.*Mounts denied|error while creating mount source path",
+    "language": "docker",
+    "title": "Volume mount denied / path error",
+    "fixes": [
+      "On Docker Desktop, add the path to Settings → Resources → File Sharing",
+      "Use absolute paths for volume mounts: `-v /full/path:/container/path`",
+      "On Windows, ensure the drive is shared in Docker Desktop settings and use //c/ format in Git Bash"
+    ],
+    "tags": ["volumes", "permissions", "mount"]
+  },
+  {
+    "id": "git-001",
+    "regex": "CONFLICT \\(content\\): Merge conflict in (.+)",
+    "language": "git",
+    "title": "Merge conflict",
+    "fixes": [
+      "Open conflicted files, resolve the <<<<<<< / ======= / >>>>>>> markers, then `git add` and `git commit`",
+      "Use a merge tool: `git mergetool` (configure with `git config merge.tool <tool>`)",
+      "To abort: `git merge --abort` to return to pre-merge state"
+    ],
+    "tags": ["merge", "conflict-resolution"]
+  },
+  {
+    "id": "git-002",
+    "regex": "You are in 'detached HEAD' state",
+    "language": "git",
+    "title": "Detached HEAD state",
+    "fixes": [
+      "Create a branch to keep your work: `git checkout -b my-branch`",
+      "Return to a branch: `git checkout main` (commits in detached HEAD may be lost without a branch)",
+      "If you already made commits, note the SHA and cherry-pick onto a branch: `git cherry-pick <sha>`"
+    ],
+    "tags": ["head", "branches", "checkout"]
+  },
+  {
+    "id": "git-003",
+    "regex": "\\! \\[rejected\\].*\\(fetch first\\)|failed to push some refs.*Updates were rejected",
+    "language": "git",
+    "title": "Push rejected — remote has new commits",
+    "fixes": [
+      "Pull and rebase: `git pull --rebase origin <branch>` then push again",
+      "Pull and merge: `git pull origin <branch>` then resolve conflicts and push",
+      "Force push only if you own the branch and understand the consequences: `git push --force-with-lease`"
+    ],
+    "tags": ["push", "remote", "rejected"]
+  },
+  {
+    "id": "git-004",
+    "regex": "CONFLICT.*could not apply|error: could not apply",
+    "language": "git",
+    "title": "Rebase conflict",
+    "fixes": [
+      "Resolve conflicts in the listed files, then `git add .` and `git rebase --continue`",
+      "Skip the problematic commit: `git rebase --skip` (loses that commit's changes)",
+      "Abort the rebase entirely: `git rebase --abort` to return to original state"
+    ],
+    "tags": ["rebase", "conflict-resolution"]
+  },
+  {
+    "id": "git-005",
+    "regex": "CONFLICT.*in.*stash|error:.*could not apply.*stash",
+    "language": "git",
+    "title": "Stash apply conflict",
+    "fixes": [
+      "Resolve the conflicts manually, then `git add .` — the stash remains in the list for safety",
+      "Drop the stash after resolving: `git stash drop stash@{0}`",
+      "Try applying to a clean branch: `git checkout -b temp-branch` then `git stash pop`"
+    ],
+    "tags": ["stash", "conflict-resolution"]
+  },
+  {
+    "id": "git-006",
+    "regex": "Permission denied \\(publickey\\)|Could not read from remote repository",
+    "language": "git",
+    "title": "SSH permission denied",
+    "fixes": [
+      "Check your SSH key is added to the agent: `ssh-add -l` — if empty, run `ssh-add ~/.ssh/id_ed25519`",
+      "Verify the key is added to your Git hosting account (GitHub/GitLab/Bitbucket Settings → SSH Keys)",
+      "Test connection: `ssh -T git@github.com` — if it fails, regenerate key: `ssh-keygen -t ed25519`"
+    ],
+    "tags": ["ssh", "authentication", "remote"]
+  },
+  {
+    "id": "git-007",
+    "regex": "git-lfs.*smudge.*error|batch response.*Git LFS",
+    "language": "git",
+    "title": "Git LFS smudge/download error",
+    "fixes": [
+      "Run `git lfs install` to ensure LFS hooks are set up",
+      "Fetch LFS objects: `git lfs pull` or `git lfs fetch --all`",
+      "Check LFS server access and storage quota — authenticate with `git lfs env` to verify endpoint"
+    ],
+    "tags": ["lfs", "large-files", "fetch"]
+  },
+  {
+    "id": "git-008",
+    "regex": "fatal: No url found for submodule path|Submodule.*registered for path.*not found",
+    "language": "git",
+    "title": "Submodule initialization failure",
+    "fixes": [
+      "Initialize submodules: `git submodule init && git submodule update --recursive`",
+      "Re-clone with submodules: `git clone --recurse-submodules <url>`",
+      "If URL changed, update .gitmodules then run `git submodule sync && git submodule update --init`"
+    ],
+    "tags": ["submodules", "init", "clone"]
+  },
+  {
+    "id": "git-009",
+    "regex": "fatal: Need to specify how to reconcile divergent branches",
+    "language": "git",
+    "title": "Divergent branches — no reconciliation strategy",
+    "fixes": [
+      "Set default pull strategy: `git config pull.rebase true` (rebase) or `git config pull.ff only` (fast-forward only)",
+      "One-time fix: `git pull --rebase origin <branch>` or `git pull --no-rebase origin <branch>`",
+      "Set globally: `git config --global pull.rebase true`"
+    ],
+    "tags": ["pull", "divergent", "config"]
+  },
+  {
+    "id": "git-010",
+    "regex": "fatal: bad default revision 'HEAD'|reflog.*not found|HEAD is now at",
+    "language": "git",
+    "title": "Lost commits — reflog recovery",
+    "fixes": [
+      "Find the lost commit SHA: `git reflog` shows all recent HEAD movements",
+      "Restore with: `git checkout <sha>` then `git checkout -b recovery-branch`",
+      "Reset to it: `git reset --hard <sha>` (if on the correct branch and sure about losing current state)"
+    ],
+    "tags": ["reflog", "recovery", "reset"]
+  }
+]

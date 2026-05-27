@@ -1,0 +1,362 @@
+[
+  {
+    "id": "sql-001",
+    "regex": "connection refused|ECONNREFUSED|could not connect to server",
+    "language": "sql",
+    "title": "Database Connection Refused",
+    "fixes": [
+      "Verify the database server is running: `systemctl status postgresql` or `docker ps`",
+      "Check host and port in your connection string — default PostgreSQL is 5432, MySQL is 3306",
+      "Ensure firewall/security group allows inbound traffic on the database port"
+    ],
+    "tags": ["connection", "network", "postgresql", "mysql"]
+  },
+  {
+    "id": "sql-002",
+    "regex": "statement timeout|query timeout|wait_timeout exceeded|Lock wait timeout exceeded",
+    "language": "sql",
+    "title": "Database Query Timeout",
+    "fixes": [
+      "Add indexes on columns used in WHERE, JOIN, and ORDER BY clauses",
+      "Increase timeout setting: `SET statement_timeout = '60s'` (PostgreSQL) or `SET wait_timeout=28800` (MySQL)",
+      "Optimize the query — check execution plan with EXPLAIN ANALYZE and eliminate full table scans"
+    ],
+    "tags": ["timeout", "performance", "query"]
+  },
+  {
+    "id": "sql-003",
+    "regex": "deadlock detected|Deadlock found when trying to get lock|was deadlocked on lock resources",
+    "language": "sql",
+    "title": "Database Deadlock Detected",
+    "fixes": [
+      "Access tables in a consistent order across all transactions to prevent circular waits",
+      "Keep transactions short — move non-DB work outside the transaction block",
+      "Add retry logic with exponential backoff for deadlock-prone operations"
+    ],
+    "tags": ["deadlock", "concurrency", "transactions"]
+  },
+  {
+    "id": "sql-004",
+    "regex": "unique constraint|duplicate key value violates unique|Duplicate entry .* for key",
+    "language": "sql",
+    "title": "Unique Constraint Violation",
+    "fixes": [
+      "Use `INSERT ... ON CONFLICT DO UPDATE` (PostgreSQL) or `INSERT ... ON DUPLICATE KEY UPDATE` (MySQL)",
+      "Check for race conditions — add application-level deduplication before inserting",
+      "Verify your unique constraint is correct — you may need a composite unique index instead"
+    ],
+    "tags": ["constraint", "duplicate", "insert"]
+  },
+  {
+    "id": "sql-005",
+    "regex": "foreign key constraint|violates foreign key|Cannot add or update a child row.*foreign key",
+    "language": "sql",
+    "title": "Foreign Key Constraint Violation",
+    "fixes": [
+      "Insert the parent record before the child record — ensure referenced row exists",
+      "When deleting, use CASCADE or delete child records first",
+      "Check that the referenced column value is correct and not NULL when the FK is NOT NULL"
+    ],
+    "tags": ["constraint", "foreign-key", "referential-integrity"]
+  },
+  {
+    "id": "sql-006",
+    "regex": "syntax error at or near|You have an error in your SQL syntax.*near",
+    "language": "sql",
+    "title": "SQL Syntax Error",
+    "fixes": [
+      "Check for missing commas, unmatched quotes, or reserved words used as identifiers (wrap in double quotes or backticks)",
+      "Verify SQL dialect — PostgreSQL, MySQL, and SQL Server have different syntax for LIMIT, string concat, etc.",
+      "Use a SQL linter or formatter to pinpoint the exact position of the error"
+    ],
+    "tags": ["syntax", "parsing", "sql"]
+  },
+  {
+    "id": "sql-007",
+    "regex": "relation .* does not exist|Table .* doesn't exist|Invalid object name",
+    "language": "sql",
+    "title": "Table or Relation Not Found",
+    "fixes": [
+      "Check the schema/database context — use `SET search_path TO myschema` or fully qualify: `schema.table`",
+      "Run pending migrations: `npx prisma migrate deploy` or `alembic upgrade head`",
+      "Verify table name casing — PostgreSQL lowercases unquoted identifiers"
+    ],
+    "tags": ["table", "schema", "migration"]
+  },
+  {
+    "id": "sql-008",
+    "regex": "column reference .* is ambiguous|ambiguous column name",
+    "language": "sql",
+    "title": "Ambiguous Column Reference",
+    "fixes": [
+      "Prefix the column with the table name or alias: `SELECT t1.id, t2.id FROM table1 t1 JOIN table2 t2`",
+      "Use explicit column lists instead of SELECT * in JOINs",
+      "Alias columns in subqueries to avoid name collisions with outer queries"
+    ],
+    "tags": ["ambiguous", "join", "column"]
+  },
+  {
+    "id": "sql-009",
+    "regex": "too many connections|max_connections|Connection pool exhausted",
+    "language": "sql",
+    "title": "Too Many Database Connections",
+    "fixes": [
+      "Use a connection pooler like PgBouncer (PostgreSQL) or ProxySQL (MySQL) in front of the database",
+      "Ensure your app properly closes/releases connections — check for connection leaks in error paths",
+      "Increase `max_connections` in database config or reduce pool size per application instance"
+    ],
+    "tags": ["connections", "pool", "resources"]
+  },
+  {
+    "id": "sql-010",
+    "regex": "migration failed|migrate.*error|Migration .* was not applied|MigrationError",
+    "language": "sql",
+    "title": "Database Migration Failed",
+    "fixes": [
+      "Check if a previous partial migration left the DB in a dirty state — manually fix and mark as applied",
+      "Run `prisma migrate resolve` or manually update the migrations table to mark the failed migration",
+      "Ensure no other process holds a lock on the migration table — check for active advisory locks"
+    ],
+    "tags": ["migration", "schema", "deploy"]
+  },
+  {
+    "id": "aws-001",
+    "regex": "AccessDenied|Access Denied|not authorized to perform|UnauthorizedAccess",
+    "language": "aws",
+    "title": "AWS Access Denied",
+    "fixes": [
+      "Check IAM policy — use `aws sts get-caller-identity` to verify which role/user is being used",
+      "Add the required permission to the IAM policy and wait 1-2 minutes for propagation",
+      "Check for explicit Deny statements in SCPs, permission boundaries, or resource-based policies"
+    ],
+    "tags": ["iam", "permissions", "auth"]
+  },
+  {
+    "id": "aws-002",
+    "regex": "Missing region|could not determine region|Region .* not set|must specify a region",
+    "language": "aws",
+    "title": "AWS Region Not Configured",
+    "fixes": [
+      "Set the region via environment variable: `export AWS_DEFAULT_REGION=us-east-1`",
+      "Add region to your AWS config: `aws configure set region us-east-1`",
+      "Pass region explicitly in SDK client constructor: `new S3Client({ region: 'us-east-1' })`"
+    ],
+    "tags": ["region", "config", "sdk"]
+  },
+  {
+    "id": "aws-003",
+    "regex": "Unable to locate credentials|NoCredentialProviders|credential.*not found|ExpiredTokenException",
+    "language": "aws",
+    "title": "AWS Credentials Not Found or Expired",
+    "fixes": [
+      "Run `aws configure` to set up credentials or check `~/.aws/credentials` file exists",
+      "If using SSO, run `aws sso login --profile your-profile` to refresh the session",
+      "For EC2/Lambda, ensure the instance profile or execution role is attached correctly"
+    ],
+    "tags": ["credentials", "auth", "iam"]
+  },
+  {
+    "id": "aws-004",
+    "regex": "NoSuchBucket|The specified bucket does not exist|bucket.*not found",
+    "language": "aws",
+    "title": "S3 Bucket Not Found",
+    "fixes": [
+      "Verify the bucket name — S3 names are globally unique and case-sensitive (must be lowercase)",
+      "Check you're using the correct AWS account and region for the bucket",
+      "List your buckets with `aws s3 ls` to confirm the exact name — typos are common"
+    ],
+    "tags": ["s3", "bucket", "storage"]
+  },
+  {
+    "id": "aws-005",
+    "regex": "Task timed out after|Lambda.*timeout|execution timed out",
+    "language": "aws",
+    "title": "AWS Lambda Timeout",
+    "fixes": [
+      "Increase the timeout setting in the Lambda configuration (max 900 seconds)",
+      "Optimize cold start — reduce package size, use provisioned concurrency, or use ARM architecture",
+      "Move long-running work to Step Functions, SQS + worker, or ECS tasks instead"
+    ],
+    "tags": ["lambda", "timeout", "serverless"]
+  },
+  {
+    "id": "linux-001",
+    "regex": "Permission denied|EACCES|Operation not permitted",
+    "language": "linux",
+    "title": "Permission Denied",
+    "fixes": [
+      "Check file permissions with `ls -la` — fix with `chmod 644 file` or `chmod 755 dir`",
+      "Run with `sudo` if root access is required, or change file ownership with `chown user:group file`",
+      "For scripts, ensure the execute bit is set: `chmod +x script.sh`"
+    ],
+    "tags": ["permissions", "filesystem", "chmod"]
+  },
+  {
+    "id": "linux-002",
+    "regex": "command not found|not recognized as.*command",
+    "language": "linux",
+    "title": "Command Not Found",
+    "fixes": [
+      "Install the missing package: `apt install <package>` or `yum install <package>`",
+      "Check if the binary is in your PATH: `echo $PATH` — add it with `export PATH=$PATH:/new/path`",
+      "For Node/Python CLIs, ensure global install: `npm install -g <pkg>` or `pip install <pkg>`"
+    ],
+    "tags": ["path", "install", "shell"]
+  },
+  {
+    "id": "linux-003",
+    "regex": "No space left on device|ENOSPC|disk full",
+    "language": "linux",
+    "title": "No Space Left on Device",
+    "fixes": [
+      "Find large files: `du -sh /* | sort -rh | head -20` and clean up logs, temp files, or old Docker images",
+      "Clear package cache: `apt clean` or `docker system prune -a` to reclaim space",
+      "Check inode usage with `df -i` — you may have many small files exhausting inodes, not disk space"
+    ],
+    "tags": ["disk", "storage", "cleanup"]
+  },
+  {
+    "id": "linux-004",
+    "regex": "Too many open files|EMFILE|ulimit",
+    "language": "linux",
+    "title": "Too Many Open Files",
+    "fixes": [
+      "Increase the limit: `ulimit -n 65536` for the current session",
+      "Permanently increase in `/etc/security/limits.conf`: `* soft nofile 65536` and `* hard nofile 65536`",
+      "Find the leaking process: `ls /proc/<pid>/fd | wc -l` — fix file descriptor leaks in your application"
+    ],
+    "tags": ["ulimit", "file-descriptors", "resources"]
+  },
+  {
+    "id": "linux-005",
+    "regex": "Segmentation fault|segfault|SIGSEGV|core dumped",
+    "language": "linux",
+    "title": "Segmentation Fault (Core Dumped)",
+    "fixes": [
+      "Enable core dumps (`ulimit -c unlimited`) and analyze with `gdb ./program core` to find the crash location",
+      "Run with AddressSanitizer: compile with `-fsanitize=address` to detect memory errors",
+      "Check for null pointer dereference, buffer overflow, or use-after-free — common in C/C++ extensions"
+    ],
+    "tags": ["crash", "memory", "debugging"]
+  },
+  {
+    "id": "css-001",
+    "regex": "z-index.*not working|z-index has no effect|stacking context",
+    "language": "css",
+    "title": "z-index Not Working",
+    "fixes": [
+      "z-index only works on positioned elements — add `position: relative`, `absolute`, or `fixed`",
+      "Check for stacking context created by parent elements (opacity < 1, transform, filter, will-change)",
+      "Inspect with DevTools 3D view — the element may be in a lower stacking context regardless of z-index value"
+    ],
+    "tags": ["z-index", "stacking-context", "layout"]
+  },
+  {
+    "id": "css-002",
+    "regex": "flex.*overflow|flex item.*overflow|text overflow.*flex|flex-shrink",
+    "language": "css",
+    "title": "Flexbox Content Overflow",
+    "fixes": [
+      "Add `min-width: 0` to the flex item — flex items default to `min-width: auto` which prevents shrinking below content size",
+      "For text overflow, add `overflow: hidden; text-overflow: ellipsis; white-space: nowrap` on the flex child",
+      "Use `overflow: auto` on the flex container or child that should scroll instead of overflowing"
+    ],
+    "tags": ["flexbox", "overflow", "layout"]
+  },
+  {
+    "id": "css-003",
+    "regex": "position.*sticky.*not working|sticky.*no effect|sticky.*scroll",
+    "language": "css",
+    "title": "position: sticky Not Working",
+    "fixes": [
+      "Ensure a threshold is set: `top: 0` (or left/right/bottom) — sticky won't work without it",
+      "Check that no ancestor has `overflow: hidden`, `overflow: auto`, or `overflow: scroll` — this breaks sticky",
+      "The sticky element's container must be tall enough to allow scrolling — sticky only works within its parent bounds"
+    ],
+    "tags": ["sticky", "position", "scroll"]
+  },
+  {
+    "id": "css-004",
+    "regex": "@import must.*first|@import.*after|@import.*ignored|@import not at top",
+    "language": "css",
+    "title": "@import Must Precede All Other Rules",
+    "fixes": [
+      "Move all @import statements to the very top of the CSS file, before any other rules or @charset",
+      "In SCSS/Sass, use @use instead of @import — it's order-independent and avoids this issue",
+      "If using PostCSS, use `postcss-import` plugin which inlines imports at build time regardless of position"
+    ],
+    "tags": ["import", "css-order", "sass"]
+  },
+  {
+    "id": "css-005",
+    "regex": "Undefined variable|undefined.*\\$|variable.*not found|SassError.*Undefined",
+    "language": "css",
+    "title": "SCSS/Sass Variable Undefined",
+    "fixes": [
+      "Ensure the file defining the variable is imported before usage: `@use 'variables' as *` or `@import 'variables'`",
+      "Check for typos in variable name — SCSS variables are case-sensitive: `$myColor` ≠ `$mycolor`",
+      "If using @use, access with namespace: `variables.$color-primary` instead of bare `$color-primary`"
+    ],
+    "tags": ["scss", "variables", "preprocessor"]
+  },
+  {
+    "id": "http-001",
+    "regex": "404 Not Found|Cannot (GET|POST|PUT|DELETE)|Route not found",
+    "language": "http",
+    "title": "404 Not Found — Debugging",
+    "fixes": [
+      "Verify the URL path, method, and trailing slash — `/api/users` vs `/api/users/` may route differently",
+      "Check that the route is registered — look for typos in route decorator or router config",
+      "For SPAs, ensure the server has a fallback route that serves index.html for client-side routes"
+    ],
+    "tags": ["404", "routing", "api"]
+  },
+  {
+    "id": "http-002",
+    "regex": "500 Internal Server Error|InternalServerError|server error",
+    "language": "http",
+    "title": "500 Internal Server Error",
+    "fixes": [
+      "Check server logs for the full stack trace — the 500 response usually hides the real error",
+      "Common causes: unhandled null reference, database connection failure, or missing environment variable",
+      "Add global error handling middleware that logs the error and returns a structured error response"
+    ],
+    "tags": ["500", "server", "debugging"]
+  },
+  {
+    "id": "http-003",
+    "regex": "403 Forbidden|forbidden|insufficient permissions",
+    "language": "http",
+    "title": "403 Forbidden",
+    "fixes": [
+      "Check authentication token is valid and not expired — inspect the JWT payload at jwt.io",
+      "Verify the user/role has the required permission for this endpoint in your authorization logic",
+      "Check CSRF token — if using session auth, ensure the CSRF token header is included in the request"
+    ],
+    "tags": ["403", "auth", "permissions"]
+  },
+  {
+    "id": "http-004",
+    "regex": "CORS|cross-origin|Access-Control-Allow-Origin|preflight|OPTIONS",
+    "language": "http",
+    "title": "CORS Preflight Failure",
+    "fixes": [
+      "Add CORS headers on the server: `Access-Control-Allow-Origin`, `Access-Control-Allow-Methods`, `Access-Control-Allow-Headers`",
+      "Ensure the server responds to OPTIONS preflight requests with 200/204 and the correct CORS headers",
+      "For credentials (cookies/auth), set `Access-Control-Allow-Credentials: true` and specify the exact origin (not `*`)"
+    ],
+    "tags": ["cors", "preflight", "cross-origin"]
+  },
+  {
+    "id": "http-005",
+    "regex": "429 Too Many Requests|rate limit|throttl|RateLimitExceeded",
+    "language": "http",
+    "title": "429 Too Many Requests (Rate Limited)",
+    "fixes": [
+      "Implement exponential backoff with jitter — wait 2^attempt * random(0.5, 1.5) seconds before retrying",
+      "Check the `Retry-After` response header for how long to wait before the next request",
+      "Reduce request frequency — use caching, batch endpoints, or webhooks instead of polling"
+    ],
+    "tags": ["rate-limit", "throttling", "retry"]
+  }
+]

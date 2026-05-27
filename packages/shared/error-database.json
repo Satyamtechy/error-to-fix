@@ -1,0 +1,112 @@
+[
+  {
+    "pattern": "Cannot read propert(y|ies) of (undefined|null)",
+    "title": "Accessing property on undefined/null",
+    "lang": "javascript",
+    "fixes": [
+      "Use optional chaining: obj?.property?.method()",
+      "Add null check: if (obj != null) { ... }",
+      "Provide default value: const items = data?.items ?? []"
+    ],
+    "source": "https://stackoverflow.com/q/14782232"
+  },
+  {
+    "pattern": "is not a function",
+    "title": "Calling a non-function value",
+    "lang": "javascript",
+    "fixes": [
+      "Check the variable type before calling: typeof fn === 'function' && fn()",
+      "Verify the import/require path is correct",
+      "Ensure the method exists on the object prototype"
+    ],
+    "source": "https://stackoverflow.com/q/6846723"
+  },
+  {
+    "pattern": "ENOENT.*no such file or directory",
+    "title": "File or directory not found",
+    "lang": "node",
+    "fixes": [
+      "Verify the path exists: fs.existsSync(path)",
+      "Use path.resolve() for absolute paths",
+      "Create parent directories: fs.mkdirSync(dir, { recursive: true })"
+    ],
+    "source": "https://stackoverflow.com/q/17575790"
+  },
+  {
+    "pattern": "Module not found|Cannot find module",
+    "title": "Module resolution failure",
+    "lang": "node",
+    "fixes": [
+      "Run npm install to ensure dependencies are installed",
+      "Check package.json for the missing dependency",
+      "Verify the import path and file extension"
+    ],
+    "source": "https://stackoverflow.com/q/9023672"
+  },
+  {
+    "pattern": "EADDRINUSE.*address already in use",
+    "title": "Port already in use",
+    "lang": "node",
+    "fixes": [
+      "Kill the process using the port: lsof -ti:PORT | xargs kill",
+      "Use a different port number",
+      "Set SO_REUSEADDR option on the server socket"
+    ],
+    "source": "https://stackoverflow.com/q/4075287"
+  },
+  {
+    "pattern": "SyntaxError.*Unexpected token",
+    "title": "Unexpected token in parsing",
+    "lang": "javascript",
+    "fixes": [
+      "Check for missing commas, brackets, or parentheses",
+      "Ensure JSON.parse() input is valid JSON",
+      "Verify the file encoding is UTF-8"
+    ],
+    "source": "https://stackoverflow.com/q/12531024"
+  },
+  {
+    "pattern": "TypeError.*assignment to (constant|const) variable",
+    "title": "Assignment to const variable",
+    "lang": "javascript",
+    "fixes": [
+      "Use let instead of const if the value needs to change",
+      "Create a new variable for the modified value",
+      "Use object mutation instead: obj.prop = value (if const object)"
+    ],
+    "source": "https://stackoverflow.com/q/23436437"
+  },
+  {
+    "pattern": "RangeError.*Maximum call stack size exceeded",
+    "title": "Stack overflow from infinite recursion",
+    "lang": "javascript",
+    "fixes": [
+      "Add a base case to recursive functions",
+      "Convert recursion to iteration with a loop",
+      "Check for circular references in objects"
+    ],
+    "source": "https://stackoverflow.com/q/6095530"
+  },
+  {
+    "pattern": "TS2322.*Type.*is not assignable to type",
+    "title": "TypeScript type mismatch",
+    "lang": "typescript",
+    "fixes": [
+      "Use a type assertion: value as ExpectedType",
+      "Fix the source type to match the target",
+      "Use a union type if multiple types are valid"
+    ],
+    "source": "https://stackoverflow.com/q/37978528"
+  },
+  {
+    "pattern": "CORS|Access-Control-Allow-Origin",
+    "title": "CORS policy blocked request",
+    "lang": "javascript",
+    "fixes": [
+      "Add CORS headers on the server: Access-Control-Allow-Origin",
+      "Use a proxy in development (e.g., Vite/webpack proxy)",
+      "Ensure preflight OPTIONS requests are handled"
+    ],
+    "source": "https://stackoverflow.com/q/21854516"
+  }
+]

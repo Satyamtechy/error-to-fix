@@ -1,0 +1,482 @@
+[
+  {
+    "id": "py-001",
+    "regex": "TypeError: unsupported operand type\\(s\\) for (.+): '(.+)' and '(.+)'",
+    "language": "python",
+    "title": "Unsupported operand types",
+    "fixes": [
+      "Cast operands to compatible types (e.g., int(x) + int(y))",
+      "Check that variables hold the expected types before the operation",
+      "Use str() to concatenate strings with numbers: str(num) + text"
+    ],
+    "tags": ["TypeError", "operand", "type-mismatch"]
+  },
+  {
+    "id": "py-002",
+    "regex": "TypeError: '(.+)' object is not callable",
+    "language": "python",
+    "title": "Object is not callable",
+    "fixes": [
+      "Remove parentheses if you're accessing a property, not calling a function",
+      "Check if you accidentally shadowed a built-in function (e.g., list = [1,2])",
+      "Ensure the variable hasn't been reassigned from a function to a value"
+    ],
+    "tags": ["TypeError", "not-callable", "shadowing"]
+  },
+  {
+    "id": "py-003",
+    "regex": "TypeError: unhashable type: '(.+)'",
+    "language": "python",
+    "title": "Unhashable type used as dict key or in set",
+    "fixes": [
+      "Convert list to tuple before using as a dict key or set element",
+      "Use frozenset() instead of set() for hashable set keys",
+      "Check that you're not accidentally passing a mutable object where an immutable one is needed"
+    ],
+    "tags": ["TypeError", "unhashable", "dict", "set"]
+  },
+  {
+    "id": "py-004",
+    "regex": "TypeError: (.+) expected (.+), got (.+)",
+    "language": "python",
+    "title": "Wrong type passed to function",
+    "fixes": [
+      "Cast the argument to the expected type (e.g., int(), str(), bytes())",
+      "Check function signature for expected parameter types",
+      "Verify the variable hasn't been reassigned to a different type upstream"
+    ],
+    "tags": ["TypeError", "type-mismatch", "argument"]
+  },
+  {
+    "id": "py-005",
+    "regex": "TypeError: (.+) takes (\\d+) positional arguments? but (\\d+) (?:was|were) given",
+    "language": "python",
+    "title": "Wrong number of arguments",
+    "fixes": [
+      "Check function definition for the correct number of parameters",
+      "Add 'self' as the first parameter if this is an instance method",
+      "Use *args or **kwargs if the function should accept variable arguments"
+    ],
+    "tags": ["TypeError", "arguments", "function-call"]
+  },
+  {
+    "id": "py-006",
+    "regex": "TypeError: cannot unpack non-iterable (.+) object",
+    "language": "python",
+    "title": "Cannot unpack non-iterable object",
+    "fixes": [
+      "Ensure the function returns a tuple/list before unpacking (a, b = func())",
+      "Check that the right-hand side is iterable",
+      "Verify the function doesn't return None in some code paths"
+    ],
+    "tags": ["TypeError", "unpacking", "iterable"]
+  },
+  {
+    "id": "py-007",
+    "regex": "AttributeError: '(.+)' object has no attribute '(.+)'",
+    "language": "python",
+    "title": "Object has no attribute",
+    "fixes": [
+      "Check for typos in the attribute/method name",
+      "Verify the object is the type you expect (print(type(obj)))",
+      "Ensure the attribute is defined in __init__ or at class level"
+    ],
+    "tags": ["AttributeError", "attribute", "typo"]
+  },
+  {
+    "id": "py-008",
+    "regex": "AttributeError: 'NoneType' object has no attribute '(.+)'",
+    "language": "python",
+    "title": "NoneType has no attribute",
+    "fixes": [
+      "A function returned None unexpectedly — check return statements",
+      "Add a None check before accessing the attribute: if obj is not None",
+      "Verify assignments — methods like list.sort() and list.append() return None"
+    ],
+    "tags": ["AttributeError", "NoneType", "null-reference"]
+  },
+  {
+    "id": "py-009",
+    "regex": "ModuleNotFoundError: No module named '(.+)'",
+    "language": "python",
+    "title": "Module not found",
+    "fixes": [
+      "Install the package: pip install <module_name>",
+      "Activate your virtual environment before running",
+      "Check for typos in the import statement or verify the package name on PyPI"
+    ],
+    "tags": ["ModuleNotFoundError", "import", "pip"]
+  },
+  {
+    "id": "py-010",
+    "regex": "ImportError: cannot import name '(.+)' from '(.+)'",
+    "language": "python",
+    "title": "Cannot import name from module",
+    "fixes": [
+      "Check for circular imports between modules",
+      "Verify the name exists in the target module (may have been renamed or removed)",
+      "Update the package — the name may have moved in a newer version"
+    ],
+    "tags": ["ImportError", "circular-import", "naming"]
+  },
+  {
+    "id": "py-011",
+    "regex": "IndentationError: unexpected indent",
+    "language": "python",
+    "title": "Unexpected indent",
+    "fixes": [
+      "Remove extra spaces/tabs at the beginning of the line",
+      "Ensure consistent indentation (all spaces or all tabs, not mixed)",
+      "Configure your editor to use 4 spaces per indent level"
+    ],
+    "tags": ["IndentationError", "whitespace", "formatting"]
+  },
+  {
+    "id": "py-012",
+    "regex": "IndentationError: expected an indented block",
+    "language": "python",
+    "title": "Expected an indented block",
+    "fixes": [
+      "Add a body to the if/for/def/class block (use 'pass' as placeholder)",
+      "Check that the line after a colon is properly indented",
+      "Remove empty blocks or add implementation"
+    ],
+    "tags": ["IndentationError", "block", "syntax"]
+  },
+  {
+    "id": "py-013",
+    "regex": "SyntaxError: invalid syntax",
+    "language": "python",
+    "title": "Invalid syntax",
+    "fixes": [
+      "Check the line above for a missing closing parenthesis, bracket, or quote",
+      "Ensure colons are present after if/for/while/def/class statements",
+      "Verify you're not using Python 3 syntax in a Python 2 environment or vice versa"
+    ],
+    "tags": ["SyntaxError", "syntax", "parsing"]
+  },
+  {
+    "id": "py-014",
+    "regex": "SyntaxError: unexpected EOF while parsing",
+    "language": "python",
+    "title": "Unexpected end of file",
+    "fixes": [
+      "Add a missing closing parenthesis, bracket, or brace",
+      "Ensure multi-line strings are properly closed with matching quotes",
+      "Check for incomplete function/class definitions at end of file"
+    ],
+    "tags": ["SyntaxError", "EOF", "brackets"]
+  },
+  {
+    "id": "py-015",
+    "regex": "SyntaxError: f-string: (.+)",
+    "language": "python",
+    "title": "f-string syntax error",
+    "fixes": [
+      "Escape braces in f-strings with double braces: {{ and }}",
+      "Don't use backslashes inside f-string expressions — assign to a variable first",
+      "Ensure Python version is 3.6+ for f-string support"
+    ],
+    "tags": ["SyntaxError", "f-string", "formatting"]
+  },
+  {
+    "id": "py-016",
+    "regex": "ValueError: invalid literal for int\\(\\) with base (\\d+): '(.+)'",
+    "language": "python",
+    "title": "Invalid literal for int()",
+    "fixes": [
+      "Strip whitespace before conversion: int(value.strip())",
+      "Validate the string contains only digits before converting",
+      "Use try/except ValueError to handle non-numeric input gracefully"
+    ],
+    "tags": ["ValueError", "conversion", "int", "parsing"]
+  },
+  {
+    "id": "py-017",
+    "regex": "ValueError: too many values to unpack \\(expected (\\d+)\\)",
+    "language": "python",
+    "title": "Too many values to unpack",
+    "fixes": [
+      "Add more variables on the left side to match the iterable length",
+      "Use *rest to capture extra values: a, b, *rest = iterable",
+      "Check that the iterable has the expected number of elements"
+    ],
+    "tags": ["ValueError", "unpacking", "tuple"]
+  },
+  {
+    "id": "py-018",
+    "regex": "ValueError: not enough values to unpack \\(expected (\\d+), got (\\d+)\\)",
+    "language": "python",
+    "title": "Not enough values to unpack",
+    "fixes": [
+      "Reduce the number of variables on the left side",
+      "Verify the iterable contains enough elements",
+      "Provide default values or handle short iterables with a length check"
+    ],
+    "tags": ["ValueError", "unpacking", "tuple"]
+  },
+  {
+    "id": "py-019",
+    "regex": "KeyError: (.+)",
+    "language": "python",
+    "title": "Dictionary key not found",
+    "fixes": [
+      "Use dict.get(key, default) to provide a fallback value",
+      "Check key existence with 'if key in dict' before accessing",
+      "Use collections.defaultdict to auto-initialize missing keys"
+    ],
+    "tags": ["KeyError", "dict", "lookup"]
+  },
+  {
+    "id": "py-020",
+    "regex": "IndexError: list index out of range",
+    "language": "python",
+    "title": "List index out of range",
+    "fixes": [
+      "Check list length before accessing: if len(lst) > index",
+      "Use try/except IndexError for safe access",
+      "Verify loop boundaries — off-by-one errors are common"
+    ],
+    "tags": ["IndexError", "list", "bounds"]
+  },
+  {
+    "id": "py-021",
+    "regex": "FileNotFoundError: \\[Errno 2\\] No such file or directory: '(.+)'",
+    "language": "python",
+    "title": "File or directory not found",
+    "fixes": [
+      "Use absolute paths or verify working directory with os.getcwd()",
+      "Check file path for typos and correct OS path separators",
+      "Use pathlib.Path and .exists() to verify before opening"
+    ],
+    "tags": ["FileNotFoundError", "file", "path"]
+  },
+  {
+    "id": "py-022",
+    "regex": "NameError: name '(.+)' is not defined",
+    "language": "python",
+    "title": "Name is not defined",
+    "fixes": [
+      "Check for typos in the variable or function name",
+      "Ensure the variable is defined before it's used (order matters)",
+      "Add the missing import statement for external names"
+    ],
+    "tags": ["NameError", "undefined", "scope"]
+  },
+  {
+    "id": "py-023",
+    "regex": "RecursionError: maximum recursion depth exceeded",
+    "language": "python",
+    "title": "Maximum recursion depth exceeded",
+    "fixes": [
+      "Add or fix the base case in your recursive function",
+      "Convert to an iterative approach using a stack/queue",
+      "Increase limit with sys.setrecursionlimit() only as a last resort"
+    ],
+    "tags": ["RecursionError", "recursion", "stack-overflow"]
+  },
+  {
+    "id": "py-024",
+    "regex": "PermissionError: \\[Errno 13\\] Permission denied: '(.+)'",
+    "language": "python",
+    "title": "Permission denied",
+    "fixes": [
+      "Run with elevated privileges (sudo on Linux/macOS, admin on Windows)",
+      "Check file permissions: os.chmod() or fix in file explorer",
+      "Ensure the file isn't locked by another process"
+    ],
+    "tags": ["PermissionError", "file", "permissions"]
+  },
+  {
+    "id": "py-025",
+    "regex": "OSError: \\[Errno 98\\] Address already in use",
+    "language": "python",
+    "title": "Address already in use",
+    "fixes": [
+      "Kill the process using the port: lsof -i :PORT then kill -9 PID",
+      "Use a different port for your server",
+      "Set SO_REUSEADDR on the socket before binding"
+    ],
+    "tags": ["OSError", "network", "port", "server"]
+  },
+  {
+    "id": "py-026",
+    "regex": "ERROR: Could not find a version that satisfies the requirement (.+)",
+    "language": "python",
+    "title": "pip cannot find package version",
+    "fixes": [
+      "Check the package name spelling on PyPI (pypi.org)",
+      "Upgrade pip: pip install --upgrade pip",
+      "Specify a valid version: pip install package==x.y.z"
+    ],
+    "tags": ["pip", "install", "version"]
+  },
+  {
+    "id": "py-027",
+    "regex": "error: externally-managed-environment",
+    "language": "python",
+    "title": "Externally managed environment (PEP 668)",
+    "fixes": [
+      "Create a virtual environment: python -m venv .venv && source .venv/bin/activate",
+      "Use pipx for CLI tools: pipx install <package>",
+      "Use --break-system-packages flag only if you understand the risks"
+    ],
+    "tags": ["pip", "venv", "PEP668", "system-python"]
+  },
+  {
+    "id": "py-028",
+    "regex": "django\\.db\\.utils\\.OperationalError: no such table: (.+)",
+    "language": "python",
+    "title": "Django: no such table",
+    "fixes": [
+      "Run migrations: python manage.py makemigrations && python manage.py migrate",
+      "Ensure the app is in INSTALLED_APPS in settings.py",
+      "Delete db.sqlite3 and re-run migrations if the schema is corrupted"
+    ],
+    "tags": ["Django", "database", "migrations", "ORM"]
+  },
+  {
+    "id": "py-029",
+    "regex": "django\\.template\\.exceptions\\.TemplateDoesNotExist: (.+)",
+    "language": "python",
+    "title": "Django: template not found",
+    "fixes": [
+      "Add the template directory to TEMPLATES[0]['DIRS'] in settings.py",
+      "Ensure APP_DIRS is True and the app is in INSTALLED_APPS",
+      "Check template file path matches the name in render() exactly"
+    ],
+    "tags": ["Django", "template", "configuration"]
+  },
+  {
+    "id": "py-030",
+    "regex": "Forbidden \\(CSRF (?:cookie|token) not set\\)|CSRF verification failed",
+    "language": "python",
+    "title": "Django/Flask: CSRF verification failed",
+    "fixes": [
+      "Add {% csrf_token %} inside your <form> tag in Django templates",
+      "Include X-CSRFToken header in AJAX requests",
+      "Ensure django.middleware.csrf.CsrfViewMiddleware is in MIDDLEWARE"
+    ],
+    "tags": ["Django", "CSRF", "security", "forms"]
+  },
+  {
+    "id": "py-031",
+    "regex": "jinja2\\.exceptions\\.TemplateNotFound: (.+)",
+    "language": "python",
+    "title": "Flask/Jinja2: template not found",
+    "fixes": [
+      "Place templates in a 'templates/' folder relative to your app",
+      "Set template_folder parameter in Flask(__name__, template_folder='...')",
+      "Check the template filename for typos and correct case"
+    ],
+    "tags": ["Flask", "Jinja2", "template"]
+  },
+  {
+    "id": "py-032",
+    "regex": "RuntimeError: Working outside of application context",
+    "language": "python",
+    "title": "Flask: working outside application context",
+    "fixes": [
+      "Wrap code in: with app.app_context():",
+      "Use @app.before_request or access within a route handler",
+      "For CLI commands, use @app.cli.command() decorator"
+    ],
+    "tags": ["Flask", "context", "application"]
+  },
+  {
+    "id": "py-033",
+    "regex": "ModuleNotFoundError: No module named '(.+)'\\.?.*(?:Did you mean|\\(venv\\))",
+    "language": "python",
+    "title": "Module not found — virtual environment not activated",
+    "fixes": [
+      "Activate virtual environment: source .venv/bin/activate (Linux/Mac) or .venv\\Scripts\\activate (Windows)",
+      "Ensure your IDE/terminal is using the correct Python interpreter from the venv",
+      "Reinstall dependencies: pip install -r requirements.txt"
+    ],
+    "tags": ["venv", "virtual-environment", "import", "activation"]
+  },
+  {
+    "id": "py-034",
+    "regex": "UnicodeDecodeError: '(.+)' codec can't decode byte",
+    "language": "python",
+    "title": "Unicode decode error",
+    "fixes": [
+      "Specify encoding when opening files: open(file, encoding='utf-8')",
+      "Try 'latin-1' or 'cp1252' for legacy Windows files",
+      "Use errors='ignore' or errors='replace' to skip bad bytes"
+    ],
+    "tags": ["UnicodeDecodeError", "encoding", "file"]
+  },
+  {
+    "id": "py-035",
+    "regex": "json\\.decoder\\.JSONDecodeError: (.+)",
+    "language": "python",
+    "title": "JSON decode error",
+    "fixes": [
+      "Validate JSON format — check for trailing commas, single quotes, or unquoted keys",
+      "Ensure the response is actually JSON (check Content-Type header)",
+      "Print/log the raw string before parsing to inspect malformed data"
+    ],
+    "tags": ["JSONDecodeError", "json", "parsing", "API"]
+  },
+  {
+    "id": "py-036",
+    "regex": "requests\\.exceptions\\.ConnectionError: (.+)",
+    "language": "python",
+    "title": "Requests connection error",
+    "fixes": [
+      "Check that the target server is running and accessible",
+      "Verify the URL scheme (http vs https) and port number",
+      "Add retry logic with backoff: urllib3.util.retry.Retry"
+    ],
+    "tags": ["requests", "network", "connection", "HTTP"]
+  },
+  {
+    "id": "py-037",
+    "regex": "django\\.db\\.utils\\.IntegrityError: (.+) violates (.+) constraint",
+    "language": "python",
+    "title": "Django: database integrity constraint violation",
+    "fixes": [
+      "Check for duplicate values on unique fields before saving",
+      "Use get_or_create() instead of create() to avoid duplicates",
+      "Ensure required ForeignKey fields are set before save()"
+    ],
+    "tags": ["Django", "database", "IntegrityError", "constraint"]
+  },
+  {
+    "id": "py-038",
+    "regex": "TypeError: Object of type (.+) is not JSON serializable",
+    "language": "python",
+    "title": "Object not JSON serializable",
+    "fixes": [
+      "Convert datetime to string: obj.isoformat()",
+      "Use a custom encoder: json.dumps(data, default=str)",
+      "Convert sets to lists, Decimal to float before serializing"
+    ],
+    "tags": ["TypeError", "JSON", "serialization"]
+  },
+  {
+    "id": "py-039",
+    "regex": "asyncio\\.exceptions\\.TimeoutError|asyncio\\.TimeoutError",
+    "language": "python",
+    "title": "Asyncio timeout",
+    "fixes": [
+      "Increase the timeout value in asyncio.wait_for() or aiohttp session",
+      "Add retry logic for transient network issues",
+      "Check if the awaited coroutine is blocked or deadlocked"
+    ],
+    "tags": ["asyncio", "timeout", "async", "network"]
+  },
+  {
+    "id": "py-040",
+    "regex": "StopIteration",
+    "language": "python",
+    "title": "StopIteration — iterator exhausted",
+    "fixes": [
+      "Use next(iterator, default_value) to provide a fallback",
+      "Wrap in try/except StopIteration or use a for loop instead",
+      "Check that the iterable has elements before calling next()"
+    ],
+    "tags": ["StopIteration", "iterator", "generator"]
+  }
+]

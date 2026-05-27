@@ -1,0 +1,35 @@
+name: Validate Error Database
+
+on:
+  pull_request:
+    paths:
+      - 'packages/shared/**'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate JSON files
+        run: |
+          for file in packages/shared/errors-*.json; do
+            echo "Validating $file..."
+            node -e "
+              const data = require('./$file');
+              if (!Array.isArray(data)) { console.error('Not an array'); process.exit(1); }
+              const errors = [];
+              data.forEach((p, i) => {
+                if (!p.id) errors.push('Entry ' + i + ': missing id');
+                if (!p.regex) errors.push('Entry ' + i + ': missing regex');
+                if (!p.language) errors.push('Entry ' + i + ': missing language');
+                if (!p.title) errors.push('Entry ' + i + ': missing title');
+                if (!p.fixes || p.fixes.length === 0) errors.push('Entry ' + i + ': missing fixes');
+                try { new RegExp(p.regex); } catch(e) { errors.push('Entry ' + i + ': invalid regex'); }
+              });
+              if (errors.length) { errors.forEach(e => console.error(e)); process.exit(1); }
+              console.log('✓ ' + data.length + ' patterns valid');
+            "
+          done

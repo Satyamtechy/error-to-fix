@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "Error To Fix",
+  "version": "1.0.0",
+  "description": "Detects console.error on any webpage and shows fixes",
+  "permissions": ["activeTab", "storage"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Error To Fix"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  }
+}

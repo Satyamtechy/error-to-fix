@@ -1,0 +1,55 @@
+name: Submit an Error Fix
+description: Submit a new error pattern with fixes
+title: "[error]: "
+labels: ["new-pattern"]
+body:
+  - type: input
+    id: error_message
+    attributes:
+      label: Error Message
+      description: The exact error text developers see
+      placeholder: "Cannot read properties of undefined (reading 'map')"
+    validations:
+      required: true
+  - type: dropdown
+    id: language
+    attributes:
+      label: Language/Tool
+      options:
+        - javascript
+        - typescript
+        - python
+        - csharp
+        - java
+        - go
+        - rust
+        - react
+        - angular
+        - vue
+        - nextjs
+        - node
+        - docker
+        - git
+        - sql
+        - css
+        - aws
+        - other
+    validations:
+      required: true
+  - type: textarea
+    id: fixes
+    attributes:
+      label: Fixes
+      description: How to fix this error (one fix per line)
+      placeholder: |
+        1. Use optional chaining: obj?.property
+        2. Add null check before accessing
+        3. Provide a default value
+    validations:
+      required: true
+  - type: input
+    id: tags
+    attributes:
+      label: Tags
+      description: Comma-separated keywords
+      placeholder: "TypeError, null, undefined"

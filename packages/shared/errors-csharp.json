@@ -1,0 +1,391 @@
+[
+  {
+    "id": "cs-001",
+    "regex": "System\\.NullReferenceException.*Object reference not set to an instance of an object",
+    "language": "csharp",
+    "title": "NullReferenceException: Object reference not set",
+    "fixes": [
+      "Add null check before accessing the object: if (obj != null) { ... }",
+      "Use null-conditional operator: obj?.Property",
+      "Use null-coalescing operator to provide default: obj ?? new Object()",
+      "Enable nullable reference types in .csproj: <Nullable>enable</Nullable>"
+    ],
+    "tags": ["runtime", "null", "NullReferenceException"]
+  },
+  {
+    "id": "cs-002",
+    "regex": "InvalidOperationException.*Sequence contains no elements",
+    "language": "csharp",
+    "title": "InvalidOperationException: Sequence contains no elements",
+    "fixes": [
+      "Use FirstOrDefault() instead of First()",
+      "Use SingleOrDefault() instead of Single()",
+      "Check Any() before calling First()/Single()",
+      "Provide a default with DefaultIfEmpty() before aggregation"
+    ],
+    "tags": ["runtime", "LINQ", "InvalidOperationException"]
+  },
+  {
+    "id": "cs-003",
+    "regex": "InvalidOperationException.*Collection was modified.*enumeration",
+    "language": "csharp",
+    "title": "InvalidOperationException: Collection modified during enumeration",
+    "fixes": [
+      "Call .ToList() before iterating: foreach (var item in list.ToList())",
+      "Use a for loop with reverse index when removing items",
+      "Use ConcurrentDictionary/ConcurrentBag for thread-safe scenarios",
+      "Collect items to remove in a separate list, then remove after iteration"
+    ],
+    "tags": ["runtime", "collection", "InvalidOperationException"]
+  },
+  {
+    "id": "cs-004",
+    "regex": "System\\.ArgumentNullException.*Value cannot be null.*Parameter name: (\\w+)",
+    "language": "csharp",
+    "title": "ArgumentNullException: Value cannot be null",
+    "fixes": [
+      "Ensure the argument is not null before passing it to the method",
+      "Add a guard clause: ArgumentNullException.ThrowIfNull(param)",
+      "Check DI registration — the service may not be registered in the container",
+      "Verify configuration/appsettings values are not missing"
+    ],
+    "tags": ["runtime", "argument", "ArgumentNullException", "DI"]
+  },
+  {
+    "id": "cs-005",
+    "regex": "System\\.ArgumentException.*is not a valid value",
+    "language": "csharp",
+    "title": "ArgumentException: Invalid argument value",
+    "fixes": [
+      "Validate input before passing to method",
+      "Check enum values with Enum.IsDefined() before casting",
+      "Ensure string arguments are not empty: ArgumentException.ThrowIfNullOrEmpty(param)"
+    ],
+    "tags": ["runtime", "argument", "ArgumentException", "validation"]
+  },
+  {
+    "id": "cs-006",
+    "regex": "System\\.InvalidCastException.*Unable to cast object of type '(.+)' to type '(.+)'",
+    "language": "csharp",
+    "title": "InvalidCastException: Unable to cast object",
+    "fixes": [
+      "Use 'as' operator with null check instead of direct cast: var x = obj as TargetType",
+      "Use pattern matching: if (obj is TargetType typed) { ... }",
+      "Verify the actual runtime type with GetType() before casting",
+      "Use Convert.ChangeType() for value type conversions"
+    ],
+    "tags": ["runtime", "casting", "InvalidCastException"]
+  },
+  {
+    "id": "cs-007",
+    "regex": "error CS0103.*The name '(.+)' does not exist in the current context",
+    "language": "csharp",
+    "title": "CS0103: Name does not exist in current context",
+    "fixes": [
+      "Add the missing using directive for the namespace",
+      "Check for typos in the variable/method name",
+      "Ensure the variable is declared in the correct scope",
+      "Add a project reference if the symbol is in another assembly"
+    ],
+    "tags": ["compiler", "CS0103", "namespace", "scope"]
+  },
+  {
+    "id": "cs-008",
+    "regex": "error CS0234.*The type or namespace name '(.+)' does not exist in the namespace '(.+)'",
+    "language": "csharp",
+    "title": "CS0234: Type or namespace not found",
+    "fixes": [
+      "Install the missing NuGet package: dotnet add package <PackageName>",
+      "Add a project reference: dotnet add reference <ProjectPath>",
+      "Check the target framework — the type may not be available in your TFM",
+      "Verify the assembly is not conditionally excluded in .csproj"
+    ],
+    "tags": ["compiler", "CS0234", "namespace", "nuget"]
+  },
+  {
+    "id": "cs-009",
+    "regex": "error CS1061.*'(.+)' does not contain a definition for '(.+)'",
+    "language": "csharp",
+    "title": "CS1061: Type does not contain definition for member",
+    "fixes": [
+      "Check for typos in the member name",
+      "Add the missing using directive for extension methods",
+      "Verify the NuGet package version — the member may have been added/removed",
+      "Cast to the correct type if using an interface reference"
+    ],
+    "tags": ["compiler", "CS1061", "member", "extension-method"]
+  },
+  {
+    "id": "cs-010",
+    "regex": "error CS0029.*Cannot implicitly convert type '(.+)' to '(.+)'",
+    "language": "csharp",
+    "title": "CS0029: Cannot implicitly convert type",
+    "fixes": [
+      "Add an explicit cast: (TargetType)value",
+      "Use a conversion method: int.Parse(), ToString(), Convert.ToInt32()",
+      "Fix the return type of the method to match the actual returned value",
+      "Add an implicit/explicit operator overload if you own the types"
+    ],
+    "tags": ["compiler", "CS0029", "conversion", "type-mismatch"]
+  },
+  {
+    "id": "cs-011",
+    "regex": "warning CS8600.*Converting null literal or possible null value to non-nullable type",
+    "language": "csharp",
+    "title": "CS8600: Possible null to non-nullable conversion",
+    "fixes": [
+      "Declare the variable as nullable: string? result = ...",
+      "Add a null check or guard before assignment",
+      "Use the null-forgiving operator if you're certain it's not null: value!",
+      "Use pattern matching: if (value is string s) { ... }"
+    ],
+    "tags": ["compiler", "CS8600", "nullable", "warning"]
+  },
+  {
+    "id": "cs-012",
+    "regex": "warning CS8602.*Dereference of a possibly null reference",
+    "language": "csharp",
+    "title": "CS8602: Dereference of possibly null reference",
+    "fixes": [
+      "Add a null check before dereferencing: if (obj != null) obj.Method()",
+      "Use null-conditional operator: obj?.Method()",
+      "Add [NotNull] attribute if analysis is wrong",
+      "Use the null-forgiving operator if certain: obj!.Method()"
+    ],
+    "tags": ["compiler", "CS8602", "nullable", "warning"]
+  },
+  {
+    "id": "cs-013",
+    "regex": "warning CS8604.*Possible null reference argument for parameter",
+    "language": "csharp",
+    "title": "CS8604: Possible null reference argument",
+    "fixes": [
+      "Add a null check before passing the argument",
+      "Use the ?? operator to provide a fallback: param ?? defaultValue",
+      "Mark the parameter as nullable in the method signature: string? param",
+      "Use the null-forgiving operator if you're certain: Method(value!)"
+    ],
+    "tags": ["compiler", "CS8604", "nullable", "warning"]
+  },
+  {
+    "id": "cs-014",
+    "regex": "NETSDK1045.*The current \\.NET SDK does not support targeting",
+    "language": "csharp",
+    "title": "NETSDK1045: SDK does not support target framework",
+    "fixes": [
+      "Install the required .NET SDK version from https://dotnet.microsoft.com/download",
+      "Update global.json to use an installed SDK version",
+      "Lower the TargetFramework in .csproj to match your installed SDK",
+      "Run 'dotnet --list-sdks' to check installed versions"
+    ],
+    "tags": ["build", "NETSDK", "sdk-version", "target-framework"]
+  },
+  {
+    "id": "cs-015",
+    "regex": "NETSDK1005.*Project .+ targets '(.+)'.*current SDK",
+    "language": "csharp",
+    "title": "NETSDK1005: Target framework version mismatch",
+    "fixes": [
+      "Install the matching .NET SDK for the target framework",
+      "Change TargetFramework in .csproj to match installed SDK",
+      "Delete global.json if it pins an unavailable SDK version",
+      "Use 'dotnet --info' to verify the active SDK"
+    ],
+    "tags": ["build", "NETSDK", "target-framework", "version-mismatch"]
+  },
+  {
+    "id": "cs-016",
+    "regex": "No migrations were applied.*database is already up to date|The migration '(.+)' has already been applied",
+    "language": "csharp",
+    "title": "EF Core: Migration already applied or database up to date",
+    "fixes": [
+      "Run 'dotnet ef migrations list' to check applied migrations",
+      "Create a new migration: dotnet ef migrations add <Name>",
+      "If schema is out of sync, remove last migration and re-add",
+      "Check __EFMigrationsHistory table in the database"
+    ],
+    "tags": ["ef-core", "migrations", "database"]
+  },
+  {
+    "id": "cs-017",
+    "regex": "Cannot open database|A network-related or instance-specific error|Login failed for user",
+    "language": "csharp",
+    "title": "EF Core / SQL: Connection string or database access error",
+    "fixes": [
+      "Verify ConnectionStrings section in appsettings.json",
+      "Ensure the database server is running and accessible",
+      "Check that the user credentials in the connection string are correct",
+      "For LocalDB: run 'sqllocaldb start MSSQLLocalDB'"
+    ],
+    "tags": ["ef-core", "connection-string", "database", "sql"]
+  },
+  {
+    "id": "cs-018",
+    "regex": "InvalidOperationException.*No service for type '(.+)' has been registered|Unable to resolve service for type '(.+)'",
+    "language": "csharp",
+    "title": "ASP.NET Core DI: Service not registered",
+    "fixes": [
+      "Register the service in Program.cs: builder.Services.AddScoped<IService, Service>()",
+      "Check that the interface and implementation match the registered types",
+      "Ensure the service is registered before Build() is called",
+      "For generic types, use AddScoped(typeof(IRepo<>), typeof(Repo<>))"
+    ],
+    "tags": ["aspnet", "DI", "dependency-injection", "InvalidOperationException"]
+  },
+  {
+    "id": "cs-019",
+    "regex": "Access to fetch.*blocked by CORS|has been blocked by CORS policy|No 'Access-Control-Allow-Origin'",
+    "language": "csharp",
+    "title": "ASP.NET Core: CORS policy blocking requests",
+    "fixes": [
+      "Add CORS in Program.cs: builder.Services.AddCors() with a policy allowing the origin",
+      "Call app.UseCors(\"policyName\") BEFORE app.UseAuthorization()",
+      "Ensure the allowed origins match exactly (include scheme and port)",
+      "For development, use .AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()"
+    ],
+    "tags": ["aspnet", "CORS", "middleware", "security"]
+  },
+  {
+    "id": "cs-020",
+    "regex": "StatusCode.*404|NotFound|No route matches|endpoint routing.*did not match",
+    "language": "csharp",
+    "title": "ASP.NET Core: 404 Not Found / Route not matched",
+    "fixes": [
+      "Verify the [Route] and [Http*] attributes on the controller/action",
+      "Ensure app.MapControllers() is called in Program.cs",
+      "Check that the controller class has [ApiController] attribute",
+      "Verify route parameters match method parameter names exactly"
+    ],
+    "tags": ["aspnet", "routing", "404", "controller"]
+  },
+  {
+    "id": "cs-021",
+    "regex": "The SSL connection could not be established|AuthenticationException.*remote certificate",
+    "language": "csharp",
+    "title": "HttpClient: SSL/TLS certificate error",
+    "fixes": [
+      "For development, bypass with HttpClientHandler.ServerCertificateCustomValidationCallback",
+      "Install/trust the development certificate: dotnet dev-certs https --trust",
+      "Ensure the server certificate is valid and not expired",
+      "Update System.Net.Http and target a modern TLS version"
+    ],
+    "tags": ["httpclient", "SSL", "TLS", "certificate"]
+  },
+  {
+    "id": "cs-022",
+    "regex": "TaskCanceledException.*A task was canceled|HttpRequestException.*request timed out|The request was canceled due to.*timeout",
+    "language": "csharp",
+    "title": "HttpClient: Request timeout",
+    "fixes": [
+      "Increase HttpClient.Timeout: client.Timeout = TimeSpan.FromSeconds(120)",
+      "Use CancellationTokenSource with a longer timeout",
+      "Check if the server is responding — test with curl/Postman",
+      "Use IHttpClientFactory with named/typed clients and configure timeout per client"
+    ],
+    "tags": ["httpclient", "timeout", "TaskCanceledException"]
+  },
+  {
+    "id": "cs-023",
+    "regex": "HttpRequestException.*Connection refused|No connection could be made|actively refused",
+    "language": "csharp",
+    "title": "HttpClient: Connection refused",
+    "fixes": [
+      "Verify the target service is running on the expected host:port",
+      "Check the base URL in configuration (appsettings/environment variable)",
+      "Ensure firewall/network allows the connection",
+      "For Docker: use the container name or host.docker.internal instead of localhost"
+    ],
+    "tags": ["httpclient", "connection", "network", "docker"]
+  },
+  {
+    "id": "cs-024",
+    "regex": "JsonException.*cycle.*detected|A possible object cycle was detected",
+    "language": "csharp",
+    "title": "JSON Serialization: Object cycle detected",
+    "fixes": [
+      "Add ReferenceHandler.IgnoreCycles: options.ReferenceHandler = ReferenceHandler.IgnoreCycles",
+      "Use [JsonIgnore] on navigation properties that cause circular references",
+      "Create DTOs without circular references instead of serializing entities directly",
+      "Configure globally in Program.cs: builder.Services.AddControllers().AddJsonOptions(...)"
+    ],
+    "tags": ["json", "serialization", "circular-reference", "System.Text.Json"]
+  },
+  {
+    "id": "cs-025",
+    "regex": "JsonException.*could not be converted|Cannot deserialize|The JSON value could not be converted to",
+    "language": "csharp",
+    "title": "JSON Deserialization: Type conversion error",
+    "fixes": [
+      "Check that JSON property types match C# model types (e.g., string vs int)",
+      "Add JsonNumberHandling.AllowReadingFromString for numeric strings",
+      "Use [JsonConverter] for custom type mapping",
+      "Ensure property names match (use [JsonPropertyName] or PropertyNameCaseInsensitive = true)"
+    ],
+    "tags": ["json", "deserialization", "type-mismatch", "System.Text.Json"]
+  },
+  {
+    "id": "cs-026",
+    "regex": "error MSB4019.*The imported project.*was not found",
+    "language": "csharp",
+    "title": "MSB4019: Imported project not found",
+    "fixes": [
+      "Restore NuGet packages: dotnet restore",
+      "Install the required workload: dotnet workload install <workload>",
+      "Check that the .NET SDK/targeting pack is installed",
+      "Delete obj/ and bin/ folders and rebuild"
+    ],
+    "tags": ["build", "MSBuild", "MSB4019", "project-import"]
+  },
+  {
+    "id": "cs-027",
+    "regex": "error NU1101.*Unable to find package|NU1102.*Unable to find package.*in any source",
+    "language": "csharp",
+    "title": "NU1101/NU1102: NuGet package not found",
+    "fixes": [
+      "Check the package name for typos",
+      "Add the correct NuGet source in nuget.config",
+      "Clear NuGet cache: dotnet nuget locals all --clear",
+      "Check if the package version exists: dotnet package search <name>"
+    ],
+    "tags": ["build", "nuget", "package-restore", "NU1101"]
+  },
+  {
+    "id": "cs-028",
+    "regex": "InvalidOperationException.*DbContext.*disposed|Cannot access a disposed context|disposed object.*DbContext",
+    "language": "csharp",
+    "title": "EF Core: DbContext already disposed",
+    "fixes": [
+      "Don't capture DbContext in a background task — inject IDbContextFactory<T> instead",
+      "Register DbContext as Scoped (default), not Transient or Singleton",
+      "Avoid using DbContext after the request scope ends (e.g., in fire-and-forget tasks)",
+      "Use IServiceScopeFactory to create a new scope for background work"
+    ],
+    "tags": ["ef-core", "DbContext", "disposed", "lifetime"]
+  },
+  {
+    "id": "cs-029",
+    "regex": "InvalidOperationException.*Middleware.*must be added before|UseRouting.*must be added before UseEndpoints|UseAuthentication.*must be called before UseAuthorization",
+    "language": "csharp",
+    "title": "ASP.NET Core: Middleware order incorrect",
+    "fixes": [
+      "Follow the correct middleware order: UseRouting → UseAuthentication → UseAuthorization → MapControllers",
+      "Place UseCors() before UseAuthorization()",
+      "Place UseHttpsRedirection() early in the pipeline",
+      "Refer to ASP.NET Core middleware documentation for canonical ordering"
+    ],
+    "tags": ["aspnet", "middleware", "pipeline", "order"]
+  },
+  {
+    "id": "cs-030",
+    "regex": "error MSB3027.*Could not copy.*being used by another process|IOException.*used by another process",
+    "language": "csharp",
+    "title": "MSB3027: File locked by another process during build",
+    "fixes": [
+      "Stop the running application (dotnet run / IIS Express / kestrel)",
+      "Close any file handles — check with Process Explorer or 'handle.exe'",
+      "Delete bin/ and obj/ folders and rebuild",
+      "Disable 'Build on Save' if using an IDE extension that triggers concurrent builds"
+    ],
+    "tags": ["build", "MSBuild", "file-lock", "MSB3027"]
+  }
+]

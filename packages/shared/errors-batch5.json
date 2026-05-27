@@ -1,0 +1,3202 @@
+[
+  {
+    "id": "aws-adv-001",
+    "regex": "Lambda cold start duration exceeded (\\d+)ms",
+    "language": "aws",
+    "title": "Lambda Cold Start Timeout",
+    "fixes": [
+      "Enable provisioned concurrency",
+      "Reduce deployment package size",
+      "Use Lambda SnapStart for Java runtimes"
+    ],
+    "tags": [
+      "aws",
+      "lambda",
+      "cold-start"
+    ]
+  },
+  {
+    "id": "aws-adv-002",
+    "regex": "Task timed out after (\\d+\\.\\d+) seconds",
+    "language": "aws",
+    "title": "Lambda Function Timeout",
+    "fixes": [
+      "Increase timeout in Lambda configuration",
+      "Optimize function code to reduce execution time",
+      "Use Step Functions for long-running workflows"
+    ],
+    "tags": [
+      "aws",
+      "lambda",
+      "timeout"
+    ]
+  },
+  {
+    "id": "aws-adv-003",
+    "regex": "Endpoint request timed out",
+    "language": "aws",
+    "title": "API Gateway Integration Timeout",
+    "fixes": [
+      "Increase API Gateway timeout (max 29s)",
+      "Implement async pattern with SQS",
+      "Add caching with API Gateway stage cache"
+    ],
+    "tags": [
+      "aws",
+      "api-gateway",
+      "timeout"
+    ]
+  },
+  {
+    "id": "aws-adv-004",
+    "regex": "ProvisionedThroughputExceededException",
+    "language": "aws",
+    "title": "DynamoDB Throughput Exceeded",
+    "fixes": [
+      "Enable auto-scaling on the table",
+      "Switch to on-demand capacity mode",
+      "Implement exponential backoff in client code"
+    ],
+    "tags": [
+      "aws",
+      "dynamodb",
+      "throughput"
+    ]
+  },
+  {
+    "id": "aws-adv-005",
+    "regex": "AccessDenied.*S3",
+    "language": "aws",
+    "title": "S3 Access Denied",
+    "fixes": [
+      "Check bucket policy allows the IAM role",
+      "Verify object ACL permissions",
+      "Ensure KMS key policy grants decrypt access"
+    ],
+    "tags": [
+      "aws",
+      "s3",
+      "permissions"
+    ]
+  },
+  {
+    "id": "aws-adv-006",
+    "regex": "UPDATE_ROLLBACK_COMPLETE|ROLLBACK_IN_PROGRESS",
+    "language": "aws",
+    "title": "CloudFormation Stack Rollback",
+    "fixes": [
+      "Check CloudFormation events for root cause",
+      "Fix the failing resource and redeploy",
+      "Use change sets to preview before deploying"
+    ],
+    "tags": [
+      "aws",
+      "cloudformation",
+      "rollback"
+    ]
+  },
+  {
+    "id": "aws-adv-007",
+    "regex": "Essential container in task exited",
+    "language": "aws",
+    "title": "ECS Essential Container Failure",
+    "fixes": [
+      "Check container logs in CloudWatch",
+      "Verify health check configuration",
+      "Ensure sufficient memory/CPU allocation"
+    ],
+    "tags": [
+      "aws",
+      "ecs",
+      "container"
+    ]
+  },
+  {
+    "id": "aws-adv-008",
+    "regex": "Communications link failure.*RDS",
+    "language": "aws",
+    "title": "RDS Connection Failure",
+    "fixes": [
+      "Check security group inbound rules for DB port",
+      "Verify RDS instance is accessible from your VPC",
+      "Enable RDS Proxy for connection pooling"
+    ],
+    "tags": [
+      "aws",
+      "rds",
+      "connection"
+    ]
+  },
+  {
+    "id": "aws-adv-009",
+    "regex": "Message not visible, VisibilityTimeout expired",
+    "language": "aws",
+    "title": "SQS Visibility Timeout Expired",
+    "fixes": [
+      "Increase visibility timeout to match processing time",
+      "Call ChangeMessageVisibility for long-running tasks",
+      "Implement batch processing with shorter per-item time"
+    ],
+    "tags": [
+      "aws",
+      "sqs",
+      "visibility-timeout"
+    ]
+  },
+  {
+    "id": "aws-adv-010",
+    "regex": "SNS delivery failed.*EndpointDisabled",
+    "language": "aws",
+    "title": "SNS Delivery Failure - Endpoint Disabled",
+    "fixes": [
+      "Re-enable the subscription endpoint",
+      "Implement dead-letter queue for failed deliveries",
+      "Check platform application credentials"
+    ],
+    "tags": [
+      "aws",
+      "sns",
+      "delivery"
+    ]
+  },
+  {
+    "id": "aws-adv-011",
+    "regex": "is not authorized to perform.*because no identity-based policy",
+    "language": "aws",
+    "title": "IAM Policy Deny - No Identity Policy",
+    "fixes": [
+      "Attach required IAM policy to the user/role",
+      "Use IAM Policy Simulator to debug permissions",
+      "Check for explicit deny in SCPs"
+    ],
+    "tags": [
+      "aws",
+      "iam",
+      "policy-deny"
+    ]
+  },
+  {
+    "id": "aws-adv-012",
+    "regex": "Runtime\\.ExitError",
+    "language": "aws",
+    "title": "Lambda Runtime Exit Error",
+    "fixes": [
+      "Check for unhandled exceptions in handler",
+      "Verify runtime compatibility with package",
+      "Increase memory allocation to prevent OOM kills"
+    ],
+    "tags": [
+      "aws",
+      "lambda",
+      "runtime"
+    ]
+  },
+  {
+    "id": "aws-adv-013",
+    "regex": "429.*Too Many Requests.*API Gateway",
+    "language": "aws",
+    "title": "API Gateway Rate Limit Exceeded",
+    "fixes": [
+      "Request throttle limit increase via Support",
+      "Implement retry with exponential backoff",
+      "Add API key usage plans"
+    ],
+    "tags": [
+      "aws",
+      "api-gateway",
+      "throttling"
+    ]
+  },
+  {
+    "id": "aws-adv-014",
+    "regex": "ConditionalCheckFailedException",
+    "language": "aws",
+    "title": "DynamoDB Conditional Check Failed",
+    "fixes": [
+      "Review condition expression logic",
+      "Implement optimistic locking with version attribute",
+      "Use TransactWriteItems for atomic operations"
+    ],
+    "tags": [
+      "aws",
+      "dynamodb",
+      "conditional-write"
+    ]
+  },
+  {
+    "id": "aws-adv-015",
+    "regex": "NoSuchKey.*The specified key does not exist",
+    "language": "aws",
+    "title": "S3 Object Not Found",
+    "fixes": [
+      "Verify the object key path and bucket name",
+      "Check if object was lifecycle-expired",
+      "Enable S3 versioning to recover deleted objects"
+    ],
+    "tags": [
+      "aws",
+      "s3",
+      "not-found"
+    ]
+  },
+  {
+    "id": "aws-adv-016",
+    "regex": "CREATE_FAILED.*Resource handler returned message",
+    "language": "aws",
+    "title": "CloudFormation Resource Creation Failed",
+    "fixes": [
+      "Read the StatusReason in stack events",
+      "Validate template with cfn validate-template",
+      "Check resource limits in the target region"
+    ],
+    "tags": [
+      "aws",
+      "cloudformation",
+      "create-failed"
+    ]
+  },
+  {
+    "id": "aws-adv-017",
+    "regex": "CannotPullContainerError",
+    "language": "aws",
+    "title": "ECS Cannot Pull Container Image",
+    "fixes": [
+      "Verify ECR repository and image tag exist",
+      "Check task execution role has ecr:GetAuthorizationToken",
+      "Ensure VPC has NAT gateway or ECR endpoint"
+    ],
+    "tags": [
+      "aws",
+      "ecs",
+      "ecr"
+    ]
+  },
+  {
+    "id": "aws-adv-018",
+    "regex": "too many connections.*RDS",
+    "language": "aws",
+    "title": "RDS Max Connections Exceeded",
+    "fixes": [
+      "Use RDS Proxy to pool connections",
+      "Increase max_connections in parameter group",
+      "Close idle connections in application code"
+    ],
+    "tags": [
+      "aws",
+      "rds",
+      "connections"
+    ]
+  },
+  {
+    "id": "aws-adv-019",
+    "regex": "InvalidParameterValue.*MessageBody",
+    "language": "aws",
+    "title": "SQS Invalid Message Body",
+    "fixes": [
+      "Ensure message body is valid UTF-8",
+      "Use SQS Extended Client for messages over 256KB",
+      "Base64 encode binary data before sending"
+    ],
+    "tags": [
+      "aws",
+      "sqs",
+      "message"
+    ]
+  },
+  {
+    "id": "aws-adv-020",
+    "regex": "An error occurred \\(AccessDeniedException\\).*not authorized",
+    "language": "aws",
+    "title": "IAM Access Denied Exception",
+    "fixes": [
+      "Check for explicit Deny statements in policies",
+      "Verify resource-based policy allows cross-account",
+      "Review service control policies"
+    ],
+    "tags": [
+      "aws",
+      "iam",
+      "access-denied"
+    ]
+  },
+  {
+    "id": "azure-adv-001",
+    "regex": "Error: Failed to deploy.*App Service",
+    "language": "azure",
+    "title": "Azure App Service Deployment Failed",
+    "fixes": [
+      "Check deployment logs in Kudu console",
+      "Verify app settings and connection strings",
+      "Ensure deployment slot is not locked"
+    ],
+    "tags": [
+      "azure",
+      "app-service",
+      "deployment"
+    ]
+  },
+  {
+    "id": "azure-adv-002",
+    "regex": "Microsoft\\.Azure\\.WebJobs\\.Host\\.FunctionTimeoutException",
+    "language": "azure",
+    "title": "Azure Function Timeout",
+    "fixes": [
+      "Increase functionTimeout in host.json",
+      "Use Durable Functions for long-running workflows",
+      "Switch to Premium plan for longer timeout"
+    ],
+    "tags": [
+      "azure",
+      "functions",
+      "timeout"
+    ]
+  },
+  {
+    "id": "azure-adv-003",
+    "regex": "Request rate is large.*429",
+    "language": "azure",
+    "title": "Cosmos DB Request Rate Too Large",
+    "fixes": [
+      "Increase provisioned RU/s or enable autoscale",
+      "Implement retry with exponential backoff",
+      "Optimize queries to consume fewer RUs"
+    ],
+    "tags": [
+      "azure",
+      "cosmos-db",
+      "throttling"
+    ]
+  },
+  {
+    "id": "azure-adv-004",
+    "regex": "Server failed to authenticate.*signature.*expired",
+    "language": "azure",
+    "title": "Azure Blob Storage SAS Token Expired",
+    "fixes": [
+      "Generate a new SAS token with longer validity",
+      "Use Azure AD authentication instead of SAS",
+      "Implement token refresh logic before expiry"
+    ],
+    "tags": [
+      "azure",
+      "blob-storage",
+      "sas"
+    ]
+  },
+  {
+    "id": "azure-adv-005",
+    "regex": "Access denied.*Key Vault.*Forbidden",
+    "language": "azure",
+    "title": "Azure Key Vault Access Denied",
+    "fixes": [
+      "Add access policy for the calling identity",
+      "Switch to RBAC-based access control",
+      "Verify managed identity is enabled on the resource"
+    ],
+    "tags": [
+      "azure",
+      "key-vault",
+      "access-denied"
+    ]
+  },
+  {
+    "id": "azure-adv-006",
+    "regex": "The service is currently busy.*Cosmos",
+    "language": "azure",
+    "title": "Cosmos DB Service Busy",
+    "fixes": [
+      "Implement retry with SDK retry policy",
+      "Enable server-side retries in Cosmos DB",
+      "Reduce batch operation sizes"
+    ],
+    "tags": [
+      "azure",
+      "cosmos-db",
+      "busy"
+    ]
+  },
+  {
+    "id": "azure-adv-007",
+    "regex": "WEBSITE_RUN_FROM_PACKAGE.*failed",
+    "language": "azure",
+    "title": "Azure App Service Package Deploy Error",
+    "fixes": [
+      "Verify zip package is valid and accessible",
+      "Check WEBSITE_RUN_FROM_PACKAGE URL or storage",
+      "Clear deployment cache and retry"
+    ],
+    "tags": [
+      "azure",
+      "app-service",
+      "package"
+    ]
+  },
+  {
+    "id": "azure-adv-008",
+    "regex": "Function host is not running",
+    "language": "azure",
+    "title": "Azure Function Host Not Running",
+    "fixes": [
+      "Check Application Insights for startup exceptions",
+      "Verify function app runtime version",
+      "Restart function app and check platform logs"
+    ],
+    "tags": [
+      "azure",
+      "functions",
+      "host"
+    ]
+  },
+  {
+    "id": "azure-adv-009",
+    "regex": "AuthorizationFailed.*does not have authorization to perform",
+    "language": "azure",
+    "title": "Azure RBAC Authorization Failed",
+    "fixes": [
+      "Assign the required Azure role to the identity",
+      "Check scope of role assignment",
+      "Use az role assignment list to verify"
+    ],
+    "tags": [
+      "azure",
+      "rbac",
+      "authorization"
+    ]
+  },
+  {
+    "id": "azure-adv-010",
+    "regex": "The offer for.*Cosmos.*has been exceeded",
+    "language": "azure",
+    "title": "Cosmos DB Offer Exceeded",
+    "fixes": [
+      "Scale up throughput provisioning",
+      "Enable autoscale to handle burst traffic",
+      "Partition data more evenly"
+    ],
+    "tags": [
+      "azure",
+      "cosmos-db",
+      "capacity"
+    ]
+  },
+  {
+    "id": "azure-adv-011",
+    "regex": "BlobNotFound|The specified blob does not exist",
+    "language": "azure",
+    "title": "Azure Blob Not Found",
+    "fixes": [
+      "Verify container and blob path are correct",
+      "Check if soft delete can recover the blob",
+      "Ensure storage account and container exist"
+    ],
+    "tags": [
+      "azure",
+      "blob-storage",
+      "not-found"
+    ]
+  },
+  {
+    "id": "azure-adv-012",
+    "regex": "Conflict.*DeploymentActive",
+    "language": "azure",
+    "title": "Azure Deployment Conflict",
+    "fixes": [
+      "Wait for current deployment to complete",
+      "Cancel the active deployment if stuck",
+      "Use deployment slots to avoid conflicts"
+    ],
+    "tags": [
+      "azure",
+      "app-service",
+      "conflict"
+    ]
+  },
+  {
+    "id": "azure-adv-013",
+    "regex": "SecretNotFound.*Key Vault",
+    "language": "azure",
+    "title": "Azure Key Vault Secret Not Found",
+    "fixes": [
+      "Verify secret name spelling and case",
+      "Check if secret was soft-deleted",
+      "Ensure Key Vault reference syntax is correct"
+    ],
+    "tags": [
+      "azure",
+      "key-vault",
+      "secret"
+    ]
+  },
+  {
+    "id": "azure-adv-014",
+    "regex": "System\\.OutOfMemoryException.*Azure Function",
+    "language": "azure",
+    "title": "Azure Function Out of Memory",
+    "fixes": [
+      "Upgrade to a higher App Service plan",
+      "Optimize memory usage in function code",
+      "Stream large data instead of loading into memory"
+    ],
+    "tags": [
+      "azure",
+      "functions",
+      "memory"
+    ]
+  },
+  {
+    "id": "azure-adv-015",
+    "regex": "OperationNotAllowed.*partition key",
+    "language": "azure",
+    "title": "Cosmos DB Partition Key Error",
+    "fixes": [
+      "Include partition key in all queries",
+      "Verify partition key path matches container config",
+      "Use cross-partition query only when necessary"
+    ],
+    "tags": [
+      "azure",
+      "cosmos-db",
+      "partition-key"
+    ]
+  },
+  {
+    "id": "azure-adv-016",
+    "regex": "SAS token does not allow access to this resource",
+    "language": "azure",
+    "title": "Azure SAS Insufficient Permissions",
+    "fixes": [
+      "Regenerate SAS with required permissions",
+      "Check srt and ss parameters in token",
+      "Use stored access policy for management"
+    ],
+    "tags": [
+      "azure",
+      "blob-storage",
+      "sas-permissions"
+    ]
+  },
+  {
+    "id": "azure-adv-017",
+    "regex": "Key Vault.*network rules.*denied",
+    "language": "azure",
+    "title": "Azure Key Vault Network Restriction",
+    "fixes": [
+      "Add client IP or VNet to Key Vault firewall",
+      "Enable service endpoint for calling subnet",
+      "Use Private Link for secure access"
+    ],
+    "tags": [
+      "azure",
+      "key-vault",
+      "network"
+    ]
+  },
+  {
+    "id": "azure-adv-018",
+    "regex": "SCM_DO_BUILD_DURING_DEPLOYMENT.*failed",
+    "language": "azure",
+    "title": "Azure App Service Build Failed",
+    "fixes": [
+      "Check Oryx build logs in Kudu",
+      "Set SCM_DO_BUILD_DURING_DEPLOYMENT=false and build locally",
+      "Verify runtime version matches stack"
+    ],
+    "tags": [
+      "azure",
+      "app-service",
+      "build"
+    ]
+  },
+  {
+    "id": "azure-adv-019",
+    "regex": "scale controller.*unable to scale",
+    "language": "azure",
+    "title": "Azure Functions Scale Controller Error",
+    "fixes": [
+      "Check for binding connection string errors",
+      "Verify storage account health for Consumption plan",
+      "Review scale controller logs"
+    ],
+    "tags": [
+      "azure",
+      "functions",
+      "scaling"
+    ]
+  },
+  {
+    "id": "azure-adv-020",
+    "regex": "RequestEntityTooLarge.*Cosmos",
+    "language": "azure",
+    "title": "Cosmos DB Document Too Large",
+    "fixes": [
+      "Split document into smaller documents (max 2MB)",
+      "Store large blobs in Blob Storage with reference",
+      "Compress payload before storing"
+    ],
+    "tags": [
+      "azure",
+      "cosmos-db",
+      "size-limit"
+    ]
+  },
+  {
+    "id": "firebase-adv-001",
+    "regex": "PERMISSION_DENIED.*Missing or insufficient permissions",
+    "language": "firebase",
+    "title": "Firestore Permission Denied",
+    "fixes": [
+      "Update Firestore security rules to allow the operation",
+      "Check auth state - user may not be authenticated",
+      "Verify rule conditions match document path"
+    ],
+    "tags": [
+      "firebase",
+      "firestore",
+      "permissions"
+    ]
+  },
+  {
+    "id": "firebase-adv-002",
+    "regex": "Quota exceeded.*RESOURCE_EXHAUSTED",
+    "language": "firebase",
+    "title": "Firebase Quota Exceeded",
+    "fixes": [
+      "Upgrade to Blaze plan for higher limits",
+      "Optimize reads/writes to reduce usage",
+      "Enable billing alerts and monitor usage dashboard"
+    ],
+    "tags": [
+      "firebase",
+      "quota",
+      "limits"
+    ]
+  },
+  {
+    "id": "firebase-adv-003",
+    "regex": "The query requires an index.*create it here",
+    "language": "firebase",
+    "title": "Firestore Index Not Defined",
+    "fixes": [
+      "Click the link in the error to auto-create index",
+      "Add composite index in firestore.indexes.json",
+      "Deploy indexes with firebase deploy --only firestore:indexes"
+    ],
+    "tags": [
+      "firebase",
+      "firestore",
+      "index"
+    ]
+  },
+  {
+    "id": "firebase-adv-004",
+    "regex": "auth/user-token-expired|auth/invalid-user-token",
+    "language": "firebase",
+    "title": "Firebase Auth Token Expired",
+    "fixes": [
+      "Call getIdToken(true) to force refresh",
+      "Implement onAuthStateChanged listener for token refresh",
+      "Check if user was disabled or deleted"
+    ],
+    "tags": [
+      "firebase",
+      "auth",
+      "token"
+    ]
+  },
+  {
+    "id": "firebase-adv-005",
+    "regex": "Function execution took \\d+ ms, finished with status: 'timeout'",
+    "language": "firebase",
+    "title": "Cloud Functions Timeout",
+    "fixes": [
+      "Increase timeoutSeconds in function options",
+      "Optimize function to complete faster",
+      "Use runWith({timeoutSeconds: 540}) for heavy tasks"
+    ],
+    "tags": [
+      "firebase",
+      "functions",
+      "timeout"
+    ]
+  },
+  {
+    "id": "firebase-adv-006",
+    "regex": "Failed to get document because the client is offline",
+    "language": "firebase",
+    "title": "Firestore Offline Cache Error",
+    "fixes": [
+      "Enable offline persistence with enablePersistence()",
+      "Check network connectivity before operations",
+      "Use getDocFromServer() to bypass cache"
+    ],
+    "tags": [
+      "firebase",
+      "firestore",
+      "offline"
+    ]
+  },
+  {
+    "id": "firebase-adv-007",
+    "regex": "auth/network-request-failed",
+    "language": "firebase",
+    "title": "Firebase Auth Network Error",
+    "fixes": [
+      "Check internet connectivity",
+      "Verify Firebase project is not blocked by firewall",
+      "Retry with exponential backoff"
+    ],
+    "tags": [
+      "firebase",
+      "auth",
+      "network"
+    ]
+  },
+  {
+    "id": "firebase-adv-008",
+    "regex": "ALREADY_EXISTS.*Document already exists",
+    "language": "firebase",
+    "title": "Firestore Document Already Exists",
+    "fixes": [
+      "Use set() with merge option instead of create()",
+      "Check for existing document before creating",
+      "Use transactions for atomic create-if-not-exists"
+    ],
+    "tags": [
+      "firebase",
+      "firestore",
+      "duplicate"
+    ]
+  },
+  {
+    "id": "firebase-adv-009",
+    "regex": "Cloud Function cold start.*exceeded (\\d+)ms",
+    "language": "firebase",
+    "title": "Cloud Functions Cold Start",
+    "fixes": [
+      "Set minInstances to keep warm instances",
+      "Reduce function dependencies and bundle size",
+      "Use lazy loading for heavy imports"
+    ],
+    "tags": [
+      "firebase",
+      "functions",
+      "cold-start"
+    ]
+  },
+  {
+    "id": "firebase-adv-010",
+    "regex": "storage/unauthorized.*not authorized",
+    "language": "firebase",
+    "title": "Firebase Storage Permission Denied",
+    "fixes": [
+      "Update Storage security rules",
+      "Verify user is authenticated before upload",
+      "Check file size against rule constraints"
+    ],
+    "tags": [
+      "firebase",
+      "storage",
+      "permissions"
+    ]
+  },
+  {
+    "id": "firebase-adv-011",
+    "regex": "auth/email-already-in-use",
+    "language": "firebase",
+    "title": "Firebase Auth Email Already In Use",
+    "fixes": [
+      "Prompt user to sign in with existing account",
+      "Implement account linking for multiple providers",
+      "Check fetchSignInMethodsForEmail before creating"
+    ],
+    "tags": [
+      "firebase",
+      "auth",
+      "email"
+    ]
+  },
+  {
+    "id": "firebase-adv-012",
+    "regex": "DEADLINE_EXCEEDED.*Firestore",
+    "language": "firebase",
+    "title": "Firestore Deadline Exceeded",
+    "fixes": [
+      "Reduce query complexity and result size",
+      "Add appropriate indexes for the query",
+      "Increase timeout in Firestore settings"
+    ],
+    "tags": [
+      "firebase",
+      "firestore",
+      "timeout"
+    ]
+  },
+  {
+    "id": "firebase-adv-013",
+    "regex": "Billing account not configured.*quota",
+    "language": "firebase",
+    "title": "Firebase Billing Not Configured",
+    "fixes": [
+      "Link a billing account in Firebase console",
+      "Upgrade from Spark to Blaze plan",
+      "Set budget alerts to control spending"
+    ],
+    "tags": [
+      "firebase",
+      "billing",
+      "quota"
+    ]
+  },
+  {
+    "id": "firebase-adv-014",
+    "regex": "auth/requires-recent-login",
+    "language": "firebase",
+    "title": "Firebase Requires Recent Login",
+    "fixes": [
+      "Re-authenticate user with reauthenticateWithCredential",
+      "Prompt user to sign in again before sensitive op",
+      "Use auth.currentUser.getIdToken(true) to refresh"
+    ],
+    "tags": [
+      "firebase",
+      "auth",
+      "reauthentication"
+    ]
+  },
+  {
+    "id": "firebase-adv-015",
+    "regex": "Function returned undefined.*expected a Promise",
+    "language": "firebase",
+    "title": "Cloud Function Missing Return",
+    "fixes": [
+      "Return a Promise from the function handler",
+      "Add return statement before async operations",
+      "Use async/await and ensure function returns value"
+    ],
+    "tags": [
+      "firebase",
+      "functions",
+      "promise"
+    ]
+  },
+  {
+    "id": "firebase-adv-016",
+    "regex": "firestore/unavailable.*offline",
+    "language": "firebase",
+    "title": "Firestore Service Unavailable",
+    "fixes": [
+      "Enable offline persistence for resilience",
+      "Implement retry logic with connectivity check",
+      "Use enableNetwork/disableNetwork for explicit control"
+    ],
+    "tags": [
+      "firebase",
+      "firestore",
+      "unavailable"
+    ]
+  },
+  {
+    "id": "firebase-adv-017",
+    "regex": "storage/retry-limit-exceeded",
+    "language": "firebase",
+    "title": "Firebase Storage Retry Limit",
+    "fixes": [
+      "Check network stability before upload",
+      "Implement resumable uploads for large files",
+      "Reduce file size or compress before upload"
+    ],
+    "tags": [
+      "firebase",
+      "storage",
+      "retry"
+    ]
+  },
+  {
+    "id": "firebase-adv-018",
+    "regex": "Exceeded maximum allowed number of rules",
+    "language": "firebase",
+    "title": "Firebase Rules Limit Exceeded",
+    "fixes": [
+      "Refactor rules to use functions for reuse",
+      "Reduce nested conditions with helper functions",
+      "Split into multiple rule files with imports"
+    ],
+    "tags": [
+      "firebase",
+      "rules",
+      "limit"
+    ]
+  },
+  {
+    "id": "firebase-adv-019",
+    "regex": "auth/popup-closed-by-user",
+    "language": "firebase",
+    "title": "Firebase Auth Popup Closed",
+    "fixes": [
+      "Show user-friendly message to retry sign-in",
+      "Use signInWithRedirect as fallback",
+      "Check for popup blockers and inform user"
+    ],
+    "tags": [
+      "firebase",
+      "auth",
+      "popup"
+    ]
+  },
+  {
+    "id": "firebase-adv-020",
+    "regex": "Maximum call stack size exceeded.*Firestore",
+    "language": "firebase",
+    "title": "Firestore Circular Reference",
+    "fixes": [
+      "Remove circular references from document data",
+      "Use toJSON() or serialize objects before saving",
+      "Flatten nested objects structure"
+    ],
+    "tags": [
+      "firebase",
+      "firestore",
+      "serialization"
+    ]
+  },
+  {
+    "id": "deploy-adv-001",
+    "regex": "Build failed.*Command.*exited with (\\d+)",
+    "language": "deployment",
+    "title": "Vercel Build Failed",
+    "fixes": [
+      "Check build logs for the failing command",
+      "Verify build command in vercel.json matches package.json",
+      "Ensure all dependencies are listed (not just devDependencies)"
+    ],
+    "tags": [
+      "vercel",
+      "build",
+      "deployment"
+    ]
+  },
+  {
+    "id": "deploy-adv-002",
+    "regex": "Serverless Function.*exceeds the maximum size.*50.*MB",
+    "language": "deployment",
+    "title": "Vercel Function Size Limit Exceeded",
+    "fixes": [
+      "Use dynamic imports to reduce bundle size",
+      "Exclude unnecessary dependencies with .vercelignore",
+      "Split into multiple smaller functions"
+    ],
+    "tags": [
+      "vercel",
+      "functions",
+      "size-limit"
+    ]
+  },
+  {
+    "id": "deploy-adv-003",
+    "regex": "Edge Function.*has crashed|EDGE_FUNCTION_INVOCATION_FAILED",
+    "language": "deployment",
+    "title": "Vercel Edge Function Crash",
+    "fixes": [
+      "Check for Node.js APIs not available in Edge runtime",
+      "Use edge-compatible packages only",
+      "Add try-catch and return proper Response objects"
+    ],
+    "tags": [
+      "vercel",
+      "edge-function",
+      "crash"
+    ]
+  },
+  {
+    "id": "deploy-adv-004",
+    "regex": "Environment variable.*not found|Missing required env",
+    "language": "deployment",
+    "title": "Deployment Environment Variable Missing",
+    "fixes": [
+      "Add variable in Vercel/Netlify project settings",
+      "Ensure variable is available for the correct environment",
+      "Check variable name matches exactly (case-sensitive)"
+    ],
+    "tags": [
+      "deployment",
+      "env-var",
+      "configuration"
+    ]
+  },
+  {
+    "id": "deploy-adv-005",
+    "regex": "ERR_TOO_MANY_REDIRECTS|redirect loop detected",
+    "language": "deployment",
+    "title": "Deployment Redirect Loop",
+    "fixes": [
+      "Check _redirects file for conflicting rules",
+      "Verify force HTTPS is not conflicting with existing rules",
+      "Remove trailing slash redirect conflicts"
+    ],
+    "tags": [
+      "deployment",
+      "redirects",
+      "loop"
+    ]
+  },
+  {
+    "id": "deploy-adv-006",
+    "regex": "ISR.*revalidation failed|On-Demand Revalidation.*error",
+    "language": "deployment",
+    "title": "ISR Revalidation Failed",
+    "fixes": [
+      "Verify revalidation API route returns correct status",
+      "Check revalidation token/secret is configured",
+      "Ensure data source is accessible during revalidation"
+    ],
+    "tags": [
+      "vercel",
+      "isr",
+      "revalidation"
+    ]
+  },
+  {
+    "id": "deploy-adv-007",
+    "regex": "Netlify.*build\\.command failed",
+    "language": "deployment",
+    "title": "Netlify Build Command Failed",
+    "fixes": [
+      "Check netlify.toml build.command configuration",
+      "Verify Node.js version in environment variables",
+      "Run build locally to reproduce the error"
+    ],
+    "tags": [
+      "netlify",
+      "build",
+      "command"
+    ]
+  },
+  {
+    "id": "deploy-adv-008",
+    "regex": "Function.*bundling.*error|Cannot find module",
+    "language": "deployment",
+    "title": "Netlify Function Bundling Error",
+    "fixes": [
+      "Check included_files in netlify.toml for native modules",
+      "Use esbuild-compatible dependencies",
+      "Add external_node_modules configuration"
+    ],
+    "tags": [
+      "netlify",
+      "functions",
+      "bundling"
+    ]
+  },
+  {
+    "id": "deploy-adv-009",
+    "regex": "Deploy failed.*branch.*is not linked",
+    "language": "deployment",
+    "title": "Deployment Branch Not Linked",
+    "fixes": [
+      "Link branch to project in dashboard settings",
+      "Verify git remote is correctly configured",
+      "Check deploy contexts in configuration file"
+    ],
+    "tags": [
+      "deployment",
+      "branch",
+      "linking"
+    ]
+  },
+  {
+    "id": "deploy-adv-010",
+    "regex": "FUNCTION_INVOCATION_TIMEOUT",
+    "language": "deployment",
+    "title": "Vercel Serverless Function Timeout",
+    "fixes": [
+      "Optimize function to complete within time limit",
+      "Upgrade to Pro plan for 60s timeout",
+      "Use background functions for long tasks"
+    ],
+    "tags": [
+      "vercel",
+      "functions",
+      "timeout"
+    ]
+  },
+  {
+    "id": "deploy-adv-011",
+    "regex": "Output.*exceeds.*maximum.*allowed size",
+    "language": "deployment",
+    "title": "Deployment Output Size Exceeded",
+    "fixes": [
+      "Remove unnecessary static assets from output",
+      "Configure output file tracing to minimize size",
+      "Use CDN for large media files instead of bundling"
+    ],
+    "tags": [
+      "deployment",
+      "output",
+      "size"
+    ]
+  },
+  {
+    "id": "deploy-adv-012",
+    "regex": "Plugin.*failed during.*onPreBuild|onBuild|onPostBuild",
+    "language": "deployment",
+    "title": "Netlify Plugin Build Hook Failed",
+    "fixes": [
+      "Check plugin version compatibility",
+      "Review plugin configuration in netlify.toml",
+      "Disable plugin temporarily to isolate issue"
+    ],
+    "tags": [
+      "netlify",
+      "plugins",
+      "build-hook"
+    ]
+  },
+  {
+    "id": "deploy-adv-013",
+    "regex": "Middleware.*error|middleware\\.js.*failed",
+    "language": "deployment",
+    "title": "Vercel Middleware Error",
+    "fixes": [
+      "Check middleware uses Edge Runtime compatible APIs",
+      "Verify matcher config in middleware.ts",
+      "Add error handling with NextResponse.next()"
+    ],
+    "tags": [
+      "vercel",
+      "middleware",
+      "edge"
+    ]
+  },
+  {
+    "id": "deploy-adv-014",
+    "regex": "Cache.*quota exceeded|build cache.*full",
+    "language": "deployment",
+    "title": "Deployment Build Cache Full",
+    "fixes": [
+      "Clear build cache in project settings",
+      "Add cache-specific ignore paths",
+      "Reduce cached dependency size"
+    ],
+    "tags": [
+      "deployment",
+      "cache",
+      "quota"
+    ]
+  },
+  {
+    "id": "deploy-adv-015",
+    "regex": "DNS.*CNAME.*conflict|domain.*already in use",
+    "language": "deployment",
+    "title": "Deployment Domain DNS Conflict",
+    "fixes": [
+      "Remove conflicting DNS records",
+      "Verify domain ownership with TXT record",
+      "Use different subdomain or remove from other project"
+    ],
+    "tags": [
+      "deployment",
+      "dns",
+      "domain"
+    ]
+  },
+  {
+    "id": "deploy-adv-016",
+    "regex": "Image Optimization.*error|next/image.*failed",
+    "language": "deployment",
+    "title": "Vercel Image Optimization Error",
+    "fixes": [
+      "Check image source URL is accessible",
+      "Verify remotePatterns in next.config.js",
+      "Reduce image dimensions to within limits"
+    ],
+    "tags": [
+      "vercel",
+      "images",
+      "optimization"
+    ]
+  },
+  {
+    "id": "deploy-adv-017",
+    "regex": "Exceeded maximum number of deployments per day",
+    "language": "deployment",
+    "title": "Deployment Rate Limit",
+    "fixes": [
+      "Wait for rate limit to reset",
+      "Batch changes into fewer deployments",
+      "Upgrade plan for higher deployment limits"
+    ],
+    "tags": [
+      "deployment",
+      "rate-limit",
+      "quota"
+    ]
+  },
+  {
+    "id": "deploy-adv-018",
+    "regex": "forms.*submission.*failed|Form detection.*error",
+    "language": "deployment",
+    "title": "Netlify Forms Submission Failed",
+    "fixes": [
+      "Ensure form has netlify attribute in HTML",
+      "Check form name matches between HTML and handler",
+      "Verify spam filter is not blocking submissions"
+    ],
+    "tags": [
+      "netlify",
+      "forms",
+      "submission"
+    ]
+  },
+  {
+    "id": "deploy-adv-019",
+    "regex": "Incremental Static Regeneration is not compatible",
+    "language": "deployment",
+    "title": "ISR Compatibility Error",
+    "fixes": [
+      "Ensure hosting platform supports ISR",
+      "Use on-demand revalidation API instead",
+      "Switch to client-side fetching for dynamic data"
+    ],
+    "tags": [
+      "deployment",
+      "isr",
+      "compatibility"
+    ]
+  },
+  {
+    "id": "deploy-adv-020",
+    "regex": "Serverless Function.*ECONNREFUSED|fetch failed in function",
+    "language": "deployment",
+    "title": "Serverless Function Connection Refused",
+    "fixes": [
+      "Verify API URL is accessible from serverless environment",
+      "Check environment variables for correct API endpoints",
+      "Ensure target service allows connections from platform IPs"
+    ],
+    "tags": [
+      "deployment",
+      "functions",
+      "connection"
+    ]
+  },
+  {
+    "id": "pkg-adv-001",
+    "regex": "ERESOLVE.*Could not resolve dependency.*peer",
+    "language": "package-manager",
+    "title": "npm Peer Dependency Conflict",
+    "fixes": [
+      "Use --legacy-peer-deps flag to bypass",
+      "Align dependency versions to satisfy peers",
+      "Add overrides field in package.json to force resolution"
+    ],
+    "tags": [
+      "npm",
+      "peer-dependency",
+      "eresolve"
+    ]
+  },
+  {
+    "id": "pkg-adv-002",
+    "regex": "Cannot find module.*\\.pnp\\.cjs|Your application tried to access",
+    "language": "package-manager",
+    "title": "Yarn Berry PnP Module Not Found",
+    "fixes": [
+      "Run yarn dlx @yarnpkg/sdks to patch IDE",
+      "Add packageExtensions in .yarnrc.yml for missing deps",
+      "Use nodeLinker: node-modules if PnP incompatible"
+    ],
+    "tags": [
+      "yarn",
+      "pnp",
+      "module-resolution"
+    ]
+  },
+  {
+    "id": "pkg-adv-003",
+    "regex": "ERR_PNPM_PEER_DEP_ISSUES|missing peer dependencies",
+    "language": "package-manager",
+    "title": "pnpm Peer Dependency Issues",
+    "fixes": [
+      "Add shamefully-hoist=true in .npmrc",
+      "Use pnpm install --no-strict-peer-dependencies",
+      "Add peerDependencyRules.ignoreMissing in package.json"
+    ],
+    "tags": [
+      "pnpm",
+      "peer-dependency",
+      "hoist"
+    ]
+  },
+  {
+    "id": "pkg-adv-004",
+    "regex": "Allowed memory size of \\d+ bytes exhausted.*Composer",
+    "language": "package-manager",
+    "title": "Composer Memory Limit Exceeded",
+    "fixes": [
+      "Run with COMPOSER_MEMORY_LIMIT=-1",
+      "Increase PHP memory_limit in php.ini",
+      "Use composer update --prefer-lowest to reduce memory"
+    ],
+    "tags": [
+      "composer",
+      "php",
+      "memory"
+    ]
+  },
+  {
+    "id": "pkg-adv-005",
+    "regex": "ResolutionImpossible|pip.*Could not find a version that satisfies",
+    "language": "package-manager",
+    "title": "pip Resolver Conflict",
+    "fixes": [
+      "Use pip install --use-deprecated=legacy-resolver",
+      "Pin conflicting packages to compatible versions",
+      "Create a constraints file to lock transitive deps"
+    ],
+    "tags": [
+      "pip",
+      "python",
+      "resolver"
+    ]
+  },
+  {
+    "id": "pkg-adv-006",
+    "regex": "feature.*was not specified|requires.*feature",
+    "language": "package-manager",
+    "title": "Cargo Feature Flag Missing",
+    "fixes": [
+      "Add required feature in Cargo.toml [features] section",
+      "Enable feature with cargo build --features flag_name",
+      "Check dependency requires default-features = false"
+    ],
+    "tags": [
+      "cargo",
+      "rust",
+      "features"
+    ]
+  },
+  {
+    "id": "pkg-adv-007",
+    "regex": "npm ERR! code ENOTEMPTY|EPERM.*rename",
+    "language": "package-manager",
+    "title": "npm File System Permission Error",
+    "fixes": [
+      "Clear npm cache with npm cache clean --force",
+      "Delete node_modules and package-lock.json and reinstall",
+      "Run terminal as administrator on Windows"
+    ],
+    "tags": [
+      "npm",
+      "filesystem",
+      "permissions"
+    ]
+  },
+  {
+    "id": "pkg-adv-008",
+    "regex": "YN0002.*Missing peer dependency",
+    "language": "package-manager",
+    "title": "Yarn Berry Missing Peer Dependency",
+    "fixes": [
+      "Install the peer dependency explicitly",
+      "Add to packageExtensions in .yarnrc.yml",
+      "Use yarn explain peer-requirements for details"
+    ],
+    "tags": [
+      "yarn",
+      "peer-dependency",
+      "warning"
+    ]
+  },
+  {
+    "id": "pkg-adv-009",
+    "regex": "ERR_PNPM_NO_MATCHING_VERSION",
+    "language": "package-manager",
+    "title": "pnpm No Matching Version",
+    "fixes": [
+      "Check registry for available versions",
+      "Verify package name is spelled correctly",
+      "Clear pnpm store with pnpm store prune"
+    ],
+    "tags": [
+      "pnpm",
+      "version",
+      "registry"
+    ]
+  },
+  {
+    "id": "pkg-adv-010",
+    "regex": "Composer.*Your requirements could not be resolved",
+    "language": "package-manager",
+    "title": "Composer Dependency Resolution Failed",
+    "fixes": [
+      "Run composer why-not package/name version to diagnose",
+      "Use composer update --with-dependencies",
+      "Add conflict section to prevent incompatible versions"
+    ],
+    "tags": [
+      "composer",
+      "php",
+      "resolution"
+    ]
+  },
+  {
+    "id": "pkg-adv-011",
+    "regex": "pip.*has inconsistent version.*installed",
+    "language": "package-manager",
+    "title": "pip Inconsistent Package Version",
+    "fixes": [
+      "Use pip install --force-reinstall package",
+      "Create fresh virtual environment",
+      "Pin exact versions in requirements.txt"
+    ],
+    "tags": [
+      "pip",
+      "python",
+      "version"
+    ]
+  },
+  {
+    "id": "pkg-adv-012",
+    "regex": "error\\[E0277\\].*trait.*is not implemented",
+    "language": "package-manager",
+    "title": "Cargo Trait Not Implemented",
+    "fixes": [
+      "Enable the required feature flag for the dependency",
+      "Implement the required trait for your type",
+      "Check if a different version provides the impl"
+    ],
+    "tags": [
+      "cargo",
+      "rust",
+      "traits"
+    ]
+  },
+  {
+    "id": "pkg-adv-013",
+    "regex": "npm ERR!.*ETARGET.*No matching version found",
+    "language": "package-manager",
+    "title": "npm No Matching Version",
+    "fixes": [
+      "Check if package version exists on registry",
+      "Use npm view package versions to list available",
+      "Verify registry URL in .npmrc is correct"
+    ],
+    "tags": [
+      "npm",
+      "version",
+      "registry"
+    ]
+  },
+  {
+    "id": "pkg-adv-014",
+    "regex": "YN0078.*unused dependencies|YN0060.*incompatible",
+    "language": "package-manager",
+    "title": "Yarn Berry Constraint Violation",
+    "fixes": [
+      "Run yarn constraints --fix to auto-resolve",
+      "Update yarn constraints.pro rules",
+      "Remove unused dependencies from package.json"
+    ],
+    "tags": [
+      "yarn",
+      "constraints",
+      "validation"
+    ]
+  },
+  {
+    "id": "pkg-adv-015",
+    "regex": "ERR_PNPM_OUTDATED_LOCKFILE",
+    "language": "package-manager",
+    "title": "pnpm Outdated Lockfile",
+    "fixes": [
+      "Run pnpm install --no-frozen-lockfile to update",
+      "Commit updated pnpm-lock.yaml",
+      "Use pnpm install --frozen-lockfile only in CI"
+    ],
+    "tags": [
+      "pnpm",
+      "lockfile",
+      "outdated"
+    ]
+  },
+  {
+    "id": "pkg-adv-016",
+    "regex": "Composer.*platform requirements.*ext-",
+    "language": "package-manager",
+    "title": "Composer Missing PHP Extension",
+    "fixes": [
+      "Install the required PHP extension",
+      "Add platform config in composer.json to ignore",
+      "Use Docker image with required extensions"
+    ],
+    "tags": [
+      "composer",
+      "php",
+      "extension"
+    ]
+  },
+  {
+    "id": "pkg-adv-017",
+    "regex": "ERROR:.*setup\\.py.*failed with error code",
+    "language": "package-manager",
+    "title": "pip Setup.py Build Failed",
+    "fixes": [
+      "Install build dependencies (gcc, python-dev)",
+      "Use --prefer-binary flag to avoid compilation",
+      "Install pre-built wheel if available"
+    ],
+    "tags": [
+      "pip",
+      "python",
+      "build"
+    ]
+  },
+  {
+    "id": "pkg-adv-018",
+    "regex": "error: failed to select a version for",
+    "language": "package-manager",
+    "title": "Cargo Version Selection Failed",
+    "fixes": [
+      "Check for conflicting version requirements in Cargo.toml",
+      "Use cargo tree -d to find duplicate dependencies",
+      "Add [patch] section to override conflicting crate"
+    ],
+    "tags": [
+      "cargo",
+      "rust",
+      "version"
+    ]
+  },
+  {
+    "id": "pkg-adv-019",
+    "regex": "npm ERR! code EINTEGRITY|sha512.*integrity checksum failed",
+    "language": "package-manager",
+    "title": "npm Integrity Check Failed",
+    "fixes": [
+      "Delete node_modules and package-lock.json and reinstall",
+      "Clear npm cache with npm cache clean --force",
+      "Verify registry is not returning corrupted packages"
+    ],
+    "tags": [
+      "npm",
+      "integrity",
+      "cache"
+    ]
+  },
+  {
+    "id": "pkg-adv-020",
+    "regex": "YN0001.*No candidates found|Resolution failed",
+    "language": "package-manager",
+    "title": "Yarn Berry Resolution Failed",
+    "fixes": [
+      "Check package exists on configured registry",
+      "Add resolutions field to force specific version",
+      "Verify .yarnrc.yml registry configuration"
+    ],
+    "tags": [
+      "yarn",
+      "resolution",
+      "registry"
+    ]
+  },
+  {
+    "id": "browser-adv-001",
+    "regex": "NotAllowedError.*Permission.*denied|NotAllowedError.*user gesture",
+    "language": "browser",
+    "title": "Browser Permission Not Allowed",
+    "fixes": [
+      "Request permission in response to user gesture (click)",
+      "Check Permissions API status before requesting",
+      "Provide fallback for when permission is denied"
+    ],
+    "tags": [
+      "browser",
+      "permissions",
+      "NotAllowedError"
+    ]
+  },
+  {
+    "id": "browser-adv-002",
+    "regex": "QuotaExceededError.*localStorage|exceeded the quota",
+    "language": "browser",
+    "title": "LocalStorage Quota Exceeded",
+    "fixes": [
+      "Clear unused localStorage entries",
+      "Implement LRU eviction strategy",
+      "Use IndexedDB for larger storage needs"
+    ],
+    "tags": [
+      "browser",
+      "storage",
+      "QuotaExceededError"
+    ]
+  },
+  {
+    "id": "browser-adv-003",
+    "regex": "SecurityError.*cross-origin|Blocked a frame with origin",
+    "language": "browser",
+    "title": "Cross-Origin Security Error",
+    "fixes": [
+      "Configure CORS headers on the server",
+      "Use postMessage for cross-origin frame communication",
+      "Proxy requests through same-origin backend"
+    ],
+    "tags": [
+      "browser",
+      "cors",
+      "SecurityError"
+    ]
+  },
+  {
+    "id": "browser-adv-004",
+    "regex": "AbortError.*The operation was aborted",
+    "language": "browser",
+    "title": "Browser Operation Aborted",
+    "fixes": [
+      "Check if AbortController signal was triggered",
+      "Handle abort gracefully in catch block",
+      "Verify operation wasn't cancelled by navigation"
+    ],
+    "tags": [
+      "browser",
+      "abort",
+      "AbortError"
+    ]
+  },
+  {
+    "id": "browser-adv-005",
+    "regex": "DOMException.*not allowed.*user activation",
+    "language": "browser",
+    "title": "DOM User Activation Required",
+    "fixes": [
+      "Trigger action from a user event handler",
+      "Use click event instead of programmatic trigger",
+      "Check document.hasStorageAccess() for third-party context"
+    ],
+    "tags": [
+      "browser",
+      "dom",
+      "user-activation"
+    ]
+  },
+  {
+    "id": "browser-adv-006",
+    "regex": "ServiceWorker registration failed|Failed to register a ServiceWorker",
+    "language": "browser",
+    "title": "Service Worker Registration Failed",
+    "fixes": [
+      "Ensure SW file is served from same origin",
+      "Check SW file has valid JavaScript syntax",
+      "Verify HTTPS is enabled (required for SW)"
+    ],
+    "tags": [
+      "browser",
+      "service-worker",
+      "registration"
+    ]
+  },
+  {
+    "id": "browser-adv-007",
+    "regex": "NotSupportedError.*The operation is not supported",
+    "language": "browser",
+    "title": "Browser API Not Supported",
+    "fixes": [
+      "Check feature availability with feature detection",
+      "Provide polyfill or fallback implementation",
+      "Verify browser version supports the API"
+    ],
+    "tags": [
+      "browser",
+      "compatibility",
+      "NotSupportedError"
+    ]
+  },
+  {
+    "id": "browser-adv-008",
+    "regex": "InvalidStateError.*object is in an invalid state",
+    "language": "browser",
+    "title": "DOM Invalid State Error",
+    "fixes": [
+      "Check element readyState before operation",
+      "Ensure DOM element is attached to document",
+      "Verify operation sequence is correct"
+    ],
+    "tags": [
+      "browser",
+      "dom",
+      "InvalidStateError"
+    ]
+  },
+  {
+    "id": "browser-adv-009",
+    "regex": "NotFoundError.*node was not found|removeChild.*not a child",
+    "language": "browser",
+    "title": "DOM Node Not Found",
+    "fixes": [
+      "Verify element exists before removing",
+      "Check parent-child relationship is correct",
+      "Use optional chaining for DOM operations"
+    ],
+    "tags": [
+      "browser",
+      "dom",
+      "NotFoundError"
+    ]
+  },
+  {
+    "id": "browser-adv-010",
+    "regex": "DataCloneError.*could not be cloned",
+    "language": "browser",
+    "title": "Structured Clone Error",
+    "fixes": [
+      "Remove functions and DOM elements from data",
+      "Serialize object with JSON before posting",
+      "Use transferable objects for ArrayBuffers"
+    ],
+    "tags": [
+      "browser",
+      "worker",
+      "DataCloneError"
+    ]
+  },
+  {
+    "id": "browser-adv-011",
+    "regex": "TypeError.*Failed to fetch|NetworkError.*request failed",
+    "language": "browser",
+    "title": "Browser Fetch Network Error",
+    "fixes": [
+      "Check network connectivity and CORS configuration",
+      "Verify URL is correct and server is running",
+      "Handle offline state with navigator.onLine check"
+    ],
+    "tags": [
+      "browser",
+      "fetch",
+      "network"
+    ]
+  },
+  {
+    "id": "browser-adv-012",
+    "regex": "NotReadableError.*Could not read.*source",
+    "language": "browser",
+    "title": "Media Stream Not Readable",
+    "fixes": [
+      "Check if camera/mic is being used by another app",
+      "Verify media constraints are supported by device",
+      "Handle device disconnection gracefully"
+    ],
+    "tags": [
+      "browser",
+      "media",
+      "NotReadableError"
+    ]
+  },
+  {
+    "id": "browser-adv-013",
+    "regex": "QuotaExceededError.*IndexedDB",
+    "language": "browser",
+    "title": "IndexedDB Quota Exceeded",
+    "fixes": [
+      "Request persistent storage with navigator.storage.persist()",
+      "Implement data cleanup for old entries",
+      "Check available quota with navigator.storage.estimate()"
+    ],
+    "tags": [
+      "browser",
+      "indexeddb",
+      "quota"
+    ]
+  },
+  {
+    "id": "browser-adv-014",
+    "regex": "SecurityError.*localStorage.*access.*denied",
+    "language": "browser",
+    "title": "LocalStorage Access Denied",
+    "fixes": [
+      "Check if third-party cookies are blocked",
+      "Use Storage Access API in embedded contexts",
+      "Implement fallback with in-memory storage"
+    ],
+    "tags": [
+      "browser",
+      "storage",
+      "security"
+    ]
+  },
+  {
+    "id": "browser-adv-015",
+    "regex": "ConstraintError.*IndexedDB.*constraint",
+    "language": "browser",
+    "title": "IndexedDB Constraint Error",
+    "fixes": [
+      "Check for duplicate key before inserting",
+      "Use put() instead of add() to upsert",
+      "Verify index uniqueness configuration"
+    ],
+    "tags": [
+      "browser",
+      "indexeddb",
+      "constraint"
+    ]
+  },
+  {
+    "id": "browser-adv-016",
+    "regex": "TimeoutError.*timed out|The operation timed out",
+    "language": "browser",
+    "title": "Browser Operation Timeout",
+    "fixes": [
+      "Increase timeout value for the operation",
+      "Implement retry logic with backoff",
+      "Check if operation is blocked by another process"
+    ],
+    "tags": [
+      "browser",
+      "timeout",
+      "TimeoutError"
+    ]
+  },
+  {
+    "id": "browser-adv-017",
+    "regex": "HierarchyRequestError.*node.*insert",
+    "language": "browser",
+    "title": "DOM Hierarchy Error",
+    "fixes": [
+      "Verify insertion point is valid for node type",
+      "Check element is not being inserted into itself",
+      "Ensure document fragment structure is correct"
+    ],
+    "tags": [
+      "browser",
+      "dom",
+      "HierarchyRequestError"
+    ]
+  },
+  {
+    "id": "browser-adv-018",
+    "regex": "EncodingError.*URI malformed|URIError",
+    "language": "browser",
+    "title": "Browser URI Encoding Error",
+    "fixes": [
+      "Use encodeURIComponent for query parameters",
+      "Validate URI string before decoding",
+      "Handle special characters in URL paths"
+    ],
+    "tags": [
+      "browser",
+      "encoding",
+      "URIError"
+    ]
+  },
+  {
+    "id": "browser-adv-019",
+    "regex": "OverconstrainedError.*Constraints could not be satisfied",
+    "language": "browser",
+    "title": "Media Constraints Error",
+    "fixes": [
+      "Relax media constraints (lower resolution)",
+      "Check available devices with enumerateDevices()",
+      "Provide fallback constraints configuration"
+    ],
+    "tags": [
+      "browser",
+      "media",
+      "constraints"
+    ]
+  },
+  {
+    "id": "browser-adv-020",
+    "regex": "InvalidAccessError.*object does not support",
+    "language": "browser",
+    "title": "Browser Invalid Access Error",
+    "fixes": [
+      "Check API compatibility with current context",
+      "Verify object has required interface",
+      "Use feature detection before calling method"
+    ],
+    "tags": [
+      "browser",
+      "dom",
+      "InvalidAccessError"
+    ]
+  },
+  {
+    "id": "perf-adv-001",
+    "regex": "Largest Contentful Paint.*exceeded.*(?:2500|4000)ms",
+    "language": "performance",
+    "title": "LCP Too Slow",
+    "fixes": [
+      "Preload critical images and fonts",
+      "Optimize server response time (TTFB)",
+      "Remove render-blocking resources from head"
+    ],
+    "tags": [
+      "performance",
+      "lcp",
+      "core-web-vitals"
+    ]
+  },
+  {
+    "id": "perf-adv-002",
+    "regex": "Cumulative Layout Shift.*(?:0\\.1|0\\.25).*exceeded",
+    "language": "performance",
+    "title": "CLS Too High",
+    "fixes": [
+      "Add width/height attributes to images and videos",
+      "Reserve space for dynamic content with aspect-ratio",
+      "Avoid inserting content above existing content"
+    ],
+    "tags": [
+      "performance",
+      "cls",
+      "core-web-vitals"
+    ]
+  },
+  {
+    "id": "perf-adv-003",
+    "regex": "Time to Interactive.*exceeded.*(?:3800|7300)ms",
+    "language": "performance",
+    "title": "TTI Too Slow",
+    "fixes": [
+      "Code-split and lazy load non-critical JavaScript",
+      "Reduce main thread blocking time",
+      "Defer third-party scripts"
+    ],
+    "tags": [
+      "performance",
+      "tti",
+      "core-web-vitals"
+    ]
+  },
+  {
+    "id": "perf-adv-004",
+    "regex": "Bundle size.*exceeded.*limit|maxSize.*budget exceeded",
+    "language": "performance",
+    "title": "Bundle Size Limit Exceeded",
+    "fixes": [
+      "Analyze bundle with webpack-bundle-analyzer",
+      "Code-split routes and heavy dependencies",
+      "Replace large libraries with lighter alternatives"
+    ],
+    "tags": [
+      "performance",
+      "bundle-size",
+      "budget"
+    ]
+  },
+  {
+    "id": "perf-adv-005",
+    "regex": "Lighthouse.*score.*dropped|performance score.*below (\\d+)",
+    "language": "performance",
+    "title": "Lighthouse Score Drop",
+    "fixes": [
+      "Run Lighthouse in CI to catch regressions",
+      "Address highest-impact opportunities first",
+      "Compare before/after with Lighthouse treemap"
+    ],
+    "tags": [
+      "performance",
+      "lighthouse",
+      "regression"
+    ]
+  },
+  {
+    "id": "perf-adv-006",
+    "regex": "memory leak detected|Detached.*DOM.*nodes.*growing",
+    "language": "performance",
+    "title": "Memory Leak Detected",
+    "fixes": [
+      "Check for unremoved event listeners",
+      "Verify subscriptions are cleaned up on destroy",
+      "Use Chrome DevTools heap snapshots to find retained objects"
+    ],
+    "tags": [
+      "performance",
+      "memory-leak",
+      "debugging"
+    ]
+  },
+  {
+    "id": "perf-adv-007",
+    "regex": "First Input Delay.*exceeded.*100ms",
+    "language": "performance",
+    "title": "FID Too High",
+    "fixes": [
+      "Break long tasks into smaller async chunks",
+      "Use web workers for heavy computation",
+      "Defer non-essential event listeners"
+    ],
+    "tags": [
+      "performance",
+      "fid",
+      "core-web-vitals"
+    ]
+  },
+  {
+    "id": "perf-adv-008",
+    "regex": "Total Blocking Time.*exceeded.*(?:200|600)ms",
+    "language": "performance",
+    "title": "TBT Too High",
+    "fixes": [
+      "Split long JavaScript tasks with requestIdleCallback",
+      "Remove unused JavaScript with tree shaking",
+      "Defer parsing of non-critical scripts"
+    ],
+    "tags": [
+      "performance",
+      "tbt",
+      "main-thread"
+    ]
+  },
+  {
+    "id": "perf-adv-009",
+    "regex": "Speed Index.*exceeded.*(?:3400|5800)ms",
+    "language": "performance",
+    "title": "Speed Index Too Slow",
+    "fixes": [
+      "Optimize critical rendering path",
+      "Inline critical CSS above the fold",
+      "Use font-display: swap for web fonts"
+    ],
+    "tags": [
+      "performance",
+      "speed-index",
+      "rendering"
+    ]
+  },
+  {
+    "id": "perf-adv-010",
+    "regex": "JavaScript execution time.*exceeded",
+    "language": "performance",
+    "title": "Excessive JS Execution Time",
+    "fixes": [
+      "Profile with Chrome DevTools Performance tab",
+      "Implement code splitting at route level",
+      "Move heavy computation to Web Workers"
+    ],
+    "tags": [
+      "performance",
+      "javascript",
+      "execution"
+    ]
+  },
+  {
+    "id": "perf-adv-011",
+    "regex": "Image.*not properly sized|Serve images in next-gen formats",
+    "language": "performance",
+    "title": "Unoptimized Images",
+    "fixes": [
+      "Use responsive images with srcset",
+      "Convert to WebP/AVIF format",
+      "Implement lazy loading with loading=lazy attribute"
+    ],
+    "tags": [
+      "performance",
+      "images",
+      "optimization"
+    ]
+  },
+  {
+    "id": "perf-adv-012",
+    "regex": "Render-blocking resource.*delayed FCP",
+    "language": "performance",
+    "title": "Render-Blocking Resources",
+    "fixes": [
+      "Add async/defer to non-critical scripts",
+      "Inline critical CSS and lazy-load the rest",
+      "Use rel=preload for critical resources"
+    ],
+    "tags": [
+      "performance",
+      "render-blocking",
+      "fcp"
+    ]
+  },
+  {
+    "id": "perf-adv-013",
+    "regex": "DOM size.*exceeded.*1500 nodes",
+    "language": "performance",
+    "title": "Excessive DOM Size",
+    "fixes": [
+      "Implement virtual scrolling for long lists",
+      "Use content-visibility: auto for off-screen content",
+      "Lazy render components below the fold"
+    ],
+    "tags": [
+      "performance",
+      "dom-size",
+      "rendering"
+    ]
+  },
+  {
+    "id": "perf-adv-014",
+    "regex": "Layout thrashing detected|forced reflow",
+    "language": "performance",
+    "title": "Layout Thrashing Detected",
+    "fixes": [
+      "Batch DOM reads before DOM writes",
+      "Use requestAnimationFrame for visual updates",
+      "Use transform/opacity for animations instead of layout properties"
+    ],
+    "tags": [
+      "performance",
+      "layout",
+      "reflow"
+    ]
+  },
+  {
+    "id": "perf-adv-015",
+    "regex": "Cache hit ratio.*below|cache miss rate.*high",
+    "language": "performance",
+    "title": "Low Cache Hit Ratio",
+    "fixes": [
+      "Set appropriate Cache-Control headers",
+      "Implement stale-while-revalidate strategy",
+      "Use content hashing in asset filenames"
+    ],
+    "tags": [
+      "performance",
+      "caching",
+      "headers"
+    ]
+  },
+  {
+    "id": "perf-adv-016",
+    "regex": "TTFB.*exceeded.*(?:800|1800)ms",
+    "language": "performance",
+    "title": "Time to First Byte Too Slow",
+    "fixes": [
+      "Enable server-side caching (Redis/CDN)",
+      "Optimize database queries on critical path",
+      "Use CDN edge locations closer to users"
+    ],
+    "tags": [
+      "performance",
+      "ttfb",
+      "server"
+    ]
+  },
+  {
+    "id": "perf-adv-017",
+    "regex": "Third-party scripts.*blocking main thread",
+    "language": "performance",
+    "title": "Third-Party Script Blocking",
+    "fixes": [
+      "Load third-party scripts async or defer",
+      "Use facade pattern for heavy embeds",
+      "Implement Partytown for off-main-thread scripts"
+    ],
+    "tags": [
+      "performance",
+      "third-party",
+      "blocking"
+    ]
+  },
+  {
+    "id": "perf-adv-018",
+    "regex": "Interaction to Next Paint.*exceeded.*200ms",
+    "language": "performance",
+    "title": "INP Too Slow",
+    "fixes": [
+      "Optimize event handlers to be under 50ms",
+      "Use startTransition for non-urgent updates",
+      "Break up long event processing with scheduler.yield()"
+    ],
+    "tags": [
+      "performance",
+      "inp",
+      "core-web-vitals"
+    ]
+  },
+  {
+    "id": "perf-adv-019",
+    "regex": "Network waterfall.*sequential requests detected",
+    "language": "performance",
+    "title": "Network Waterfall Pattern",
+    "fixes": [
+      "Use rel=preconnect for third-party origins",
+      "Parallelize independent API requests",
+      "Implement resource hints (prefetch, preload)"
+    ],
+    "tags": [
+      "performance",
+      "network",
+      "waterfall"
+    ]
+  },
+  {
+    "id": "perf-adv-020",
+    "regex": "Animation frame.*dropped|jank.*detected",
+    "language": "performance",
+    "title": "Animation Jank Detected",
+    "fixes": [
+      "Use CSS transforms instead of layout properties",
+      "Promote elements to own layer with will-change",
+      "Reduce paint complexity in animated areas"
+    ],
+    "tags": [
+      "performance",
+      "animation",
+      "jank"
+    ]
+  },
+  {
+    "id": "a11y-adv-001",
+    "regex": "ARIA role.*is not valid|aria-role.*invalid",
+    "language": "accessibility",
+    "title": "Invalid ARIA Role",
+    "fixes": [
+      "Use a valid WAI-ARIA role from the spec",
+      "Check role is appropriate for the element type",
+      "Remove role if element has implicit semantics"
+    ],
+    "tags": [
+      "a11y",
+      "aria",
+      "role"
+    ]
+  },
+  {
+    "id": "a11y-adv-002",
+    "regex": "Focus trap.*not implemented|focus.*escaping modal",
+    "language": "accessibility",
+    "title": "Missing Focus Trap",
+    "fixes": [
+      "Implement focus trap in modal/dialog components",
+      "Use cdkTrapFocus directive for Angular",
+      "Ensure Escape key closes and restores focus"
+    ],
+    "tags": [
+      "a11y",
+      "focus",
+      "modal"
+    ]
+  },
+  {
+    "id": "a11y-adv-003",
+    "regex": "Color contrast ratio.*insufficient|contrast.*below.*4\\.5",
+    "language": "accessibility",
+    "title": "Insufficient Color Contrast",
+    "fixes": [
+      "Increase contrast ratio to at least 4.5:1 for text",
+      "Use 3:1 minimum for large text (18px+ bold)",
+      "Test with browser devtools contrast checker"
+    ],
+    "tags": [
+      "a11y",
+      "color",
+      "contrast"
+    ]
+  },
+  {
+    "id": "a11y-adv-004",
+    "regex": "img.*missing alt|Image element.*missing alternative text",
+    "language": "accessibility",
+    "title": "Missing Alt Text on Image",
+    "fixes": [
+      "Add descriptive alt attribute to image",
+      "Use alt='' for decorative images",
+      "Use aria-label if alt attribute is not applicable"
+    ],
+    "tags": [
+      "a11y",
+      "images",
+      "alt-text"
+    ]
+  },
+  {
+    "id": "a11y-adv-005",
+    "regex": "not reachable.*keyboard|keyboard.*not accessible",
+    "language": "accessibility",
+    "title": "Keyboard Navigation Broken",
+    "fixes": [
+      "Ensure all interactive elements are focusable",
+      "Add tabindex=0 for custom interactive elements",
+      "Implement arrow key navigation for composite widgets"
+    ],
+    "tags": [
+      "a11y",
+      "keyboard",
+      "navigation"
+    ]
+  },
+  {
+    "id": "a11y-adv-006",
+    "regex": "aria-live.*not announcing|screen reader.*not reading",
+    "language": "accessibility",
+    "title": "Screen Reader Not Announcing",
+    "fixes": [
+      "Use aria-live=polite for dynamic content updates",
+      "Add role=alert for important notifications",
+      "Use aria-atomic=true for complete region updates"
+    ],
+    "tags": [
+      "a11y",
+      "screen-reader",
+      "aria-live"
+    ]
+  },
+  {
+    "id": "a11y-adv-007",
+    "regex": "aria-label.*missing|Accessible name.*not provided",
+    "language": "accessibility",
+    "title": "Missing Accessible Name",
+    "fixes": [
+      "Add aria-label to the interactive element",
+      "Use aria-labelledby to reference visible label",
+      "Add visible label text with for attribute"
+    ],
+    "tags": [
+      "a11y",
+      "aria",
+      "label"
+    ]
+  },
+  {
+    "id": "a11y-adv-008",
+    "regex": "heading.*skipped level|Heading levels.*not sequential",
+    "language": "accessibility",
+    "title": "Heading Level Skipped",
+    "fixes": [
+      "Ensure headings follow sequential order (h1>h2>h3)",
+      "Don't skip heading levels for styling purposes",
+      "Use CSS classes for visual sizing instead"
+    ],
+    "tags": [
+      "a11y",
+      "headings",
+      "structure"
+    ]
+  },
+  {
+    "id": "a11y-adv-009",
+    "regex": "aria-expanded.*not toggled|disclosure.*state not communicated",
+    "language": "accessibility",
+    "title": "ARIA Expanded State Missing",
+    "fixes": [
+      "Toggle aria-expanded on the trigger button",
+      "Set aria-controls to point to expandable region",
+      "Announce state change to screen readers"
+    ],
+    "tags": [
+      "a11y",
+      "aria",
+      "state"
+    ]
+  },
+  {
+    "id": "a11y-adv-010",
+    "regex": "tabindex.*positive value|tabindex.*greater than 0",
+    "language": "accessibility",
+    "title": "Positive Tabindex Used",
+    "fixes": [
+      "Remove positive tabindex values",
+      "Use tabindex=0 for natural tab order",
+      "Reorder DOM to achieve desired focus order"
+    ],
+    "tags": [
+      "a11y",
+      "tabindex",
+      "focus-order"
+    ]
+  },
+  {
+    "id": "a11y-adv-011",
+    "regex": "form.*label.*not associated|input.*missing label",
+    "language": "accessibility",
+    "title": "Form Input Missing Label",
+    "fixes": [
+      "Add label element with matching for attribute",
+      "Use aria-label for visually hidden labels",
+      "Wrap input inside label element"
+    ],
+    "tags": [
+      "a11y",
+      "forms",
+      "label"
+    ]
+  },
+  {
+    "id": "a11y-adv-012",
+    "regex": "link.*purpose.*not clear|ambiguous link text",
+    "language": "accessibility",
+    "title": "Ambiguous Link Text",
+    "fixes": [
+      "Use descriptive link text (not 'click here')",
+      "Add aria-label for context when text is generic",
+      "Use aria-describedby for additional context"
+    ],
+    "tags": [
+      "a11y",
+      "links",
+      "descriptive"
+    ]
+  },
+  {
+    "id": "a11y-adv-013",
+    "regex": "motion.*reduced.*not respected|prefers-reduced-motion",
+    "language": "accessibility",
+    "title": "Reduced Motion Not Respected",
+    "fixes": [
+      "Add @media (prefers-reduced-motion: reduce) query",
+      "Disable animations when preference is set",
+      "Use transition: none in reduced motion media query"
+    ],
+    "tags": [
+      "a11y",
+      "motion",
+      "animation"
+    ]
+  },
+  {
+    "id": "a11y-adv-014",
+    "regex": "autocomplete.*missing|input.*autocomplete attribute",
+    "language": "accessibility",
+    "title": "Missing Autocomplete Attribute",
+    "fixes": [
+      "Add appropriate autocomplete value to form inputs",
+      "Use autocomplete=off only when truly necessary",
+      "Match autocomplete to input purpose (name, email, tel)"
+    ],
+    "tags": [
+      "a11y",
+      "forms",
+      "autocomplete"
+    ]
+  },
+  {
+    "id": "a11y-adv-015",
+    "regex": "landmark.*missing|page.*no main landmark",
+    "language": "accessibility",
+    "title": "Missing ARIA Landmark",
+    "fixes": [
+      "Wrap main content in <main> element",
+      "Add <nav> for navigation regions",
+      "Use <aside>, <header>, <footer> for page structure"
+    ],
+    "tags": [
+      "a11y",
+      "landmarks",
+      "structure"
+    ]
+  },
+  {
+    "id": "a11y-adv-016",
+    "regex": "focus.*not visible|focus indicator.*missing",
+    "language": "accessibility",
+    "title": "Focus Indicator Not Visible",
+    "fixes": [
+      "Never use outline: none without alternative",
+      "Add visible focus styles with :focus-visible",
+      "Ensure focus ring has 3:1 contrast ratio"
+    ],
+    "tags": [
+      "a11y",
+      "focus",
+      "indicator"
+    ]
+  },
+  {
+    "id": "a11y-adv-017",
+    "regex": "aria-hidden.*on focusable|focusable.*inside aria-hidden",
+    "language": "accessibility",
+    "title": "Focusable Element Inside aria-hidden",
+    "fixes": [
+      "Remove tabindex from elements inside aria-hidden",
+      "Add inert attribute instead of aria-hidden",
+      "Move focusable elements outside hidden region"
+    ],
+    "tags": [
+      "a11y",
+      "aria",
+      "hidden"
+    ]
+  },
+  {
+    "id": "a11y-adv-018",
+    "regex": "table.*missing headers|data table.*no th elements",
+    "language": "accessibility",
+    "title": "Table Missing Headers",
+    "fixes": [
+      "Add th elements for column/row headers",
+      "Use scope attribute on th elements",
+      "Add aria-label to table for context"
+    ],
+    "tags": [
+      "a11y",
+      "tables",
+      "headers"
+    ]
+  },
+  {
+    "id": "a11y-adv-019",
+    "regex": "error.*not associated.*input|validation message.*not linked",
+    "language": "accessibility",
+    "title": "Error Message Not Linked to Input",
+    "fixes": [
+      "Use aria-describedby to link error to input",
+      "Add aria-invalid=true when field has error",
+      "Use aria-errormessage for error description"
+    ],
+    "tags": [
+      "a11y",
+      "forms",
+      "errors"
+    ]
+  },
+  {
+    "id": "a11y-adv-020",
+    "regex": "touch target.*too small|click target.*below 44px",
+    "language": "accessibility",
+    "title": "Touch Target Too Small",
+    "fixes": [
+      "Ensure minimum 44x44px touch target size",
+      "Add padding to increase hit area without visual change",
+      "Use min-width and min-height on interactive elements"
+    ],
+    "tags": [
+      "a11y",
+      "mobile",
+      "touch-target"
+    ]
+  },
+  {
+    "id": "lint-adv-001",
+    "regex": "Parsing error:.*Unexpected token",
+    "language": "eslint",
+    "title": "ESLint Parsing Error",
+    "fixes": [
+      "Set correct parser (e.g., @typescript-eslint/parser)",
+      "Verify ecmaVersion matches your JS/TS version",
+      "Check for syntax errors in the source file"
+    ],
+    "tags": [
+      "eslint",
+      "parsing",
+      "configuration"
+    ]
+  },
+  {
+    "id": "lint-adv-002",
+    "regex": "Rule.*conflicts with Prettier|prettier/prettier.*conflict",
+    "language": "eslint",
+    "title": "ESLint Rule Conflicts with Prettier",
+    "fixes": [
+      "Add eslint-config-prettier to extends (last)",
+      "Remove conflicting formatting rules from ESLint",
+      "Use eslint-plugin-prettier for unified formatting"
+    ],
+    "tags": [
+      "eslint",
+      "prettier",
+      "conflict"
+    ]
+  },
+  {
+    "id": "lint-adv-003",
+    "regex": "Cannot find.*eslint-plugin|Failed to load plugin",
+    "language": "eslint",
+    "title": "ESLint Plugin Not Found",
+    "fixes": [
+      "Install the missing plugin package",
+      "Verify plugin name in eslintrc (drop eslint-plugin- prefix)",
+      "Check node_modules is not corrupted"
+    ],
+    "tags": [
+      "eslint",
+      "plugin",
+      "installation"
+    ]
+  },
+  {
+    "id": "lint-adv-004",
+    "regex": "Configuration for rule.*is invalid|Rule.*configuration.*invalid",
+    "language": "eslint",
+    "title": "ESLint Rule Configuration Invalid",
+    "fixes": [
+      "Check rule documentation for valid options",
+      "Verify array syntax [severity, options]",
+      "Update rule to match new API for current version"
+    ],
+    "tags": [
+      "eslint",
+      "rules",
+      "configuration"
+    ]
+  },
+  {
+    "id": "lint-adv-005",
+    "regex": "overrides.*not applying|File.*not matched by any config",
+    "language": "eslint",
+    "title": "ESLint Overrides Not Applying",
+    "fixes": [
+      "Check files glob pattern in overrides",
+      "Verify file extension is included in pattern",
+      "Use eslint --debug to trace config resolution"
+    ],
+    "tags": [
+      "eslint",
+      "overrides",
+      "glob"
+    ]
+  },
+  {
+    "id": "lint-adv-006",
+    "regex": "ignorePatterns.*not working|\\.eslintignore.*not excluding",
+    "language": "eslint",
+    "title": "ESLint Ignore Pattern Not Working",
+    "fixes": [
+      "Use absolute paths or proper glob patterns",
+      "Check .eslintignore is in project root",
+      "Verify ignore pattern syntax (no leading ./)"
+    ],
+    "tags": [
+      "eslint",
+      "ignore",
+      "patterns"
+    ]
+  },
+  {
+    "id": "lint-adv-007",
+    "regex": "flat config.*migration|eslintrc.*deprecated|FlatCompat",
+    "language": "eslint",
+    "title": "ESLint Flat Config Migration Error",
+    "fixes": [
+      "Use FlatCompat utility for legacy plugins",
+      "Migrate extends to import in eslint.config.js",
+      "Convert plugins array to object format"
+    ],
+    "tags": [
+      "eslint",
+      "flat-config",
+      "migration"
+    ]
+  },
+  {
+    "id": "lint-adv-008",
+    "regex": "Cannot read config file.*eslint",
+    "language": "eslint",
+    "title": "ESLint Config File Error",
+    "fixes": [
+      "Verify JSON/YAML syntax in config file",
+      "Check for circular extends references",
+      "Rename to eslint.config.js for flat config"
+    ],
+    "tags": [
+      "eslint",
+      "config",
+      "syntax"
+    ]
+  },
+  {
+    "id": "lint-adv-009",
+    "regex": "Definition for rule.*was not found",
+    "language": "eslint",
+    "title": "ESLint Rule Not Found",
+    "fixes": [
+      "Install the plugin that provides the rule",
+      "Check rule was not renamed in newer version",
+      "Verify plugin is listed in plugins array"
+    ],
+    "tags": [
+      "eslint",
+      "rules",
+      "not-found"
+    ]
+  },
+  {
+    "id": "lint-adv-010",
+    "regex": "Prettier.*formatting.*differs|Code style issues found",
+    "language": "eslint",
+    "title": "Prettier Formatting Mismatch",
+    "fixes": [
+      "Run prettier --write to fix formatting",
+      "Add format script to package.json",
+      "Set up pre-commit hook with lint-staged"
+    ],
+    "tags": [
+      "prettier",
+      "formatting",
+      "mismatch"
+    ]
+  },
+  {
+    "id": "lint-adv-011",
+    "regex": "@typescript-eslint.*Cannot read tsconfig|parserOptions.project.*error",
+    "language": "eslint",
+    "title": "ESLint TypeScript Parser Config Error",
+    "fixes": [
+      "Set parserOptions.project to correct tsconfig path",
+      "Add include array in tsconfig for linted files",
+      "Use createDefaultProgram as fallback"
+    ],
+    "tags": [
+      "eslint",
+      "typescript",
+      "parser"
+    ]
+  },
+  {
+    "id": "lint-adv-012",
+    "regex": "eslint-plugin-import.*Unable to resolve path",
+    "language": "eslint",
+    "title": "ESLint Import Resolver Error",
+    "fixes": [
+      "Configure import/resolver settings in eslintrc",
+      "Install eslint-import-resolver-typescript",
+      "Add paths to resolver settings matching tsconfig"
+    ],
+    "tags": [
+      "eslint",
+      "import",
+      "resolver"
+    ]
+  },
+  {
+    "id": "lint-adv-013",
+    "regex": "Maximum call stack.*eslint|circular.*config",
+    "language": "eslint",
+    "title": "ESLint Circular Config Reference",
+    "fixes": [
+      "Check for circular extends in config chain",
+      "Remove self-referencing overrides",
+      "Flatten config hierarchy"
+    ],
+    "tags": [
+      "eslint",
+      "config",
+      "circular"
+    ]
+  },
+  {
+    "id": "lint-adv-014",
+    "regex": "Prettier.*parser.*could not be inferred",
+    "language": "eslint",
+    "title": "Prettier Parser Not Inferred",
+    "fixes": [
+      "Specify parser explicitly in prettier config",
+      "Add overrides for file extensions in .prettierrc",
+      "Check filepath is passed to prettier API"
+    ],
+    "tags": [
+      "prettier",
+      "parser",
+      "inference"
+    ]
+  },
+  {
+    "id": "lint-adv-015",
+    "regex": "No files matching.*were found|No files to lint",
+    "language": "eslint",
+    "title": "ESLint No Files Found",
+    "fixes": [
+      "Check CLI glob pattern matches file extensions",
+      "Remove --ext flag if using flat config",
+      "Verify files are not all in ignore list"
+    ],
+    "tags": [
+      "eslint",
+      "files",
+      "glob"
+    ]
+  },
+  {
+    "id": "lint-adv-016",
+    "regex": "Rule.*requires type information|parserServices.*unavailable",
+    "language": "eslint",
+    "title": "ESLint Rule Requires Type Info",
+    "fixes": [
+      "Add parserOptions.project pointing to tsconfig.json",
+      "Ensure file is included in tsconfig includes",
+      "Use type-aware rules only in TypeScript overrides"
+    ],
+    "tags": [
+      "eslint",
+      "typescript",
+      "type-aware"
+    ]
+  },
+  {
+    "id": "lint-adv-017",
+    "regex": "eslint-disable.*ineffective|Unused eslint-disable",
+    "language": "eslint",
+    "title": "ESLint Unused Disable Comment",
+    "fixes": [
+      "Remove the eslint-disable comment",
+      "Enable reportUnusedDisableDirectives in config",
+      "Fix the underlying issue instead of disabling"
+    ],
+    "tags": [
+      "eslint",
+      "disable",
+      "unused"
+    ]
+  },
+  {
+    "id": "lint-adv-018",
+    "regex": "prettier.*endOfLine.*conflict|Delete.*CR.*prettier",
+    "language": "eslint",
+    "title": "Prettier End of Line Conflict",
+    "fixes": [
+      "Set endOfLine: auto in .prettierrc",
+      "Configure git autocrlf=input",
+      "Add .gitattributes with eol=lf"
+    ],
+    "tags": [
+      "prettier",
+      "eol",
+      "line-endings"
+    ]
+  },
+  {
+    "id": "lint-adv-019",
+    "regex": "Cannot use.*plugin.*with flat config|incompatible.*eslint 9",
+    "language": "eslint",
+    "title": "ESLint Plugin Flat Config Incompatible",
+    "fixes": [
+      "Update plugin to version supporting flat config",
+      "Use FlatCompat wrapper for legacy plugins",
+      "Check plugin changelog for migration guide"
+    ],
+    "tags": [
+      "eslint",
+      "flat-config",
+      "plugin"
+    ]
+  },
+  {
+    "id": "lint-adv-020",
+    "regex": "env.*not supported.*flat config|globals.*not defined",
+    "language": "eslint",
+    "title": "ESLint Globals in Flat Config",
+    "fixes": [
+      "Replace env with globals from globals package",
+      "Import globals and spread browser/node sets",
+      "Define globals directly in languageOptions"
+    ],
+    "tags": [
+      "eslint",
+      "flat-config",
+      "globals"
+    ]
+  },
+  {
+    "id": "monorepo-adv-001",
+    "regex": "No package found.*workspace|Package.*not found in workspace",
+    "language": "monorepo",
+    "title": "Workspace Package Not Found",
+    "fixes": [
+      "Verify package name matches workspace definition",
+      "Check workspaces field in root package.json",
+      "Ensure package directory exists and has package.json"
+    ],
+    "tags": [
+      "monorepo",
+      "workspace",
+      "not-found"
+    ]
+  },
+  {
+    "id": "monorepo-adv-002",
+    "regex": "Circular dependency.*detected|task dependency cycle",
+    "language": "monorepo",
+    "title": "Task Dependency Cycle Detected",
+    "fixes": [
+      "Review dependsOn configuration in turbo.json",
+      "Remove circular task references between packages",
+      "Use topological ordering for task execution"
+    ],
+    "tags": [
+      "turborepo",
+      "cycle",
+      "dependency"
+    ]
+  },
+  {
+    "id": "monorepo-adv-003",
+    "regex": "MISS.*cache|cache miss.*rebuilding",
+    "language": "monorepo",
+    "title": "Turborepo Cache Miss",
+    "fixes": [
+      "Check inputs configuration in turbo.json",
+      "Verify environment variables are in globalEnv",
+      "Ensure .gitignore is not excluding hash inputs"
+    ],
+    "tags": [
+      "turborepo",
+      "cache",
+      "miss"
+    ]
+  },
+  {
+    "id": "monorepo-adv-004",
+    "regex": "Conflicting dependency.*root.*workspace|version mismatch.*monorepo",
+    "language": "monorepo",
+    "title": "Root Dependency Conflict",
+    "fixes": [
+      "Use resolutions/overrides to force single version",
+      "Move shared dependency to root package.json",
+      "Use syncpack to align versions across packages"
+    ],
+    "tags": [
+      "monorepo",
+      "dependency",
+      "conflict"
+    ]
+  },
+  {
+    "id": "monorepo-adv-005",
+    "regex": "Cannot publish.*dependency.*not published|publish order.*violated",
+    "language": "monorepo",
+    "title": "Publish Order Violation",
+    "fixes": [
+      "Publish dependencies before dependents",
+      "Use changesets for ordered publishing",
+      "Configure topological publishing in CI pipeline"
+    ],
+    "tags": [
+      "monorepo",
+      "publish",
+      "order"
+    ]
+  },
+  {
+    "id": "monorepo-adv-006",
+    "regex": "changesets.*error|No changesets found|changeset.*version mismatch",
+    "language": "monorepo",
+    "title": "Changesets Error",
+    "fixes": [
+      "Run changeset add to create a changeset",
+      "Check .changeset directory exists and is valid",
+      "Verify changeset config.json access field"
+    ],
+    "tags": [
+      "monorepo",
+      "changesets",
+      "versioning"
+    ]
+  },
+  {
+    "id": "monorepo-adv-007",
+    "regex": "turbo.*daemon.*failed|turbo daemon.*not responding",
+    "language": "monorepo",
+    "title": "Turborepo Daemon Error",
+    "fixes": [
+      "Restart daemon with turbo daemon clean",
+      "Kill stale turbo processes",
+      "Update turborepo to latest version"
+    ],
+    "tags": [
+      "turborepo",
+      "daemon",
+      "process"
+    ]
+  },
+  {
+    "id": "monorepo-adv-008",
+    "regex": "Cannot find module.*workspace:.*protocol",
+    "language": "monorepo",
+    "title": "Workspace Protocol Resolution Error",
+    "fixes": [
+      "Use workspace:* protocol in package.json",
+      "Ensure package manager supports workspace protocol",
+      "Run install from monorepo root"
+    ],
+    "tags": [
+      "monorepo",
+      "workspace",
+      "protocol"
+    ]
+  },
+  {
+    "id": "monorepo-adv-009",
+    "regex": "nx.*Cannot find project|Project.*does not exist",
+    "language": "monorepo",
+    "title": "Nx Project Not Found",
+    "fixes": [
+      "Run nx reset to clear project graph cache",
+      "Verify project.json or package.json has nx config",
+      "Check workspace.json or nx.json includes path"
+    ],
+    "tags": [
+      "nx",
+      "project",
+      "not-found"
+    ]
+  },
+  {
+    "id": "monorepo-adv-010",
+    "regex": "turbo.*globalDependencies.*invalid|pipeline.*deprecated",
+    "language": "monorepo",
+    "title": "Turborepo Config Migration Error",
+    "fixes": [
+      "Migrate pipeline to tasks in turbo.json",
+      "Update globalDependencies to globalEnv format",
+      "Follow turbo codemods for version migration"
+    ],
+    "tags": [
+      "turborepo",
+      "config",
+      "migration"
+    ]
+  },
+  {
+    "id": "monorepo-adv-011",
+    "regex": "Lerna.*ERR.*topological.*failed|lerna.*dependency not built",
+    "language": "monorepo",
+    "title": "Lerna Topological Build Failure",
+    "fixes": [
+      "Ensure all dependencies build successfully first",
+      "Use --stream flag to see which package fails",
+      "Check for missing build script in dependency"
+    ],
+    "tags": [
+      "lerna",
+      "build",
+      "topological"
+    ]
+  },
+  {
+    "id": "monorepo-adv-012",
+    "regex": "Remote cache.*authentication failed|TURBO_TOKEN.*invalid",
+    "language": "monorepo",
+    "title": "Turborepo Remote Cache Auth Failed",
+    "fixes": [
+      "Verify TURBO_TOKEN environment variable",
+      "Re-login with turbo login",
+      "Check remote cache endpoint configuration"
+    ],
+    "tags": [
+      "turborepo",
+      "remote-cache",
+      "auth"
+    ]
+  },
+  {
+    "id": "monorepo-adv-013",
+    "regex": "nx.*affected.*no projects|No affected projects found",
+    "language": "monorepo",
+    "title": "Nx Affected Detection Issue",
+    "fixes": [
+      "Verify base and head refs are correct",
+      "Check that changes touch files owned by projects",
+      "Run nx graph to verify project dependencies"
+    ],
+    "tags": [
+      "nx",
+      "affected",
+      "detection"
+    ]
+  },
+  {
+    "id": "monorepo-adv-014",
+    "regex": "workspace.*hoisting conflict|nohoist.*not working",
+    "language": "monorepo",
+    "title": "Workspace Hoisting Conflict",
+    "fixes": [
+      "Add nohoist pattern for conflicting package",
+      "Use pnpm for stricter dependency isolation",
+      "Configure workspace-specific node_modules"
+    ],
+    "tags": [
+      "monorepo",
+      "hoisting",
+      "isolation"
+    ]
+  },
+  {
+    "id": "monorepo-adv-015",
+    "regex": "turbo.*output not found|Missing outputs.*task",
+    "language": "monorepo",
+    "title": "Turborepo Missing Task Outputs",
+    "fixes": [
+      "Configure outputs array in turbo.json task",
+      "Verify build outputs match configured paths",
+      "Add dist/** or build/** to outputs"
+    ],
+    "tags": [
+      "turborepo",
+      "outputs",
+      "configuration"
+    ]
+  },
+  {
+    "id": "monorepo-adv-016",
+    "regex": "changeset.*pre\\.json.*error|prerelease.*mode conflict",
+    "language": "monorepo",
+    "title": "Changesets Prerelease Mode Error",
+    "fixes": [
+      "Run changeset pre exit to leave prerelease mode",
+      "Check .changeset/pre.json is valid",
+      "Remove stale pre.json and re-enter pre mode"
+    ],
+    "tags": [
+      "monorepo",
+      "changesets",
+      "prerelease"
+    ]
+  },
+  {
+    "id": "monorepo-adv-017",
+    "regex": "internal packages.*not resolving|tsconfig paths.*workspace",
+    "language": "monorepo",
+    "title": "Internal Package Resolution Error",
+    "fixes": [
+      "Configure TypeScript paths in tsconfig.json",
+      "Use exports field in internal package.json",
+      "Set main/types fields correctly in package"
+    ],
+    "tags": [
+      "monorepo",
+      "typescript",
+      "resolution"
+    ]
+  },
+  {
+    "id": "monorepo-adv-018",
+    "regex": "turbo.*env.*not available|globalEnv.*missing variable",
+    "language": "monorepo",
+    "title": "Turborepo Environment Variable Not Hashed",
+    "fixes": [
+      "Add variable to globalEnv in turbo.json",
+      "Use env array on specific task for scoped vars",
+      "Prefix with TURBO_ for automatic inclusion"
+    ],
+    "tags": [
+      "turborepo",
+      "env",
+      "hashing"
+    ]
+  },
+  {
+    "id": "monorepo-adv-019",
+    "regex": "workspace.*version.*out of sync|syncpack.*mismatches",
+    "language": "monorepo",
+    "title": "Workspace Version Mismatch",
+    "fixes": [
+      "Run syncpack fix-mismatches to align versions",
+      "Set versionGroups in syncpack config",
+      "Use single-version policy for shared deps"
+    ],
+    "tags": [
+      "monorepo",
+      "versions",
+      "sync"
+    ]
+  },
+  {
+    "id": "monorepo-adv-020",
+    "regex": "nx.*generator.*failed|schematic.*error.*workspace",
+    "language": "monorepo",
+    "title": "Nx Generator/Schematic Error",
+    "fixes": [
+      "Check generator version matches Nx version",
+      "Verify required options are provided",
+      "Run with --dry-run to preview changes first"
+    ],
+    "tags": [
+      "nx",
+      "generator",
+      "schematic"
+    ]
+  }
+]

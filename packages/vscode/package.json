@@ -1,0 +1,31 @@
+{
+  "name": "error-to-fix",
+  "displayName": "Error To Fix",
+  "description": "Auto-detects errors in terminal and Problems panel, shows quick fixes",
+  "version": "1.0.0",
+  "publisher": "satyamtechy",
+  "engines": {
+    "vscode": "^1.96.0"
+  },
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "errortofix.search",
+        "title": "Error To Fix: Search"
+      }
+    ]
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "npx tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.96.0",
+    "typescript": "^5.7.0"
+  }
+}

@@ -1,0 +1,640 @@
+[
+  {
+    "id": "js-001",
+    "regex": "TypeError:.*Cannot read propert(y|ies) of (null|undefined)",
+    "language": "javascript",
+    "title": "Cannot read property of null/undefined",
+    "fixes": [
+      "Add optional chaining (?.) before the property access",
+      "Add a null check before accessing the property",
+      "Ensure the variable is initialized before use",
+      "Check if an async operation has completed before accessing the result"
+    ],
+    "tags": ["TypeError", "null", "undefined", "runtime"]
+  },
+  {
+    "id": "js-002",
+    "regex": "TypeError:.*is not a function",
+    "language": "javascript",
+    "title": "Value is not a function",
+    "fixes": [
+      "Check that the variable holds a function and not undefined/null",
+      "Verify the import path and that the function is exported correctly",
+      "Ensure you're not shadowing the function with a variable of the same name",
+      "Check for circular dependencies that may cause the import to be undefined"
+    ],
+    "tags": ["TypeError", "function", "runtime"]
+  },
+  {
+    "id": "js-003",
+    "regex": "TypeError:.*Assignment to constant variable",
+    "language": "javascript",
+    "title": "Assignment to constant variable",
+    "fixes": [
+      "Change `const` to `let` if the variable needs reassignment",
+      "Use a new variable instead of reassigning the constant",
+      "For objects/arrays declared with const, mutate properties instead of reassigning"
+    ],
+    "tags": ["TypeError", "const", "runtime"]
+  },
+  {
+    "id": "js-004",
+    "regex": "TypeError:.*is not iterable",
+    "language": "javascript",
+    "title": "Value is not iterable",
+    "fixes": [
+      "Ensure the value is an array or iterable before using for...of or spread",
+      "Provide a default empty array: `value || []`",
+      "Check that the API response returns an array, not an object or null",
+      "Use Array.from() to convert array-like objects to arrays"
+    ],
+    "tags": ["TypeError", "iterable", "runtime"]
+  },
+  {
+    "id": "js-005",
+    "regex": "TypeError:.*Cannot set propert(y|ies) of (null|undefined)",
+    "language": "javascript",
+    "title": "Cannot set property of null/undefined",
+    "fixes": [
+      "Initialize the object before setting properties on it",
+      "Add a null check before the assignment",
+      "Ensure DOM element exists before setting attributes (check querySelector result)"
+    ],
+    "tags": ["TypeError", "null", "assignment", "runtime"]
+  },
+  {
+    "id": "js-006",
+    "regex": "TypeError:.*Cannot convert (undefined|null) to object",
+    "language": "javascript",
+    "title": "Cannot convert undefined/null to object",
+    "fixes": [
+      "Provide a fallback value: `Object.keys(value || {})`",
+      "Check for null/undefined before passing to Object.keys, Object.assign, etc.",
+      "Ensure the data source returns an object, not null"
+    ],
+    "tags": ["TypeError", "object", "runtime"]
+  },
+  {
+    "id": "js-007",
+    "regex": "ReferenceError:.*is not defined",
+    "language": "javascript",
+    "title": "Variable is not defined",
+    "fixes": [
+      "Import or declare the variable before using it",
+      "Check for typos in the variable name",
+      "For browser globals (window, document), ensure code runs in the correct environment",
+      "Add the missing dependency to package.json and install it"
+    ],
+    "tags": ["ReferenceError", "undefined", "runtime"]
+  },
+  {
+    "id": "js-008",
+    "regex": "ReferenceError:.*Cannot access .* before initialization",
+    "language": "javascript",
+    "title": "Cannot access variable before initialization (TDZ)",
+    "fixes": [
+      "Move the variable declaration before its first usage",
+      "Check for circular dependencies between modules",
+      "Replace `let`/`const` with function declarations if hoisting is needed"
+    ],
+    "tags": ["ReferenceError", "TDZ", "hoisting", "runtime"]
+  },
+  {
+    "id": "js-009",
+    "regex": "SyntaxError:.*Unexpected token",
+    "language": "javascript",
+    "title": "Unexpected token",
+    "fixes": [
+      "Check for missing commas, brackets, or parentheses near the reported line",
+      "Ensure JSON files don't have trailing commas or comments",
+      "Verify the file is being parsed with the correct module type (ESM vs CJS)",
+      "Check that optional chaining/nullish coalescing is supported by your target"
+    ],
+    "tags": ["SyntaxError", "parse", "syntax"]
+  },
+  {
+    "id": "js-010",
+    "regex": "SyntaxError:.*Invalid regular expression",
+    "language": "javascript",
+    "title": "Invalid regular expression",
+    "fixes": [
+      "Escape special regex characters: . * + ? ^ $ { } ( ) | [ ] \\",
+      "When using `new RegExp()`, double-escape backslashes: `\\\\d` instead of `\\d`",
+      "Check for unbalanced parentheses or brackets in the pattern"
+    ],
+    "tags": ["SyntaxError", "regex", "runtime"]
+  },
+  {
+    "id": "js-011",
+    "regex": "SyntaxError:.*JSON\\.parse|Unexpected (token|end of JSON|number|string) (in JSON )?at position",
+    "language": "javascript",
+    "title": "JSON parse error",
+    "fixes": [
+      "Validate the JSON string with a linter or JSON.parse in try/catch",
+      "Check for trailing commas, single quotes, or unquoted keys",
+      "Ensure the response is actually JSON and not HTML (check Content-Type header)",
+      "Look for control characters or BOM in the input string"
+    ],
+    "tags": ["SyntaxError", "JSON", "parse"]
+  },
+  {
+    "id": "js-012",
+    "regex": "SyntaxError:.*Unexpected.*'export'|Cannot use import statement outside a module",
+    "language": "node",
+    "title": "Cannot use import/export outside a module",
+    "fixes": [
+      "Add `\"type\": \"module\"` to package.json for ESM",
+      "Rename file to .mjs for ESM or .cjs for CommonJS",
+      "Configure your bundler/transpiler to handle ESM syntax",
+      "Use `require()` instead if targeting CommonJS"
+    ],
+    "tags": ["SyntaxError", "ESM", "modules", "node"]
+  },
+  {
+    "id": "js-013",
+    "regex": "RangeError:.*Maximum call stack size exceeded",
+    "language": "javascript",
+    "title": "Maximum call stack size exceeded (infinite recursion)",
+    "fixes": [
+      "Add a base case to your recursive function to stop recursion",
+      "Check for circular references in objects being serialized (JSON.stringify)",
+      "Convert recursion to iteration using a stack/queue",
+      "Check for infinite component re-renders (React useEffect deps, Angular change detection)"
+    ],
+    "tags": ["RangeError", "recursion", "stack-overflow", "runtime"]
+  },
+  {
+    "id": "js-014",
+    "regex": "RangeError:.*Invalid array length",
+    "language": "javascript",
+    "title": "Invalid array length",
+    "fixes": [
+      "Ensure the array length is a non-negative integer",
+      "Check that the value passed to `new Array()` is not negative or NaN",
+      "Validate input before using it as an array size"
+    ],
+    "tags": ["RangeError", "array", "runtime"]
+  },
+  {
+    "id": "js-015",
+    "regex": "RangeError:.*Invalid (time value|date)",
+    "language": "javascript",
+    "title": "Invalid Date",
+    "fixes": [
+      "Validate the date string format before passing to `new Date()`",
+      "Use ISO 8601 format (YYYY-MM-DD) for cross-browser compatibility",
+      "Check for null/undefined being passed as a date argument",
+      "Use a date library (date-fns, dayjs) for reliable parsing"
+    ],
+    "tags": ["RangeError", "date", "runtime"]
+  },
+  {
+    "id": "js-016",
+    "regex": "TS2322:.*Type '.*' is not assignable to type",
+    "language": "typescript",
+    "title": "TS2322: Type is not assignable",
+    "fixes": [
+      "Fix the type mismatch — ensure the value matches the declared type",
+      "Add a type assertion if you're certain of the type: `value as MyType`",
+      "Widen the target type to accept the value (e.g., union type)",
+      "Check if null/undefined needs to be included in the type definition"
+    ],
+    "tags": ["typescript", "TS2322", "type-mismatch", "compile"]
+  },
+  {
+    "id": "js-017",
+    "regex": "TS2339:.*Property '.*' does not exist on type",
+    "language": "typescript",
+    "title": "TS2339: Property does not exist on type",
+    "fixes": [
+      "Add the property to the interface/type definition",
+      "Use optional chaining if the property may not exist: `obj?.prop`",
+      "Cast to a more specific type that includes the property",
+      "Check for typos in the property name"
+    ],
+    "tags": ["typescript", "TS2339", "property", "compile"]
+  },
+  {
+    "id": "js-018",
+    "regex": "TS2345:.*Argument of type '.*' is not assignable to parameter of type",
+    "language": "typescript",
+    "title": "TS2345: Argument type mismatch",
+    "fixes": [
+      "Ensure the argument matches the expected parameter type",
+      "Add a type assertion: `value as ExpectedType`",
+      "Update the function signature to accept the broader type",
+      "Transform the data to match the expected shape before passing"
+    ],
+    "tags": ["typescript", "TS2345", "argument", "compile"]
+  },
+  {
+    "id": "js-019",
+    "regex": "TS2532:.*Object is possibly 'undefined'",
+    "language": "typescript",
+    "title": "TS2532: Object is possibly undefined",
+    "fixes": [
+      "Add a null/undefined check before accessing the object",
+      "Use optional chaining: `obj?.property`",
+      "Use non-null assertion if you're certain it's defined: `obj!.property`",
+      "Provide a default value with nullish coalescing: `obj ?? defaultValue`"
+    ],
+    "tags": ["typescript", "TS2532", "undefined", "strict-null", "compile"]
+  },
+  {
+    "id": "js-020",
+    "regex": "TS2554:.*Expected \\d+ arguments?, but got \\d+",
+    "language": "typescript",
+    "title": "TS2554: Wrong number of arguments",
+    "fixes": [
+      "Pass the correct number of arguments to the function",
+      "Make parameters optional with `?` if they're not always needed",
+      "Add default values to parameters: `param = defaultValue`",
+      "Check the function signature — it may have changed"
+    ],
+    "tags": ["typescript", "TS2554", "arguments", "compile"]
+  },
+  {
+    "id": "js-021",
+    "regex": "TS2769:.*No overload matches this call",
+    "language": "typescript",
+    "title": "TS2769: No overload matches this call",
+    "fixes": [
+      "Check which overload signatures exist and match your arguments to one",
+      "Cast arguments to the expected types for the correct overload",
+      "Ensure you're not passing extra or incompatible arguments",
+      "Check the library's type definitions for the correct usage"
+    ],
+    "tags": ["typescript", "TS2769", "overload", "compile"]
+  },
+  {
+    "id": "js-022",
+    "regex": "TS7006:.*Parameter '.*' implicitly has an 'any' type",
+    "language": "typescript",
+    "title": "TS7006: Parameter implicitly has any type",
+    "fixes": [
+      "Add an explicit type annotation to the parameter",
+      "Set `\"noImplicitAny\": false` in tsconfig.json (not recommended)",
+      "Define an interface for the parameter shape"
+    ],
+    "tags": ["typescript", "TS7006", "any", "implicit", "compile"]
+  },
+  {
+    "id": "js-023",
+    "regex": "TS18046:.*is of type 'unknown'",
+    "language": "typescript",
+    "title": "TS18046: Value is of type unknown",
+    "fixes": [
+      "Narrow the type with a type guard: `if (value instanceof Error)`",
+      "Use a type assertion after validation: `(value as MyType)`",
+      "Add a typeof check: `if (typeof value === 'string')`"
+    ],
+    "tags": ["typescript", "TS18046", "unknown", "compile"]
+  },
+  {
+    "id": "js-024",
+    "regex": "TS2307:.*Cannot find module '.*' or its corresponding type declarations",
+    "language": "typescript",
+    "title": "TS2307: Cannot find module or type declarations",
+    "fixes": [
+      "Install the package: `npm install <package>`",
+      "Install type declarations: `npm install -D @types/<package>`",
+      "Create a declaration file (.d.ts) with `declare module '<package>'`",
+      "Check `tsconfig.json` paths and baseUrl configuration"
+    ],
+    "tags": ["typescript", "TS2307", "module", "import", "compile"]
+  },
+  {
+    "id": "js-025",
+    "regex": "TS2531:.*Object is possibly 'null'",
+    "language": "typescript",
+    "title": "TS2531: Object is possibly null",
+    "fixes": [
+      "Add a null check: `if (obj !== null)`",
+      "Use non-null assertion operator: `obj!` (only when certain)",
+      "Use optional chaining: `obj?.method()`",
+      "Provide a fallback with nullish coalescing: `obj ?? default`"
+    ],
+    "tags": ["typescript", "TS2531", "null", "strict-null", "compile"]
+  },
+  {
+    "id": "js-026",
+    "regex": "TS2355:.*A function whose declared type is neither 'void' nor 'any' must return a value",
+    "language": "typescript",
+    "title": "TS2355: Function must return a value",
+    "fixes": [
+      "Add a return statement for all code paths",
+      "Change the return type to include `undefined` or `void` if appropriate",
+      "Add return statements to else branches and after switch cases"
+    ],
+    "tags": ["typescript", "TS2355", "return", "compile"]
+  },
+  {
+    "id": "js-027",
+    "regex": "TS2740:.*Type '.*' is missing the following properties from type",
+    "language": "typescript",
+    "title": "TS2740: Type is missing required properties",
+    "fixes": [
+      "Add the missing properties to the object literal",
+      "Make the properties optional in the interface with `?`",
+      "Use `Partial<Type>` if all properties should be optional",
+      "Check if you're using the correct interface for the context"
+    ],
+    "tags": ["typescript", "TS2740", "properties", "compile"]
+  },
+  {
+    "id": "js-028",
+    "regex": "ERR_MODULE_NOT_FOUND|Cannot find (module|package)",
+    "language": "node",
+    "title": "Module not found",
+    "fixes": [
+      "Run `npm install` to install missing dependencies",
+      "Check the import path for typos and correct casing",
+      "Verify the package is listed in package.json dependencies",
+      "Check that the module's `main`/`exports` field points to the correct file"
+    ],
+    "tags": ["module", "import", "node", "runtime"]
+  },
+  {
+    "id": "js-029",
+    "regex": "ERR_REQUIRE_ESM|require\\(\\) of ES Module.*not supported",
+    "language": "node",
+    "title": "Cannot require() an ES Module",
+    "fixes": [
+      "Use dynamic `import()` instead of `require()`",
+      "Downgrade to an older version of the package that supports CJS",
+      "Convert your project to ESM by adding `\"type\": \"module\"` to package.json",
+      "Use a bundler that handles ESM/CJS interop"
+    ],
+    "tags": ["node", "ESM", "CJS", "require", "runtime"]
+  },
+  {
+    "id": "js-030",
+    "regex": "Unhandled(PromiseRejection|promise rejection)|UnhandledPromiseRejectionWarning",
+    "language": "javascript",
+    "title": "Unhandled promise rejection",
+    "fixes": [
+      "Add `.catch()` to the promise chain",
+      "Wrap async code in try/catch",
+      "Add a global handler: `process.on('unhandledRejection', handler)`",
+      "Check that all async functions are awaited"
+    ],
+    "tags": ["promise", "async", "unhandled", "runtime"]
+  },
+  {
+    "id": "js-031",
+    "regex": "TypeError:.*\\.then is not a function|is not a (thenable|promise)",
+    "language": "javascript",
+    "title": "Value is not a promise/thenable",
+    "fixes": [
+      "Ensure the function returns a Promise (add `async` or return `new Promise()`)",
+      "Check that you're not calling .then() on a synchronous return value",
+      "Wrap the value in `Promise.resolve(value)` if needed"
+    ],
+    "tags": ["promise", "TypeError", "async", "runtime"]
+  },
+  {
+    "id": "js-032",
+    "regex": "ReferenceError:.*document is not defined",
+    "language": "javascript",
+    "title": "document is not defined (SSR/Node)",
+    "fixes": [
+      "Guard DOM access with `if (typeof document !== 'undefined')`",
+      "Move DOM manipulation to lifecycle hooks that only run in the browser (ngAfterViewInit, useEffect)",
+      "Use `isPlatformBrowser()` in Angular or equivalent framework check",
+      "Use JSDOM or happy-dom for testing environments"
+    ],
+    "tags": ["SSR", "DOM", "ReferenceError", "node"]
+  },
+  {
+    "id": "js-033",
+    "regex": "ReferenceError:.*window is not defined",
+    "language": "javascript",
+    "title": "window is not defined (SSR/Node)",
+    "fixes": [
+      "Guard with `if (typeof window !== 'undefined')`",
+      "Use dependency injection to abstract window access",
+      "Move browser-only code to client-side lifecycle hooks",
+      "Mock window in tests: `global.window = {}`"
+    ],
+    "tags": ["SSR", "DOM", "ReferenceError", "node"]
+  },
+  {
+    "id": "js-034",
+    "regex": "ENOENT:.*no such file or directory",
+    "language": "node",
+    "title": "ENOENT: File or directory not found",
+    "fixes": [
+      "Check the file path for typos and ensure it exists",
+      "Use path.resolve() or path.join() for cross-platform paths",
+      "Create the directory first with `fs.mkdirSync(dir, { recursive: true })`",
+      "Check that the working directory is correct"
+    ],
+    "tags": ["node", "filesystem", "ENOENT", "runtime"]
+  },
+  {
+    "id": "js-035",
+    "regex": "EACCES:.*permission denied",
+    "language": "node",
+    "title": "EACCES: Permission denied",
+    "fixes": [
+      "Fix folder permissions: `chmod -R 755 <directory>` or take ownership on Windows",
+      "Avoid running npm with sudo — fix npm prefix: `npm config set prefix ~/.npm-global`",
+      "Run the terminal as Administrator on Windows",
+      "Check if the file is locked by another process"
+    ],
+    "tags": ["node", "filesystem", "permissions", "EACCES"]
+  },
+  {
+    "id": "js-036",
+    "regex": "EPERM:.*operation not permitted",
+    "language": "node",
+    "title": "EPERM: Operation not permitted",
+    "fixes": [
+      "Close applications that may have the file open (editors, dev servers)",
+      "Run terminal as Administrator (Windows) or with sudo (Unix)",
+      "Delete node_modules and reinstall: `rm -rf node_modules && npm install`",
+      "Disable antivirus temporarily if it's blocking file operations"
+    ],
+    "tags": ["node", "filesystem", "permissions", "EPERM"]
+  },
+  {
+    "id": "js-037",
+    "regex": "EADDRINUSE:.*address already in use.*:\\d+",
+    "language": "node",
+    "title": "EADDRINUSE: Port already in use",
+    "fixes": [
+      "Kill the process using the port: `npx kill-port <port>` or `lsof -ti:<port> | xargs kill`",
+      "Use a different port via environment variable or CLI flag",
+      "On Windows: `netstat -ano | findstr :<port>` then `taskkill /PID <pid> /F`"
+    ],
+    "tags": ["node", "network", "port", "EADDRINUSE"]
+  },
+  {
+    "id": "js-038",
+    "regex": "Error:.*ENOSPC|no space left on device|System limit for number of file watchers reached",
+    "language": "node",
+    "title": "ENOSPC: Too many file watchers or no disk space",
+    "fixes": [
+      "Increase file watcher limit: `echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p`",
+      "Free disk space — clear node_modules caches: `npm cache clean --force`",
+      "Exclude node_modules from file watching in your dev tool config"
+    ],
+    "tags": ["node", "filesystem", "watchers", "linux"]
+  },
+  {
+    "id": "js-039",
+    "regex": "Module build failed.*loader|Module parse failed|You may need an appropriate loader",
+    "language": "javascript",
+    "title": "Webpack: Module parse/build failed — missing loader",
+    "fixes": [
+      "Install the required loader (e.g., `npm install -D css-loader style-loader`)",
+      "Add a rule in webpack.config.js for the file type",
+      "Check that the file extension matches a configured module rule",
+      "Ensure the loader version is compatible with your webpack version"
+    ],
+    "tags": ["webpack", "loader", "build", "bundler"]
+  },
+  {
+    "id": "js-040",
+    "regex": "error TS6059:.*is not under 'rootDir'|TS6305:.*Output file.*has not been built from source",
+    "language": "typescript",
+    "title": "TypeScript rootDir/project reference error",
+    "fixes": [
+      "Ensure all source files are under the `rootDir` specified in tsconfig.json",
+      "Update `include`/`exclude` patterns in tsconfig.json",
+      "Build referenced projects first with `tsc --build`",
+      "Move the file under the correct source directory"
+    ],
+    "tags": ["typescript", "tsconfig", "rootDir", "compile"]
+  },
+  {
+    "id": "js-041",
+    "regex": "\\[vite\\].*Failed to resolve import|Could not resolve",
+    "language": "javascript",
+    "title": "Vite: Failed to resolve import",
+    "fixes": [
+      "Install the missing dependency: `npm install <package>`",
+      "Add the path alias to `resolve.alias` in vite.config.ts",
+      "Check that the file extension is included if non-standard",
+      "Ensure the package has an ESM export in its package.json `exports` field"
+    ],
+    "tags": ["vite", "import", "resolve", "build"]
+  },
+  {
+    "id": "js-042",
+    "regex": "error\\[E0\\d+\\]|Build failed with \\d+ error|✘.*esbuild",
+    "language": "javascript",
+    "title": "esbuild build failure",
+    "fixes": [
+      "Check the specific error code and file/line reference in the output",
+      "Ensure syntax is compatible with the `target` setting in esbuild config",
+      "Add problematic packages to the `external` list if they shouldn't be bundled",
+      "Install missing dependencies referenced in the error"
+    ],
+    "tags": ["esbuild", "build", "bundler"]
+  },
+  {
+    "id": "js-043",
+    "regex": "Chunk \\w+ \\[\\w+\\] exceeds.*limit|entrypoint size limit|asset size limit",
+    "language": "javascript",
+    "title": "Webpack/build: Bundle size exceeds limit",
+    "fixes": [
+      "Enable code splitting with dynamic imports: `import('./module')`",
+      "Analyze the bundle with `webpack-bundle-analyzer` to find large dependencies",
+      "Use tree-shaking-friendly imports: `import { x } from 'lib'` instead of `import lib`",
+      "Increase the limit in config or set `performance.hints` to 'warning'"
+    ],
+    "tags": ["webpack", "bundle-size", "performance", "build"]
+  },
+  {
+    "id": "js-044",
+    "regex": "TypeError:.*(?:reduce|find|map|filter|forEach) of (empty array|undefined|null)|is not a function",
+    "language": "javascript",
+    "title": "Array method called on non-array",
+    "fixes": [
+      "Ensure the value is an array before calling array methods",
+      "Provide a default empty array: `(data || []).map(...)`",
+      "For reduce on empty array, always provide an initial value as second argument",
+      "Check the API response shape — it may wrap the array in an object"
+    ],
+    "tags": ["TypeError", "array", "runtime"]
+  },
+  {
+    "id": "js-045",
+    "regex": "TypeError:.*(?:flat|flatMap|replaceAll|at) is not a function",
+    "language": "javascript",
+    "title": "Modern method not available (polyfill needed)",
+    "fixes": [
+      "Check your Node.js version — upgrade to a version supporting the method",
+      "Add a polyfill via core-js: `import 'core-js/features/array/flat'`",
+      "Update the `target`/`lib` in tsconfig.json to include ES2019+",
+      "Use an alternative: `[].concat(...arr)` instead of `arr.flat()`"
+    ],
+    "tags": ["TypeError", "polyfill", "compatibility", "runtime"]
+  },
+  {
+    "id": "js-046",
+    "regex": "TS2304:.*Cannot find name '.*'",
+    "language": "typescript",
+    "title": "TS2304: Cannot find name",
+    "fixes": [
+      "Import the type/variable from its module",
+      "Install type declarations: `npm install -D @types/node` or `@types/<lib>`",
+      "Add to `compilerOptions.types` in tsconfig.json",
+      "Declare the global in a .d.ts file: `declare const myGlobal: MyType`"
+    ],
+    "tags": ["typescript", "TS2304", "name", "compile"]
+  },
+  {
+    "id": "js-047",
+    "regex": "TS2688:.*Cannot find type definition file for",
+    "language": "typescript",
+    "title": "TS2688: Cannot find type definition file",
+    "fixes": [
+      "Install the missing @types package: `npm install -D @types/<name>`",
+      "Remove the package from `types` array in tsconfig.json if not needed",
+      "Check that node_modules/@types/<name> exists and is not corrupted",
+      "Run `npm install` to restore missing packages"
+    ],
+    "tags": ["typescript", "TS2688", "types", "compile"]
+  },
+  {
+    "id": "js-048",
+    "regex": "Circular dependency detected|WARNING.*circular",
+    "language": "javascript",
+    "title": "Circular dependency detected",
+    "fixes": [
+      "Extract shared code into a third module that both modules can import",
+      "Use dependency injection or inversion of control to break the cycle",
+      "Move the import inside the function that needs it (lazy import)",
+      "Refactor barrel files (index.ts) — they often create accidental cycles"
+    ],
+    "tags": ["circular", "dependency", "architecture", "build"]
+  },
+  {
+    "id": "js-049",
+    "regex": "Error:.*ENAMETOOLONG|file name too long",
+    "language": "node",
+    "title": "ENAMETOOLONG: File path too long",
+    "fixes": [
+      "Shorten the file path or move the project closer to the root directory",
+      "On Windows, enable long paths: `git config --system core.longpaths true`",
+      "Flatten deeply nested node_modules with `npm dedupe`",
+      "Use pnpm or Yarn PnP which handle deep paths better"
+    ],
+    "tags": ["node", "filesystem", "windows", "path"]
+  },
+  {
+    "id": "js-050",
+    "regex": "heap out of memory|FATAL ERROR:.*allocation failed|JavaScript heap out of memory",
+    "language": "node",
+    "title": "JavaScript heap out of memory",
+    "fixes": [
+      "Increase Node.js memory: `node --max-old-space-size=8192`",
+      "Set via env: `NODE_OPTIONS=--max-old-space-size=8192`",
+      "Find and fix memory leaks — check for unbounded caches, growing arrays, or event listeners",
+      "Process large data in streams/chunks instead of loading everything into memory"
+    ],
+    "tags": ["node", "memory", "heap", "runtime"]
+  }
+]

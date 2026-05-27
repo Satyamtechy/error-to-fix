@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="header">
+    <svg width="20" height="20" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="11" fill="#7c3aed"/>
+      <text x="12" y="17" text-anchor="middle" fill="white" font-size="14" font-weight="bold">!</text>
+    </svg>
+    <h1>Error To Fix</h1>
+  </div>
+  <input type="text" id="search" placeholder="Paste or type an error message..." autofocus>
+  <div id="detected"></div>
+  <div id="results"></div>
+  <script src="database.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -10,12 +10,13 @@ program
   .argument("<error>", "error message to search for")
   .option("--json", "output as JSON")
   .option("--lang <language>", "filter by language")
-  .action((error: string, opts: { json?: boolean; lang?: string }) => {
+  .option("--explain", "show why the error happens")
+  .action((error: string, opts: { json?: boolean; lang?: string; explain?: boolean }) => {
     const results = search(error, opts.lang);
     if (opts.json) {
       displayJson(results);
     } else {
-      displayResults(results);
+      displayResults(results, opts.explain);
     }
   });
 

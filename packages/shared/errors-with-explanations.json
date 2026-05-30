@@ -1,0 +1,604 @@
+[
+  {
+    "pattern": "Cannot read propert(y|ies) of (undefined|null)",
+    "title": "Cannot read properties of undefined",
+    "lang": "javascript",
+    "why": "You're accessing a property on a variable that is undefined. This usually happens when an API response hasn't loaded yet or an object key is misspelled.",
+    "fixes": [
+      "Add optional chaining: obj?.property",
+      "Add null check: if (obj != null) { obj.property }",
+      "Provide default value: const val = obj?.prop ?? fallback"
+    ],
+    "source": "https://stackoverflow.com/q/14782232"
+  },
+  {
+    "pattern": "is not a function",
+    "title": "TypeError: X is not a function",
+    "lang": "javascript",
+    "why": "You're calling something as a function that isn't one. Common causes: wrong import, calling a property that's a value not a method, or the object hasn't been initialized yet.",
+    "fixes": [
+      "Check the variable type: typeof fn === 'function' && fn()",
+      "Verify the import path is correct",
+      "Ensure the method exists on the object"
+    ],
+    "source": "https://stackoverflow.com/q/6846723"
+  },
+  {
+    "pattern": "Cannot set propert(y|ies) of (undefined|null)",
+    "title": "Cannot set properties of undefined",
+    "lang": "javascript",
+    "why": "You're trying to assign a value to a property on something that is undefined or null. The parent object doesn't exist yet.",
+    "fixes": [
+      "Initialize the parent object first: obj = obj || {}",
+      "Use nullish coalescing assignment: obj ??= {}",
+      "Check the chain of property access for undefined links"
+    ],
+    "source": "https://stackoverflow.com/q/13861312"
+  },
+  {
+    "pattern": "Assignment to constant variable",
+    "title": "TypeError: Assignment to constant variable",
+    "lang": "javascript",
+    "why": "You declared a variable with 'const' which makes it read-only, then tried to reassign it. Const bindings cannot be changed after initialization.",
+    "fixes": [
+      "Change const to let if the variable needs reassignment",
+      "Use a new variable for the new value",
+      "For objects/arrays, mutate properties instead of reassigning: obj.key = val"
+    ],
+    "source": "https://stackoverflow.com/q/23436437"
+  },
+  {
+    "pattern": "Unexpected token.*JSON",
+    "title": "SyntaxError: Unexpected token in JSON",
+    "lang": "javascript",
+    "why": "JSON.parse() received a string that isn't valid JSON. Common causes: the server returned HTML (like a 404 page), there's a trailing comma, or single quotes were used instead of double quotes.",
+    "fixes": [
+      "Check the raw response: console.log(typeof response, response)",
+      "Validate the JSON string at jsonlint.com",
+      "Ensure the server returns Content-Type: application/json"
+    ],
+    "source": "https://stackoverflow.com/q/12320784"
+  },
+  {
+    "pattern": "Maximum call stack size exceeded",
+    "title": "RangeError: Maximum call stack size exceeded",
+    "lang": "javascript",
+    "why": "A function is calling itself recursively without a proper base case, creating an infinite loop that exhausts the call stack.",
+    "fixes": [
+      "Add or fix the base case in your recursive function",
+      "Check for circular references in objects being stringified",
+      "Convert recursion to iteration with a stack/queue"
+    ],
+    "source": "https://stackoverflow.com/q/6095530"
+  },
+  {
+    "pattern": "Cannot access.*before initialization",
+    "title": "ReferenceError: Cannot access before initialization",
+    "lang": "javascript",
+    "why": "You're using a let/const variable before its declaration in the code. Unlike var, let/const have a 'temporal dead zone' from the start of the block to the declaration.",
+    "fixes": [
+      "Move the variable declaration before its first usage",
+      "Check for variables with the same name in different scopes",
+      "Ensure imports are at the top of the file"
+    ],
+    "source": "https://stackoverflow.com/q/31219420"
+  },
+  {
+    "pattern": "is not defined",
+    "title": "ReferenceError: X is not defined",
+    "lang": "javascript",
+    "why": "You're using a variable or function name that doesn't exist in the current scope. It was never declared, is misspelled, or is out of scope.",
+    "fixes": [
+      "Check for typos in the variable name",
+      "Ensure the variable is imported or declared in scope",
+      "Verify script load order in the HTML"
+    ],
+    "source": "https://stackoverflow.com/q/5431351"
+  },
+  {
+    "pattern": "forEach is not a function",
+    "title": "TypeError: X.forEach is not a function",
+    "lang": "javascript",
+    "why": "You're calling .forEach() on something that isn't an array. It could be an object, NodeList (in older browsers), null, or undefined.",
+    "fixes": [
+      "Convert to array first: Array.from(value).forEach(...)",
+      "Check the value type: Array.isArray(value) && value.forEach(...)",
+      "Use Object.entries(obj).forEach() for objects"
+    ],
+    "source": "https://stackoverflow.com/q/43246209"
+  },
+  {
+    "pattern": "Unexpected end of (input|JSON)",
+    "title": "SyntaxError: Unexpected end of input",
+    "lang": "javascript",
+    "why": "The parser reached the end of the string/file while still expecting more content. Usually a missing closing bracket, parenthesis, or the response body was empty.",
+    "fixes": [
+      "Check for missing closing brackets/braces/parentheses",
+      "Verify the fetch response isn't empty before parsing",
+      "Use a code formatter to find unmatched delimiters"
+    ],
+    "source": "https://stackoverflow.com/q/12338848"
+  },
+  {
+    "pattern": "Cannot convert undefined or null to object",
+    "title": "TypeError: Cannot convert undefined or null to object",
+    "lang": "javascript",
+    "why": "You passed undefined or null to a function that expects an object, like Object.keys(), Object.assign(), or the spread operator on a non-object.",
+    "fixes": [
+      "Add a fallback: Object.keys(obj || {})",
+      "Guard with a check: if (obj) { Object.keys(obj) }",
+      "Ensure the data source returns an object, not undefined"
+    ],
+    "source": "https://stackoverflow.com/q/29258718"
+  },
+  {
+    "pattern": "Failed to fetch|NetworkError|ERR_NETWORK",
+    "title": "TypeError: Failed to fetch",
+    "lang": "javascript",
+    "why": "The browser couldn't complete the network request. Common causes: CORS blocking, server is down, no internet, or the URL is wrong.",
+    "fixes": [
+      "Check browser DevTools Network tab for the actual status",
+      "Verify CORS headers on the server: Access-Control-Allow-Origin",
+      "Ensure the URL is correct and the server is running"
+    ],
+    "source": "https://stackoverflow.com/q/44742612"
+  },
+  {
+    "pattern": "Reduce of empty array with no initial value",
+    "title": "TypeError: Reduce of empty array with no initial value",
+    "lang": "javascript",
+    "why": "You called .reduce() on an empty array without providing an initial value as the second argument. When the array is empty, reduce doesn't know what to return.",
+    "fixes": [
+      "Provide an initial value: arr.reduce((acc, val) => acc + val, 0)",
+      "Guard against empty arrays: if (arr.length) { arr.reduce(...) }",
+      "Use optional chaining with a fallback"
+    ],
+    "source": "https://stackoverflow.com/q/20798477"
+  },
+  {
+    "pattern": "Illegal return statement",
+    "title": "SyntaxError: Illegal return statement",
+    "lang": "javascript",
+    "why": "You used a 'return' statement outside of a function body. This often happens when braces are mismatched or code is pasted at the top level.",
+    "fixes": [
+      "Ensure return is inside a function or method",
+      "Check for mismatched curly braces above the return",
+      "Wrap top-level code in an IIFE or function if needed"
+    ],
+    "source": "https://stackoverflow.com/q/9167726"
+  },
+  {
+    "pattern": ".*is not iterable",
+    "title": "TypeError: X is not iterable",
+    "lang": "javascript",
+    "why": "You used for...of, destructuring, or spread on a value that doesn't implement the iterable protocol (like a plain object, number, or undefined).",
+    "fixes": [
+      "Check the value isn't undefined/null before iterating",
+      "Use Object.entries() for objects: for (const [k,v] of Object.entries(obj))",
+      "Ensure the function returns an array, not a single value"
+    ],
+    "source": "https://stackoverflow.com/q/44827610"
+  },
+  {
+    "pattern": "IndentationError.*unexpected indent",
+    "title": "IndentationError: unexpected indent",
+    "lang": "python",
+    "why": "Python uses indentation to define code blocks. You have extra spaces or tabs where they shouldn't be, or you've mixed tabs and spaces inconsistently.",
+    "fixes": [
+      "Use consistent indentation (4 spaces per level, no tabs)",
+      "Configure your editor to show whitespace characters",
+      "Run: python -tt script.py to detect tab/space mixing"
+    ],
+    "source": "https://stackoverflow.com/q/1016814"
+  },
+  {
+    "pattern": "ModuleNotFoundError.*No module named",
+    "title": "ModuleNotFoundError: No module named X",
+    "lang": "python",
+    "why": "Python can't find the module you're importing. It's either not installed, installed in a different environment, or the module name is misspelled.",
+    "fixes": [
+      "Install the package: pip install <package-name>",
+      "Check you're using the right virtual environment",
+      "Verify module name matches PyPI name (e.g., pip install Pillow, import PIL)"
+    ],
+    "source": "https://stackoverflow.com/q/7165749"
+  },
+  {
+    "pattern": "TypeError.*argument.*'NoneType'",
+    "title": "TypeError: argument of type 'NoneType'",
+    "lang": "python",
+    "why": "You're performing an operation on a None value, usually because a function returned None implicitly (no return statement) or an assignment like list.sort() returns None.",
+    "fixes": [
+      "Check the function's return value: result = fn(); if result is not None: ...",
+      "Note that .sort(), .append(), .update() return None — they modify in-place",
+      "Add explicit return statements in your functions"
+    ],
+    "source": "https://stackoverflow.com/q/23086383"
+  },
+  {
+    "pattern": "KeyError",
+    "title": "KeyError: X",
+    "lang": "python",
+    "why": "You're accessing a dictionary key that doesn't exist. The key is misspelled, wasn't added yet, or was already removed.",
+    "fixes": [
+      "Use .get() with a default: data.get('key', default_value)",
+      "Check key existence: if 'key' in data: ...",
+      "Use collections.defaultdict for auto-initializing dicts"
+    ],
+    "source": "https://stackoverflow.com/q/16154032"
+  },
+  {
+    "pattern": "AttributeError.*has no attribute",
+    "title": "AttributeError: object has no attribute X",
+    "lang": "python",
+    "why": "You're accessing a method or property that doesn't exist on this object. The object might be the wrong type, or the attribute name is misspelled.",
+    "fixes": [
+      "Check the object type: print(type(obj))",
+      "Use hasattr(obj, 'attr') before accessing",
+      "Verify the correct class/module is imported"
+    ],
+    "source": "https://stackoverflow.com/q/8575062"
+  },
+  {
+    "pattern": "ValueError.*too many values to unpack",
+    "title": "ValueError: too many values to unpack",
+    "lang": "python",
+    "why": "You're destructuring an iterable into fewer variables than it contains. The left side has fewer names than the right side has values.",
+    "fixes": [
+      "Use * to capture extras: a, b, *rest = iterable",
+      "Match the number of variables to the iterable length",
+      "Use indexing instead: a = iterable[0]"
+    ],
+    "source": "https://stackoverflow.com/q/1479776"
+  },
+  {
+    "pattern": "TypeError.*missing.*required.*argument",
+    "title": "TypeError: missing required positional argument",
+    "lang": "python",
+    "why": "You called a function without providing all required arguments. If it's a method, you may have forgotten 'self', or called Class.method() instead of instance.method().",
+    "fixes": [
+      "Pass all required arguments to the function",
+      "For methods, call on an instance: obj.method() not Class.method()",
+      "Check the function signature for required parameters"
+    ],
+    "source": "https://stackoverflow.com/q/23944657"
+  },
+  {
+    "pattern": "RecursionError.*maximum recursion depth",
+    "title": "RecursionError: maximum recursion depth exceeded",
+    "lang": "python",
+    "why": "A function keeps calling itself without stopping. The base case is missing or never reached, causing infinite recursion until Python's stack limit (usually 1000) is hit.",
+    "fixes": [
+      "Add or fix the base case in your recursive function",
+      "Convert to iterative approach with a loop",
+      "If intentional deep recursion: sys.setrecursionlimit(n) (use carefully)"
+    ],
+    "source": "https://stackoverflow.com/q/3323001"
+  },
+  {
+    "pattern": "TypeError.*'int' object is not (subscriptable|iterable)",
+    "title": "TypeError: 'int' object is not subscriptable/iterable",
+    "lang": "python",
+    "why": "You're using [] indexing or iterating over an integer. A variable you expected to be a list/string is actually a number, often from an accidental reassignment.",
+    "fixes": [
+      "Check the variable type: print(type(var))",
+      "Trace where the variable gets reassigned to an int",
+      "Ensure function returns a list/string, not a count or status code"
+    ],
+    "source": "https://stackoverflow.com/q/31727333"
+  },
+  {
+    "pattern": "ImportError.*cannot import name",
+    "title": "ImportError: cannot import name X from Y",
+    "lang": "python",
+    "why": "The name you're importing doesn't exist in the module. It could be a circular import, a renamed/removed function, or a version mismatch.",
+    "fixes": [
+      "Check circular imports: A imports from B which imports from A",
+      "Verify the name exists in the module: dir(module)",
+      "Check you have the correct package version installed"
+    ],
+    "source": "https://stackoverflow.com/q/9252543"
+  },
+  {
+    "pattern": "Type.*is not assignable to type",
+    "title": "TS2322: Type X is not assignable to type Y",
+    "lang": "typescript",
+    "why": "TypeScript detected a type mismatch. You're assigning a value of one type to a variable/parameter that expects a different type. The compiler is preventing a potential runtime error.",
+    "fixes": [
+      "Fix the value to match the expected type",
+      "Update the type annotation to accept the value",
+      "Use a type assertion if you're certain: value as ExpectedType"
+    ],
+    "source": "https://stackoverflow.com/q/37978528"
+  },
+  {
+    "pattern": "Property.*does not exist on type",
+    "title": "TS2339: Property X does not exist on type Y",
+    "lang": "typescript",
+    "why": "You're accessing a property that TypeScript doesn't know about on this type. The type definition is missing it, or the variable has a wider/narrower type than expected.",
+    "fixes": [
+      "Add the property to the interface/type definition",
+      "Use type narrowing: if ('prop' in obj) { obj.prop }",
+      "Cast to the correct type: (obj as ExtendedType).prop"
+    ],
+    "source": "https://stackoverflow.com/q/18083389"
+  },
+  {
+    "pattern": "Object is possibly '(undefined|null)'",
+    "title": "TS2532: Object is possibly undefined/null",
+    "lang": "typescript",
+    "why": "TypeScript's strict null checks found a code path where a value could be undefined or null. You need to handle the null case before using the value.",
+    "fixes": [
+      "Add optional chaining: obj?.property",
+      "Add a null guard: if (obj) { obj.property }",
+      "Use non-null assertion if certain: obj!.property (not recommended)"
+    ],
+    "source": "https://stackoverflow.com/q/40349987"
+  },
+  {
+    "pattern": "Argument of type.*is not assignable to parameter of type",
+    "title": "TS2345: Argument type mismatch",
+    "lang": "typescript",
+    "why": "A function call is receiving an argument of the wrong type. The value you're passing doesn't match what the function's parameter expects.",
+    "fixes": [
+      "Transform the argument to the expected type before passing",
+      "Update the function signature to accept the broader type",
+      "Check if you're passing the right variable"
+    ],
+    "source": "https://stackoverflow.com/q/45019803"
+  },
+  {
+    "pattern": "Cannot find module.*or its corresponding type declarations",
+    "title": "TS2307: Cannot find module or type declarations",
+    "lang": "typescript",
+    "why": "TypeScript can't resolve the import. Either the package isn't installed, it lacks type definitions, or the path alias isn't configured in tsconfig.",
+    "fixes": [
+      "Install types: npm install -D @types/package-name",
+      "Create a declaration file: declare module 'package-name'",
+      "Check tsconfig paths and baseUrl configuration"
+    ],
+    "source": "https://stackoverflow.com/q/41292559"
+  },
+  {
+    "pattern": "has no exported member",
+    "title": "TS2305: Module has no exported member",
+    "lang": "typescript",
+    "why": "You're importing a name that isn't exported from the module. It may have been renamed, moved to a different file, or is a default export being imported as named.",
+    "fixes": [
+      "Check the module's exports: use IDE auto-import",
+      "Use default import if it's a default export",
+      "Verify the package version matches the import syntax"
+    ],
+    "source": "https://stackoverflow.com/q/43395911"
+  },
+  {
+    "pattern": "Type.*is missing the following properties",
+    "title": "TS2739: Type is missing required properties",
+    "lang": "typescript",
+    "why": "You're creating an object that doesn't have all required properties defined in its type. Some fields are mandatory but weren't included.",
+    "fixes": [
+      "Add the missing properties to the object literal",
+      "Make properties optional in the type: prop?: string",
+      "Use Partial<Type> if all properties should be optional"
+    ],
+    "source": "https://stackoverflow.com/q/59900059"
+  },
+  {
+    "pattern": "Conversion of type.*may be a mistake",
+    "title": "TS2352: Type assertion may be a mistake",
+    "lang": "typescript",
+    "why": "TypeScript thinks your type assertion (as X) doesn't make sense because the types have no overlap. The source and target types are incompatible.",
+    "fixes": [
+      "Double-assert through unknown: value as unknown as TargetType",
+      "Fix the source type to be compatible with the target",
+      "Use a type guard function instead of assertion"
+    ],
+    "source": "https://stackoverflow.com/q/61148557"
+  },
+  {
+    "pattern": "Generic type.*requires.*type argument",
+    "title": "TS2314: Generic type requires type arguments",
+    "lang": "typescript",
+    "why": "You're using a generic type without specifying its type parameters. TypeScript needs to know the concrete types to use.",
+    "fixes": [
+      "Provide type arguments: Array<string>, Map<string, number>",
+      "Let TypeScript infer when possible by passing a value",
+      "Add default type parameters to the generic: T = unknown"
+    ],
+    "source": "https://stackoverflow.com/q/38213926"
+  },
+  {
+    "pattern": ".*is declared but.*never (used|read)",
+    "title": "TS6133: Variable is declared but never used",
+    "lang": "typescript",
+    "why": "You declared a variable, import, or parameter that's never referenced in the code. This usually indicates dead code or a forgotten refactor.",
+    "fixes": [
+      "Remove the unused declaration",
+      "Prefix with underscore if intentionally unused: _unusedParam",
+      "Disable with // @ts-ignore or configure noUnusedLocals in tsconfig"
+    ],
+    "source": "https://stackoverflow.com/q/38992717"
+  },
+  {
+    "pattern": "ENOENT.*no such file or directory",
+    "title": "Error: ENOENT: no such file or directory",
+    "lang": "node",
+    "why": "Node.js tried to access a file or directory that doesn't exist at the specified path. The path may be wrong, relative to an unexpected directory, or the file was deleted.",
+    "fixes": [
+      "Use path.resolve() or path.join() for reliable paths",
+      "Check existence first: fs.existsSync(path)",
+      "Create parent dirs: fs.mkdirSync(dir, { recursive: true })"
+    ],
+    "source": "https://stackoverflow.com/q/17575790"
+  },
+  {
+    "pattern": "EADDRINUSE.*address already in use",
+    "title": "Error: EADDRINUSE: address already in use",
+    "lang": "node",
+    "why": "Another process is already listening on the port you're trying to use. A previous instance of your server may not have shut down cleanly.",
+    "fixes": [
+      "Kill the process on that port: npx kill-port 3000",
+      "Use a different port: PORT=3001 node server.js",
+      "Find the process: netstat -ano | findstr :3000 (Windows) or lsof -i :3000 (Mac/Linux)"
+    ],
+    "source": "https://stackoverflow.com/q/4075287"
+  },
+  {
+    "pattern": "ERR_REQUIRE_ESM|require\\(\\) of ES Module",
+    "title": "Error: require() of ES Module not supported",
+    "lang": "node",
+    "why": "You're using require() to load a package that only supports ES modules (import/export). The package dropped CommonJS support in a recent version.",
+    "fixes": [
+      "Use dynamic import: const pkg = await import('package')",
+      "Add \"type\": \"module\" to package.json and use import syntax",
+      "Downgrade to the last CJS-compatible version of the package"
+    ],
+    "source": "https://stackoverflow.com/q/69041454"
+  },
+  {
+    "pattern": "ENOMEM|JavaScript heap out of memory",
+    "title": "FATAL ERROR: JavaScript heap out of memory",
+    "lang": "node",
+    "why": "Node.js ran out of memory. You're processing too much data in memory at once, have a memory leak, or the default heap limit (~1.7GB) is too low for your workload.",
+    "fixes": [
+      "Increase heap: node --max-old-space-size=4096 script.js",
+      "Use streams for large files instead of reading all into memory",
+      "Check for memory leaks: growing arrays, unclosed connections, event listener accumulation"
+    ],
+    "source": "https://stackoverflow.com/q/38558989"
+  },
+  {
+    "pattern": "MODULE_NOT_FOUND|Cannot find module",
+    "title": "Error: Cannot find module",
+    "lang": "node",
+    "why": "Node.js can't locate the module at the specified path. The package isn't installed, the file path is wrong, or node_modules is corrupted.",
+    "fixes": [
+      "Run npm install to restore dependencies",
+      "Delete node_modules and package-lock.json, then npm install",
+      "Check the import path for typos and correct casing"
+    ],
+    "source": "https://stackoverflow.com/q/9023672"
+  },
+  {
+    "pattern": "Rendered more hooks than during the previous render",
+    "title": "React: Rendered more hooks than previous render",
+    "lang": "react",
+    "why": "You're calling hooks conditionally or inside loops. React relies on hooks being called in the same order every render. An early return or conditional before a hook breaks this.",
+    "fixes": [
+      "Move all hooks above any early returns or conditions",
+      "Never put hooks inside if/else, loops, or nested functions",
+      "Extract conditional logic into a child component"
+    ],
+    "source": "https://stackoverflow.com/q/55622768"
+  },
+  {
+    "pattern": "Too many re-renders",
+    "title": "React: Too many re-renders",
+    "lang": "react",
+    "why": "A component is stuck in an infinite render loop. Usually caused by calling setState directly in the render body or passing a function call instead of a function reference to an event handler.",
+    "fixes": [
+      "Use arrow function in handler: onClick={() => setCount(count+1)} not onClick={setCount(count+1)}",
+      "Move setState into useEffect with proper dependencies",
+      "Check that useEffect dependencies don't cause cascading updates"
+    ],
+    "source": "https://stackoverflow.com/q/59313116"
+  },
+  {
+    "pattern": "Each child in a list should have a unique.*key.*prop",
+    "title": "React: Each child in a list should have a unique key",
+    "lang": "react",
+    "why": "React needs a stable, unique 'key' prop on each element in a list to efficiently track which items changed, were added, or removed during re-renders.",
+    "fixes": [
+      "Add a unique key from your data: key={item.id}",
+      "Never use array index as key if list order can change",
+      "Use a combination of fields if no single unique ID: key={`${item.name}-${item.date}`}"
+    ],
+    "source": "https://stackoverflow.com/q/28329382"
+  },
+  {
+    "pattern": "Cannot update a component.*while rendering a different component",
+    "title": "React: Cannot update component while rendering another",
+    "lang": "react",
+    "why": "You're calling setState of a parent component during the render phase of a child component. React doesn't allow state updates that trigger re-renders during an ongoing render.",
+    "fixes": [
+      "Move the state update to useEffect",
+      "Use a callback pattern or event-based communication",
+      "Lift state up or use context to avoid cross-component updates during render"
+    ],
+    "source": "https://stackoverflow.com/q/62336340"
+  },
+  {
+    "pattern": "Invalid hook call.*Hooks can only be called inside",
+    "title": "React: Invalid hook call",
+    "lang": "react",
+    "why": "You're calling a hook (useState, useEffect, etc.) outside a React function component or custom hook. This can also happen with duplicate React copies in node_modules.",
+    "fixes": [
+      "Ensure hooks are only called in function components or custom hooks",
+      "Check for multiple React versions: npm ls react",
+      "Don't call hooks in class components, event handlers, or regular functions"
+    ],
+    "source": "https://stackoverflow.com/q/56663785"
+  }
+
+  ,
+  {
+    "pattern": "fatal.*not a git repository",
+    "title": "fatal: not a git repository",
+    "lang": "git",
+    "why": "You ran a git command in a directory that isn't inside a git repository. Either you're in the wrong folder, or git init was never run here.",
+    "fixes": [
+      "Navigate to the correct project directory: cd /path/to/repo",
+      "Initialize a new repo: git init",
+      "Check if .git folder exists in parent directories"
+    ],
+    "source": "https://stackoverflow.com/q/4630704"
+  },
+  {
+    "pattern": "CONFLICT.*Merge conflict in",
+    "title": "CONFLICT: Merge conflict in file",
+    "lang": "git",
+    "why": "Two branches modified the same lines in a file differently. Git can't automatically decide which version to keep, so it marks the conflict for you to resolve manually.",
+    "fixes": [
+      "Open the file and resolve conflict markers (<<<<<<, ======, >>>>>>)",
+      "Use a merge tool: git mergetool",
+      "After resolving: git add <file> && git commit"
+    ],
+    "source": "https://stackoverflow.com/q/161813"
+  },
+  {
+    "pattern": "error.*failed to push some refs",
+    "title": "error: failed to push some refs",
+    "lang": "git",
+    "why": "The remote branch has commits that your local branch doesn't have. Someone else pushed changes, or you rebased/amended commits that were already pushed.",
+    "fixes": [
+      "Pull first: git pull --rebase origin branch-name",
+      "If intentional: git push --force-with-lease (safer than --force)",
+      "Fetch and merge: git fetch origin && git merge origin/branch"
+    ],
+    "source": "https://stackoverflow.com/q/24114676"
+  },
+  {
+    "pattern": "Your local changes.*would be overwritten by",
+    "title": "error: Your local changes would be overwritten",
+    "lang": "git",
+    "why": "You have uncommitted changes in files that the checkout/pull/merge needs to modify. Git refuses to overwrite your work silently.",
+    "fixes": [
+      "Stash changes: git stash && git pull && git stash pop",
+      "Commit your changes first: git add . && git commit -m 'wip'",
+      "Discard changes if not needed: git checkout -- <file>"
+    ],
+    "source": "https://stackoverflow.com/q/15745045"
+  },
+  {
+    "pattern": "detached HEAD",
+    "title": "You are in 'detached HEAD' state",
+    "lang": "git",
+    "why": "You checked out a specific commit, tag, or remote branch directly instead of a local branch. Any new commits won't belong to any branch and could be lost.",
+    "fixes": [
+      "Create a branch from current state: git checkout -b new-branch-name",
+      "Return to a branch: git checkout main",
+      "If you already made commits: git branch save-my-work && git checkout main"
+    ],
+    "source": "https://stackoverflow.com/q/5772192"
+  }
+]

@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
+import { detectLang } from "./detect-lang.js";
 
 export interface ErrorEntry {
   pattern: string;
@@ -8,6 +9,7 @@ export interface ErrorEntry {
   lang: string;
   fixes: string[];
   source: string;
+  why?: string;
 }
 
 export interface SearchResult extends ErrorEntry {
@@ -21,7 +23,8 @@ const dbPath = resolve(__dirname, "../data/errors.json");
 const database: ErrorEntry[] = JSON.parse(readFileSync(dbPath, "utf-8")) as ErrorEntry[];
 
 export function search(query: string, lang?: string): SearchResult[] {
-  const entries = lang ? database.filter((e) => e.lang === lang) : database;
+  const resolvedLang = lang ?? detectLang(query);
+  const entries = resolvedLang ? database.filter((e) => e.lang === resolvedLang) : database;
 
   return entries
     .map((entry) => {

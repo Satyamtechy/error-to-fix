@@ -25,11 +25,14 @@ You Google an error → scroll through 5 StackOverflow answers → find the fix 
 ## Install
 
 ```bash
-# Use instantly (no install)
-npx error-to-fix "Cannot read properties of undefined"
+# Use instantly
+npx error-to-fix "your error message"
 
-# Or install globally
-npm i -g error-to-fix
+# Watch mode
+your-command 2>&1 | npx error-to-fix --watch
+
+# With explanation
+npx error-to-fix "TypeError: x is not a function" --explain
 ```
 
 ---
@@ -60,6 +63,50 @@ error-to-fix "ENOENT: no such file" --json
   3. Check API response shape — the data might be nested: response.data.items
 
   Source: MDN / StackOverflow
+```
+
+---
+
+## Features
+
+### Watch Mode — Real-time Error Detection
+
+```bash
+# Pipe any command's output
+npm run dev 2>&1 | error-to-fix --watch
+
+# Or pipe build output  
+cargo build 2>&1 | error-to-fix --watch
+```
+
+Automatically detects errors in terminal output and shows fixes inline.
+
+### Auto Language Detection
+
+```bash
+# No --lang needed — detected automatically
+error-to-fix "Traceback (most recent call last): KeyError: 'name'"
+# → Detected: python
+
+error-to-fix "NullReferenceException: Object reference not set"
+# → Detected: csharp
+```
+
+### Explain Mode
+
+```bash
+error-to-fix "Cannot read properties of undefined" --explain
+```
+```
+  ✗ Cannot read properties of undefined [javascript]
+
+  Why: You're accessing a property on a variable that is undefined.
+  This usually happens when data hasn't loaded yet or a key is misspelled.
+
+  Fixes:
+  1. Add optional chaining: obj?.property
+  2. Check if variable exists before accessing
+  3. Initialize with default value
 ```
 
 ---
@@ -167,8 +214,8 @@ const results = search("ECONNREFUSED 127.0.0.1:5432");
 
 ## Roadmap
 
-- [ ] Auto-detect language from error format
-- [ ] `--watch` mode: monitor terminal output and suggest fixes in real-time
+- [x] Auto-detect language from error format
+- [x] `--watch` mode: monitor terminal output and suggest fixes in real-time
 - [ ] Fuzzy search for partial/typo matches
 - [ ] Community voting on fix quality
 - [ ] VS Code: inline fix suggestions on error squiggles
